@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="L02_files/libs/clipboard/clipboard.min.js"></script>
+<script src="L02_files/libs/quarto-html/tabby.min.js"></script>
+<script src="L02_files/libs/quarto-html/popper.min.js"></script>
+<script src="L02_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="L02_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="L02_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="L02_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.2.269">
+
+  <meta name="author" content="Dr.&nbsp;Seals">
+  <title>Simple Probability Samples</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="L02_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="L02_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="L02_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <link href="L02_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="L02_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="L02_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="L02_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="L02_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="L02_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-captioned.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-captioned) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-captioned.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-captioned .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-captioned .callout-caption  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-captioned.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-captioned.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-caption {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-caption {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-caption {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-captioned .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-captioned .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-captioned) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-caption {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-caption {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-caption {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-caption {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-caption {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  
+  <link href="L02_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+  <script src="L02_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Simple Probability Samples</h1>
+  <p class="subtitle">Chapter 2</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Dr.&nbsp;Seals 
+</div>
+</div>
+</div>
+
+</section>
+<section id="types-of-probability-samples" class="slide level2">
+<h2>2.1: Types of Probability Samples</h2>
+<ul>
+<li><p><strong>Simple random sample</strong>: a simple random sample of size <em>n</em> is taken when every possible subset of <em>n</em> units in the population has equal probability of being the sample chosen.</p>
+<ul>
+<li>i.e., every unit has equal probability of being selected for the sample</li>
+</ul></li>
+<li><p><strong>Stratified random sample</strong>: the population is divided into subgroups (strata) and a simple random sample is selected from each stratum.</p>
+<ul>
+<li>Strata are often (1) subgroups of interest, (2) easily identified.</li>
+</ul></li>
+<li><p><strong>Cluster sample</strong>: observation units are grouped into larger sampling units called clusters; a simple random sample of the clusters is then chosen.</p>
+<ul>
+<li>This is different from stratified random sampling because we are sampling the <em>entire cluster</em>.</li>
+</ul></li>
+<li><p><strong>Systematic sample</strong>: a starting point is sampled from a list of population members using a random number, then, every <em>k</em><sup>th</sup> unit thereafter is chosen to be in the sample.</p>
+<ul>
+<li>The sample consists of units equally spaced in the list.</li>
+</ul></li>
+</ul>
+</section>
+<section id="types-of-probability-samples-1" class="slide level2">
+<h2>2.1: Types of Probability Samples</h2>
+<center>
+<img src="images/L02a.png" width="1000">
+</center>
+</section>
+<section id="framework-for-probability-sampling" class="slide level2">
+<h2>2.2: Framework for Probability Sampling</h2>
+<ul>
+<li>Let there be <em>N</em> units in the finite population. We denote the finite population (or universe) with</li>
+</ul>
+<p><span class="math display">
+\mathscr{U} = \{ 1, \ 2, \ ... \ , N\}
+</span></p>
+<ul>
+<li><p>When we choose a sample, it is a subset of <span class="math inline">\mathscr{U}</span>. We denote this as <span class="math inline">\mathscr{S}</span>.</p></li>
+<li><p>Suppose the population has four units, <span class="math inline">\mathscr{U} = \{1, \ 2, \ 3, \ 4\}</span>. The following are possible samples, <span class="math display">
+\begin{align*}
+\mathscr{S}_1 &amp;= \{1, \ 2\} \ \ \ \ \ \mathscr{S}_2 = \{1, \ 3 \} \ \ \ \ \ \mathscr{S}_3 = \{1, \ 4 \} \\
+\mathscr{S}_4 &amp;= \{2, \ 3 \} \ \ \ \ \ \mathscr{S}_5 = \{2, \ 4 \} \ \ \ \ \ \mathscr{S}_6 = \{3, \ 4 \}
+\end{align*}
+</span></p></li>
+</ul>
+</section>
+<section id="framework-for-probability-sampling-1" class="slide level2">
+<h2>2.2: Framework for Probability Sampling</h2>
+<ul>
+<li><p>In probability sampling, each possible sample <span class="math inline">\mathscr{S}</span> has a known probability, <span class="math inline">\text{P}[\mathscr{S}]</span>, of being chosen.</p>
+<ul>
+<li><p>Remember, any probability must be between 0 and 1.</p>
+<ul>
+<li>i.e., <span class="math inline">0 \le \text{P}[\mathscr{S}] \le 1</span></li>
+</ul></li>
+<li><p>The probabilities of all possible samples must sum to 1.</p></li>
+</ul></li>
+<li><p>Thus, each unit has a known probability of being selected for a sample,</p></li>
+</ul>
+<p><span class="math display">
+\begin{align*}
+\pi_i &amp;= \text{P}[\text{unit $i$ in sample}] \\
+&amp;= \sum \text{probabilities of all possible samples that contain unit $i$}
+\end{align*}
+</span></p>
+</section>
+<section id="framework-for-probability-sampling-2" class="slide level2">
+<h2>2.2: Framework for Probability Sampling</h2>
+<ul>
+<li>Let’s revisit the <em>n</em> = 2 samples for <span class="math inline">\mathscr{U} = \{1, \ 2, \ 3, \ 4\}</span>.</li>
+</ul>
+<p><span class="math display">
+\begin{align*}
+\mathscr{S}_1 &amp;= \{1, \ 2\} \ \ \ \ \ \mathscr{S}_2 = \{1, \ 3 \} \ \ \ \ \ \mathscr{S}_3 = \{1, \ 4 \} \\
+\mathscr{S}_4 &amp;= \{2, \ 3 \} \ \ \ \ \ \mathscr{S}_5 = \{2, \ 4 \} \ \ \ \ \ \mathscr{S}_6 = \{3, \ 4 \}
+\end{align*}
+</span></p>
+<ul>
+<li>Suppose they have probabilities,</li>
+</ul>
+<p><span class="math display">
+\begin{align*}
+\text{P}[\mathscr{S}_1] &amp;= 1/3  &amp; \text{P}[\mathscr{S}_2] &amp;= 1/6  &amp; \text{P}[\mathscr{S}_3] &amp;= 1/2 \\
+\text{P}[\mathscr{S}_4] &amp;= 0  &amp; \text{P}[\mathscr{S}_5] &amp;= 0  &amp; \text{P}[\mathscr{S}_6] &amp;= 0
+\end{align*}
+</span></p>
+<ul>
+<li>Find <span class="math inline">\pi_i</span>.</li>
+</ul>
+</section>
+<section id="framework-for-probability-sampling-3" class="slide level2">
+<h2>2.2: Framework for Probability Sampling</h2>
+<ul>
+<li>If the sample probabilities are as given,</li>
+</ul>
+<p><span class="math display">
+\begin{align*}
+\text{P}[\mathscr{S}_1= \{1, \ 2\}] &amp;= 1/3  &amp; \text{P}[\mathscr{S}_2= \{1, \ 3\}] &amp;= 1/6  &amp; \text{P}[\mathscr{S}_3= \{1, \ 4\}] &amp;= 1/2 \\
+\text{P}[\mathscr{S}_4= \{2, \ 3\}] &amp;= 0  &amp; \text{P}[\mathscr{S}_5= \{2, \ 4\}] &amp;= 0  &amp; \text{P}[\mathscr{S}_6= \{3, \ 4\}] &amp;= 0
+\end{align*}
+</span></p>
+<ul>
+<li>Then, the unit probabilities are as follows,</li>
+</ul>
+<p><span class="math display">
+\begin{align*}
+\pi_1 &amp;= \text{P}[\mathscr{S}_1] + \text{P}[\mathscr{S}_2] + \text{P}[\mathscr{S}_3] = 1/2 \\
+\pi_2 &amp;= \text{P}[\mathscr{S}_1] + \text{P}[\mathscr{S}_4] + \text{P}[\mathscr{S}_5] = 1/3 \\
+\pi_3 &amp;= \text{P}[\mathscr{S}_2] + \text{P}[\mathscr{S}_4] + \text{P}[\mathscr{S}_6] = 2/3 \\
+\pi_4 &amp;= \text{P}[\mathscr{S}_3] + \text{P}[\mathscr{S}_5] + \text{P}[\mathscr{S}_6] = 1/2
+\end{align*}
+</span></p>
+</section>
+<section id="framework-for-probability-sampling-4" class="slide level2">
+<h2>2.2: Framework for Probability Sampling</h2>
+<ul>
+<li>Consider a new population with <em>N</em> = 8,</li>
+</ul>
+<p><span class="math display">
+\mathscr{U} = \{1, \ 2, \ 3, \ 4, \ 5, \ 6, \ 7, \ 8 \}
+</span></p>
+<ul>
+<li>The values of <span class="math inline">y_i</span> are</li>
+</ul>
+<p><span class="math display">
+\begin{align*}
+y_1 &amp;= 1 &amp; y_2 &amp;= 2 &amp; y_3 &amp;= 4 &amp; y_4 &amp;= 4 \\
+y_5 &amp;= 7 &amp; y_6 &amp;= 7 &amp; y_7 &amp;= 7 &amp; y_8 &amp;= 8
+\end{align*}
+</span></p>
+<ul>
+<li><p>When drawing samples of size <em>n</em> = 4, there are 70 possible samples 😱</p>
+<ul>
+<li>Thankfully the textbook author has given us a spreadsheet with all possible samples! 🤓</li>
+</ul></li>
+</ul>
+</section>
+<section id="framework-for-probability-sampling-5" class="slide level2">
+<h2>2.2: Framework for Probability Sampling</h2>
+<ul>
+<li>Because we are using R, we will install the <a href="https://cran.r-project.org/web/packages/SDAResources/index.html"><code>SDAResources</code> package</a></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="st">"SDAResources"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Then, we will call in the package,</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(SDAResources)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Note 1: After installing a package, remove the <code>install.packages()</code> call.</p>
+<ul>
+<li>When repeatedly running <code>install.packages()</code>, we are repeatedly downloading and installing packages…</li>
+</ul></li>
+<li><p>Note 2: In the event that you forget to remove an <code>install.packages()</code> in your Quarto document, that’s why it will not compile.</p></li>
+<li><p>Note 3: No, I do not know why we use quotes in <code>install.packages()</code> and no quotes in <code>library()</code>.</p></li>
+</ul>
+</section>
+<section id="framework-for-probability-sampling-6" class="slide level2">
+<h2>2.2: Framework for Probability Sampling</h2>
+<ul>
+<li><p>Now, we can call in (and preview) the dataset.</p></li>
+<li><p>The last column (<em>total</em>) contains the total (sum of all observations in the sample).</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">data</span>(sample70) <span class="co"># call in data from library</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">head</span>(sample70, <span class="at">n =</span> <span class="dv">5</span>) <span class="co"># show the first 5 observations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["sampnum"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["u1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["u2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["u3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["u4"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["y1"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["y2"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["y3"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["y4"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["total"],"name":[10],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1","3":"2","4":"3","5":"4","6":"1","7":"2","8":"4","9":"4","10":"22","_rn_":"1"},{"1":"2","2":"1","3":"2","4":"3","5":"5","6":"1","7":"2","8":"4","9":"7","10":"28","_rn_":"2"},{"1":"3","2":"1","3":"2","4":"3","5":"6","6":"1","7":"2","8":"4","9":"7","10":"28","_rn_":"3"},{"1":"4","2":"1","3":"2","4":"3","5":"7","6":"1","7":"2","8":"4","9":"7","10":"28","_rn_":"4"},{"1":"5","2":"1","3":"2","4":"3","5":"8","6":"1","7":"2","8":"4","9":"8","10":"30","_rn_":"5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="framework-for-probability-sampling-7" class="slide level2">
+<h2>2.2: Framework for Probability Sampling</h2>
+<ul>
+<li>Let’s consider estimating a population total, <span class="math inline">\tau</span>.</li>
+</ul>
+<p><span class="math display">
+\tau = \sum_{i=1}^N y_i
+</span></p>
+<ul>
+<li>We can estimate <span class="math inline">\tau</span> using the sample mean,</li>
+</ul>
+<p><span class="math display">
+\hat{\tau}_{\mathscr{S}} = N \bar{y}_{\mathscr{S}}
+</span></p>
+<ul>
+<li><p><strong>Sampling distribution</strong>: the distribution of different values of the statistic obtained by the process of taking all possible samples from the population.</p>
+<ul>
+<li><p>Because we have all possible samples and their totals for <span class="math inline">\mathscr{U} = \{1, \ 2, \ 3, \ 4, \ 5, \ 6, \ 7, \ 8 \}</span>, we can calculate the sampling distribution for <span class="math inline">\hat{\tau}</span> under samples of size <em>n</em> = 4.</p></li>
+<li><p>As <em>N</em> grows larger, it becomes harder/more cumbersome to enumerate all possible samples.</p></li>
+<li><p>We can only do this if we know all values in the population.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="framework-for-probability-sampling-8" class="slide level2">
+<h2>2.2: Framework for Probability Sampling</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># call in tidyverse package </span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>counts <span class="ot">&lt;-</span> sample70 <span class="sc">%&gt;%</span> <span class="co"># create dataset called "counts"</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">count</span>(total) <span class="sc">%&gt;%</span> <span class="co"># create frequency distribution of tau hat</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="fu">mutate</span>(<span class="at">prob =</span> n<span class="sc">/</span><span class="dv">70</span>) <span class="co"># create column with probability of tau hat</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="fu">head</span>(counts, <span class="at">n=</span><span class="dv">5</span>) <span class="co"># show first 5 observations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["total"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["prob"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"22","2":"1","3":"0.01428571"},{"1":"28","2":"6","3":"0.08571429"},{"1":"30","2":"2","3":"0.02857143"},{"1":"32","2":"3","3":"0.04285714"},{"1":"34","2":"7","3":"0.10000000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="framework-for-probability-sampling-9" class="slide level2">
+<h2>2.2: Framework for Probability Sampling</h2>
+<ul>
+<li><strong>Expected value</strong>: what is expected; an average</li>
+</ul>
+<p><span class="math display">
+\text{E}[X] = \sum_{i=1}^n x_i \text{P}[x_i]
+</span></p>
+<ul>
+<li>We can find the expected value of <span class="math inline">\hat{\tau}</span>,</li>
+</ul>
+<p><span class="math display">
+\text{E}\left[\hat{\tau}\right] = \sum_{i=1}^n \hat{\tau}_i \text{P}\left[\hat{\tau}_i\right]
+</span></p>
+<ul>
+<li>In our working example, <span class="math inline">\text{E}\left[ \hat{\tau} \right]</span> = 40.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>counts <span class="ot">&lt;-</span> counts <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">expect =</span> total<span class="sc">*</span>prob) <span class="co"># find tau hat * P[tau hat]</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">sum</span>(counts<span class="sc">$</span>expect) <span class="co"># find E[tau hat]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 40</code></pre>
+</div>
+</div>
+</section>
+<section id="framework-for-probability-sampling-10" class="slide level2">
+<h2>2.2: Framework for Probability Sampling</h2>
+<ul>
+<li><strong>Bias</strong>: estimation bias is the difference between the expected value and the true value of the parameter.</li>
+</ul>
+<p><span class="math display">
+\text{bias}\left[ \hat{\theta} \right] = \text{E} \left[ \hat{\theta} \right] - \theta
+</span></p>
+<ul>
+<li>In the case of <span class="math inline">\hat{\tau}</span>,</li>
+</ul>
+<p><span class="math display">
+\text{bias}\left[ \hat{\tau} \right] = \text{E} \left[ \hat{\tau} \right] - \tau
+</span></p>
+<ul>
+<li><p>In our working example, <span class="math inline">\tau</span> = 40 and <span class="math inline">\text{E}\left[ \hat{\tau} \right]</span> = 40.</p>
+<ul>
+<li><p>Thus, <span class="math inline">\hat{\tau}</span> is unbiased for <span class="math inline">\tau</span>.</p>
+<ul>
+<li>This is true regardless of the population we are dealing with.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="framework-for-probability-sampling-11" class="slide level2">
+<h2>2.2: Framework for Probability Sampling</h2>
+<ul>
+<li>We can find the variance of an estimator,</li>
+</ul>
+<p><span class="math display">
+\text{var}[X] = \text{E}\left[ (X - \text{E}[X])^2  \right]  = \sum_{i=1}^n \text{P}[x_i]\left(x_i -\text{E}\left[x_i\right]\right)^2
+</span></p>
+<ul>
+<li>Applying this to <span class="math inline">\hat{\tau}</span>,</li>
+</ul>
+<p><span class="math display">
+\text{var}[\hat{\tau}] = \text{E}\left[ (\hat{\tau} - \text{E}\left[\hat{\tau}\right])^2  \right] = \sum_{i=1}^n \text{P}[\hat{\tau}_i]\left(\hat{\tau} - \text{E}\left[\hat{\tau}\right]\right)^2
+</span></p>
+<ul>
+<li>In our working example, <span class="math inline">\text{var}\left[ \hat{\tau} \right]</span> = 54.86.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>counts <span class="ot">&lt;-</span> counts <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">var =</span> prob<span class="sc">*</span>(total<span class="dv">-40</span>)<span class="sc">^</span><span class="dv">2</span>) <span class="co"># find terms for summation</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">round</span>(<span class="fu">sum</span>(counts<span class="sc">$</span>var), <span class="dv">2</span>) <span class="co"># find var[tau hat] &amp; round to 2 decimal places</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 54.86</code></pre>
+</div>
+</div>
+</section>
+<section id="framework-for-probability-sampling-12" class="slide level2">
+<h2>2.2: Framework for Probability Sampling</h2>
+<ul>
+<li><p>While unbiased estimators are nice, they are not always available.</p></li>
+<li><p>We look to the mean squared error (MSE) to measure the accuracy of an estimator,</p></li>
+</ul>
+<p><span class="math display">
+\text{MSE}\left[ \hat{\tau} \right] = \text{E}\left[ \left( \hat{\tau} - \tau \right)^2 \right] = \text{var}\left[ \hat{\tau} \right] + \left( \text{bias}\left[ \hat{\tau} \right] \right)^2
+</span></p>
+<ul>
+<li>Estimators can be unbiased (A), precise but not unbiased (B), or accurate (C).</li>
+</ul>
+<center>
+<img src="images/L02b.png">
+</center>
+</section>
+<section id="simple-random-sampling" class="slide level2">
+<h2>2.3: Simple Random Sampling</h2>
+<ul>
+<li><p>This is the simplest of probability sampling and the first building block for all concepts in this course.</p></li>
+<li><p>Simple random sample <em>with replacement</em>: a sampling unit may be selected more than once.</p></li>
+<li><p>Simple random sample <em>without replacement</em>: a sampling unit may not be selected more than once.</p></li>
+<li><p>When dealing with finite populations, sampling the same unit twice does not give additional information.</p>
+<ul>
+<li>For this reason, we most often choose to sample without replacement.</li>
+</ul></li>
+</ul>
+</section>
+<section id="simple-random-sampling-1" class="slide level2">
+<h2>2.3: Simple Random Sampling</h2>
+<ul>
+<li><p>When drawing a sample of size <em>n</em> from a population of size <em>N</em> without replacement:</p>
+<ul>
+<li><p>There are <sub>N</sub>C<sub>n</sub> possible samples.</p></li>
+<li><p>The probability of selecting any individual sample <span class="math inline">\mathscr{S}</span> of <em>n</em> units is</p></li>
+</ul></li>
+</ul>
+<p><span class="math display">
+\text{P}\left[ \mathscr{S} \right] = \frac{1}{_N\text{C}_n} = \frac{n!(N-n)!}{N!}
+</span></p>
+<ul>
+<li>Under this definition, it can be shown that <span class="math inline">\pi_i=n/N</span>.</li>
+</ul>
+</section>
+<section id="simple-random-sampling-2" class="slide level2">
+<h2>2.3: Simple Random Sampling</h2>
+<ul>
+<li><p>Let us consider the <strong>agpop</strong> data, provided by the textbook.</p>
+<ul>
+<li>This gives historical data about farms in the <em>N</em> = 3078 counties in the US for 1982, 1987, and 1997.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">data</span>(agpop)</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="fu">head</span>(agpop, <span class="at">n=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["county"],"name":[1],"type":["chr"],"align":["left"]},{"label":["state"],"name":[2],"type":["chr"],"align":["left"]},{"label":["acres92"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["acres87"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["acres82"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["farms92"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["farms87"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["farms82"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["largef92"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["largef87"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["largef82"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["smallf92"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["smallf87"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["smallf82"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["region"],"name":[15],"type":["chr"],"align":["left"]}],"data":[{"1":"ALEUTIAN ISLANDS AREA","2":"AK","3":"683533","4":"726596","5":"764514","6":"26","7":"27","8":"28","9":"14","10":"16","11":"20","12":"6","13":"4","14":"1","15":"W"},{"1":"ANCHORAGE AREA","2":"AK","3":"47146","4":"59297","5":"256709","6":"217","7":"245","8":"223","9":"9","10":"10","11":"11","12":"41","13":"52","14":"38","15":"W"},{"1":"FAIRBANKS AREA","2":"AK","3":"141338","4":"154913","5":"204568","6":"168","7":"175","8":"170","9":"25","10":"28","11":"21","12":"12","13":"18","14":"25","15":"W"},{"1":"JUNEAU AREA","2":"AK","3":"210","4":"214","5":"127","6":"8","7":"8","8":"12","9":"0","10":"0","11":"0","12":"5","13":"4","14":"8","15":"W"},{"1":"KENAI PENINSULA AREA","2":"AK","3":"50810","4":"85712","5":"98035","6":"93","7":"119","8":"137","9":"9","10":"18","11":"17","12":"12","13":"18","14":"19","15":"W"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="simple-random-sampling-3" class="slide level2">
+<h2>2.3: Simple Random Sampling</h2>
+<ul>
+<li>We will use the <a href="https://dplyr.tidyverse.org/reference/slice.html"><code>slice_sample()</code> function</a> from the <a href="https://dplyr.tidyverse.org/index.html"><code>dplyr</code> package</a> (included in <a href="https://www.tidyverse.org/"><code>tidyverse</code></a>).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>agsamp <span class="ot">&lt;-</span> agpop <span class="sc">%&gt;%</span> <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">5</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="fu">head</span>(agsamp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["county"],"name":[1],"type":["chr"],"align":["left"]},{"label":["state"],"name":[2],"type":["chr"],"align":["left"]},{"label":["acres92"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["acres87"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["acres82"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["farms92"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["farms87"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["farms82"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["largef92"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["largef87"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["largef82"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["smallf92"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["smallf87"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["smallf82"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["region"],"name":[15],"type":["chr"],"align":["left"]}],"data":[{"1":"TRIGG COUNTY","2":"KY","3":"111866","4":"111362","5":"120597","6":"425","7":"470","8":"532","9":"26","10":"21","11":"22","12":"49","13":"53","14":"66","15":"S"},{"1":"GRAFTON COUNTY","2":"NH","3":"75733","4":"80871","5":"90365","6":"348","7":"356","8":"397","9":"4","10":"4","11":"6","12":"38","13":"24","14":"34","15":"NE"},{"1":"WHITLEY COUNTY","2":"KY","3":"44548","4":"50379","5":"50155","6":"369","7":"403","8":"438","9":"1","10":"3","11":"2","12":"22","13":"21","14":"28","15":"S"},{"1":"BENTON COUNTY","2":"AR","3":"293745","4":"302659","5":"295645","6":"2244","7":"2441","8":"2457","9":"21","10":"19","11":"18","12":"138","13":"172","14":"172","15":"S"},{"1":"PITT COUNTY","2":"NC","3":"194015","4":"213831","5":"233934","6":"583","7":"757","8":"1070","9":"41","10":"35","11":"29","12":"35","13":"50","14":"51","15":"S"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="simple-random-sampling-4" class="slide level2">
+<h2>2.3: Simple Random Sampling</h2>
+<ul>
+<li>Every time we run <a href="https://dplyr.tidyverse.org/reference/slice.html"><code>slice_sample()</code></a>, it will produce a different sample.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>agsamp <span class="ot">&lt;-</span> agpop <span class="sc">%&gt;%</span> <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">5</span>)</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="fu">head</span>(agsamp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["county"],"name":[1],"type":["chr"],"align":["left"]},{"label":["state"],"name":[2],"type":["chr"],"align":["left"]},{"label":["acres92"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["acres87"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["acres82"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["farms92"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["farms87"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["farms82"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["largef92"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["largef87"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["largef82"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["smallf92"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["smallf87"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["smallf82"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["region"],"name":[15],"type":["chr"],"align":["left"]}],"data":[{"1":"WASHINGTON COUNTY","2":"IL","3":"297003","4":"315971","5":"302821","6":"831","7":"987","8":"1057","9":"57","10":"48","11":"33","12":"40","13":"60","14":"38","15":"NC"},{"1":"COFFEE COUNTY","2":"GA","3":"178861","4":"178875","5":"200598","6":"711","7":"649","8":"833","9":"26","10":"29","11":"24","12":"53","13":"47","14":"55","15":"S"},{"1":"HENDRY COUNTY","2":"FL","3":"529835","4":"545111","5":"538360","6":"389","7":"396","8":"298","9":"57","10":"55","11":"54","12":"58","13":"53","14":"24","15":"S"},{"1":"HENNEPIN COUNTY","2":"MN","3":"79183","4":"91078","5":"110967","6":"683","7":"852","8":"940","9":"7","10":"2","11":"6","12":"66","13":"104","14":"107","15":"NC"},{"1":"CEDAR COUNTY","2":"MO","3":"187856","4":"196032","5":"188119","6":"821","7":"910","8":"956","9":"18","10":"20","11":"15","12":"27","13":"50","14":"38","15":"NC"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="simple-random-sampling-5" class="slide level2">
+<h2>2.3: Simple Random Sampling</h2>
+<ul>
+<li><p>A random number generator (RNG) is used to determine a starting point for the sampling.</p>
+<ul>
+<li>The default RNG in R (and is considered the “best” RNG) is the <a href="https://en.wikipedia.org/wiki/Mersenne_Twister">Mersenne-Twister</a>.</li>
+</ul></li>
+<li><p>For reproducibility purposes, we can specify a starting point (called a “seed”) using the <a href="https://r-coder.com/set-seed-r/"><code>set.seed()</code> function</a>.</p>
+<ul>
+<li>Note that the seed does not “stick” in the system.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">set.seed</span>(<span class="dv">528</span>)</span>
+<span id="cb12-2"><a href="#cb12-2"></a>agsamp <span class="ot">&lt;-</span> agpop <span class="sc">%&gt;%</span> <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">5</span>)</span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="fu">head</span>(agsamp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["county"],"name":[1],"type":["chr"],"align":["left"]},{"label":["state"],"name":[2],"type":["chr"],"align":["left"]},{"label":["acres92"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["acres87"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["acres82"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["farms92"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["farms87"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["farms82"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["largef92"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["largef87"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["largef82"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["smallf92"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["smallf87"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["smallf82"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["region"],"name":[15],"type":["chr"],"align":["left"]}],"data":[{"1":"SCOTT COUNTY","2":"KS","3":"484415","4":"470774","5":"509606","6":"363","7":"391","8":"416","9":"163","10":"165","11":"165","12":"17","13":"31","14":"40","15":"NC"},{"1":"ASHLAND COUNTY","2":"OH","3":"171129","4":"179361","5":"188813","6":"953","7":"1078","8":"1185","9":"15","10":"9","11":"8","12":"43","13":"58","14":"64","15":"NC"},{"1":"DICKINSON COUNTY","2":"KS","3":"514436","4":"513946","5":"527451","6":"941","7":"1028","8":"1149","9":"158","10":"151","11":"121","12":"53","13":"68","14":"69","15":"NC"},{"1":"GREEN COUNTY","2":"WI","3":"293134","4":"329364","5":"338889","6":"1271","7":"1418","8":"1517","9":"13","10":"11","11":"13","12":"55","13":"65","14":"52","15":"NC"},{"1":"GA RZA COUNTY","2":"TX","3":"573827","4":"548251","5":"570986","6":"262","7":"236","8":"240","9":"87","10":"80","11":"69","12":"8","13":"10","14":"12","15":"S"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="simple-random-sampling-6" class="slide level2">
+<h2>2.3: Simple Random Sampling</h2>
+<ul>
+<li><p>Let’s run it again to verify that it reproduces the sample we saw on the last slide.</p>
+<ul>
+<li>We should see Scott, Ashland, Dickinson, Green, and Garza</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">set.seed</span>(<span class="dv">528</span>)</span>
+<span id="cb13-2"><a href="#cb13-2"></a>agsamp <span class="ot">&lt;-</span> agpop <span class="sc">%&gt;%</span> <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">5</span>)</span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="fu">head</span>(agsamp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["county"],"name":[1],"type":["chr"],"align":["left"]},{"label":["state"],"name":[2],"type":["chr"],"align":["left"]},{"label":["acres92"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["acres87"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["acres82"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["farms92"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["farms87"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["farms82"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["largef92"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["largef87"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["largef82"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["smallf92"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["smallf87"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["smallf82"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["region"],"name":[15],"type":["chr"],"align":["left"]}],"data":[{"1":"SCOTT COUNTY","2":"KS","3":"484415","4":"470774","5":"509606","6":"363","7":"391","8":"416","9":"163","10":"165","11":"165","12":"17","13":"31","14":"40","15":"NC"},{"1":"ASHLAND COUNTY","2":"OH","3":"171129","4":"179361","5":"188813","6":"953","7":"1078","8":"1185","9":"15","10":"9","11":"8","12":"43","13":"58","14":"64","15":"NC"},{"1":"DICKINSON COUNTY","2":"KS","3":"514436","4":"513946","5":"527451","6":"941","7":"1028","8":"1149","9":"158","10":"151","11":"121","12":"53","13":"68","14":"69","15":"NC"},{"1":"GREEN COUNTY","2":"WI","3":"293134","4":"329364","5":"338889","6":"1271","7":"1418","8":"1517","9":"13","10":"11","11":"13","12":"55","13":"65","14":"52","15":"NC"},{"1":"GA RZA COUNTY","2":"TX","3":"573827","4":"548251","5":"570986","6":"262","7":"236","8":"240","9":"87","10":"80","11":"69","12":"8","13":"10","14":"12","15":"S"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="simple-random-sampling-7" class="slide level2">
+<h2>2.3: Simple Random Sampling</h2>
+<ul>
+<li>Let’s now take a sample of 300 to be our working example.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">set.seed</span>(<span class="dv">9185</span>)</span>
+<span id="cb14-2"><a href="#cb14-2"></a>agsamp <span class="ot">&lt;-</span> agpop <span class="sc">%&gt;%</span> <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">300</span>)</span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="fu">head</span>(agsamp, <span class="at">n=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["county"],"name":[1],"type":["chr"],"align":["left"]},{"label":["state"],"name":[2],"type":["chr"],"align":["left"]},{"label":["acres92"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["acres87"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["acres82"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["farms92"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["farms87"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["farms82"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["largef92"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["largef87"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["largef82"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["smallf92"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["smallf87"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["smallf82"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["region"],"name":[15],"type":["chr"],"align":["left"]}],"data":[{"1":"CHEYENNE COUNTY","2":"KS","3":"592207","4":"619870","5":"602726","6":"426","7":"493","8":"546","9":"189","10":"222","11":"221","12":"10","13":"17","14":"33","15":"NC"},{"1":"CASS COUNTY","2":"IA","3":"347353","4":"333083","5":"345726","6":"905","7":"942","8":"1087","9":"70","10":"52","11":"38","12":"55","13":"66","14":"72","15":"NC"},{"1":"ELLIS COUNTY","2":"KS","3":"547483","4":"568934","5":"509050","6":"693","7":"795","8":"790","9":"162","10":"145","11":"125","12":"34","13":"53","14":"38","15":"NC"},{"1":"SEQUOYAH COUNTY","2":"OK","3":"215222","4":"206393","5":"204993","6":"913","7":"976","8":"1011","9":"30","10":"35","11":"27","12":"39","13":"53","14":"54","15":"S"},{"1":"JASPER COUNTY","2":"MO","3":"281327","4":"275511","5":"272986","6":"1317","7":"1418","8":"1427","9":"38","10":"28","11":"32","12":"66","13":"86","14":"73","15":"NC"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="simple-random-sampling-8" class="slide level2">
+<h2>2.3: Simple Random Sampling</h2>
+<ul>
+<li>Let’s first visualize our data using a histogram of the number of acres devoted to farms in 1992 (<em>acres92</em>).</li>
+</ul>
+<center>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>agsamp <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> acres92)) <span class="sc">+</span> <span class="co"># pipe data into ggplot(), specify x-axis</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">70</span>) <span class="sc">+</span> <span class="co"># request histogram with 70 bins</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Acres"</span>, <span class="at">y =</span> <span class="st">"Number of Farms"</span>) <span class="sc">+</span> <span class="co"># change axis labels</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">theme_bw</span>() <span class="co"># change theme of graph</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img data-src="L02_files/figure-revealjs/unnamed-chunk-13-1.png" width="960"></p>
+</div>
+</div>
+</center>
+</section>
+<section id="simple-random-sampling-9" class="slide level2">
+<h2>2.3: Simple Random Sampling</h2>
+<center>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="L02_files/figure-revealjs/unnamed-chunk-14-1.png" width="960"></p>
+</div>
+</div>
+</center>
+<ul>
+<li><p>Most counties have fewer than 300,000 acres in farms.</p>
+<ul>
+<li>One county has over 700,000 acres in farms!</li>
+</ul></li>
+<li><p>Even without the obvious outlier, the number of acres is right-skewed.</p></li>
+</ul>
+</section>
+<section id="simple-random-sampling-10" class="slide level2">
+<h2>2.3: Simple Random Sampling</h2>
+<ul>
+<li><strong>Mean</strong>: <span class="math inline">\bar{y}</span> is used to estimate <span class="math inline">\mu</span></li>
+</ul>
+<p><span class="math display">
+\bar{y} = \frac{1}{n} \sum_{i \in \mathscr{S}} y_i = \frac{1}{n} \sum_{i =1}^n y_i
+</span></p>
+<ul>
+<li><strong>Variance of the estimated mean</strong>: measures the variability among estimates of <span class="math inline">\mu</span> from different samples</li>
+</ul>
+<p><span class="math display">
+\hat{\text{var}} \left[ \bar{y} \right] = \frac{s^2}{n} \left(1 - \frac{n}{N}\right),
+</span></p>
+<ul>
+<li>Note that <span class="math inline">s^2</span> is the variance of the sample,</li>
+</ul>
+<p><span class="math display">
+S^2 = \frac{1}{n-1} \sum_{i=1}^n \left( y_i - \bar{y} \right)^2
+</span></p>
+</section>
+<section id="simple-random-sampling-11" class="slide level2">
+<h2>2.3: Simple Random Sampling</h2>
+<ul>
+<li><strong>Total</strong>: <span class="math inline">\hat{\tau}</span> is used to estimate <span class="math inline">\tau</span>,</li>
+</ul>
+<p><span class="math display">
+\hat{\tau} = \frac{N}{n} \sum_{i =1}^n y_i = N \bar{y}
+</span></p>
+<ul>
+<li><strong>Variance of the estimated total</strong>: measures the variability among estimates of <span class="math inline">\tau</span> from different samples</li>
+</ul>
+<p><span class="math display">
+\hat{\text{var}}\left[ \hat{\tau} \right] = N^2\left(1-\frac{n}{N}\right) \frac{s^2}{n} = N^2 \hat{\text{var}}\left[ \bar{y} \right]
+</span></p>
+</section>
+<section id="simple-random-sampling-12" class="slide level2">
+<h2>2.3: Simple Random Sampling</h2>
+<ul>
+<li><p><strong>Proportion</strong>: we use <span class="math inline">\hat{p}</span> to estimate <span class="math inline">p</span>.</p>
+<ul>
+<li><p>First, let <span class="math inline">y_i</span> = 1 if the unit has the characteristic of interest and <span class="math inline">y_i</span> = 0 if not.</p></li>
+<li><p>Then, we estimate the population proportion with</p></li>
+</ul></li>
+</ul>
+<p><span class="math display">
+\hat{p} = \frac{1}{n} \sum_{i=1}^n y_i
+</span></p>
+<ul>
+<li><p>i.e., the proportion is an <em>average</em>.</p></li>
+<li><p><strong>Variance of the estimated proportion</strong>: measures the variability among estimates of <span class="math inline">p</span> from different samples</p></li>
+</ul>
+<p><span class="math display">
+\hat{\text{var}}\left[ \hat{p} \right] = \left( 1 - \frac{n}{N} \right) \frac{\hat{p} \left(1-\hat{p}\right)}{n-1}
+</span></p>
+</section>
+<section id="simple-random-sampling-13" class="slide level2">
+<h2>2.3: Simple Random Sampling</h2>
+<ul>
+<li><p>Variance is great because it tells us about the spread… but it’s in squared units.</p>
+<ul>
+<li>We are interested in discussing the spread in terms of the original units.</li>
+</ul></li>
+<li><p>For any estimated variance, we can find the <strong>standard error (SE)</strong>:</p></li>
+</ul>
+<p><span class="math display">
+\text{SE}\left[\hat{\theta}\right] = \sqrt{ \hat{\text{var}}\left[ \hat{\theta} \right]}
+</span></p>
+<ul>
+<li><strong>Coefficient of variation</strong>: This adjusts the spread relative to the estimated parameter,</li>
+</ul>
+<p><span class="math display">
+\hat{\text{CV}} = \frac{\text{SE}\left[\hat{\theta}\right]}{\hat{\theta}}
+</span></p>
+</section>
+<section id="simple-random-sampling-14" class="slide level2">
+<h2>2.3: Simple Random Sampling</h2>
+<ul>
+<li><p>Let us now review how to find these statistics in R.</p></li>
+<li><p>Finding the mean (<span class="math inline">\bar{y}</span>) and the variance (<span class="math inline">s^2</span>) using <a href="https://dplyr.tidyverse.org/reference/summarise.html"><code>summarize()</code></a> from <a href="https://dplyr.tidyverse.org/"><code>dplyr</code></a>/<a href="https://www.tidyverse.org/"><code>tidyverse</code></a>:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>agsamp <span class="sc">%&gt;%</span> <span class="fu">summarize</span>( <span class="co"># request summary statistics</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="at">mean =</span> <span class="fu">mean</span>(acres92, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="co"># request the mean</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="at">var =</span> <span class="fu">var</span>(acres92, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># request the variance</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>  )  <span class="co"># note: the na.rm = TRUE excludes missing from calculation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["mean"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["var"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"336479.1","2":"315651139236"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="simple-random-sampling-15" class="slide level2">
+<h2>2.3: Simple Random Sampling</h2>
+<ul>
+<li>But… we are interested in the estimated variance of <span class="math inline">\bar{y}</span>, SE, and CV.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># set values to use in computation:</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>m <span class="ot">=</span> <span class="fu">mean</span>(agsamp<span class="sc">$</span>acres92, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># find the mean of acres92</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>s2 <span class="ot">=</span> <span class="fu">var</span>(agsamp<span class="sc">$</span>acres92, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># find the variance of acres92</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a>n <span class="ot">=</span> <span class="fu">nrow</span>(agsamp) <span class="co"># count the number of rows for sample size</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a>N <span class="ot">=</span> <span class="fu">nrow</span>(agpop) <span class="co"># count the number of rows for population size</span></span>
+<span id="cb17-6"><a href="#cb17-6"></a></span>
+<span id="cb17-7"><a href="#cb17-7"></a><span class="co"># computations:</span></span>
+<span id="cb17-8"><a href="#cb17-8"></a>estvar <span class="ot">=</span> (<span class="dv">1</span><span class="sc">-</span>n<span class="sc">/</span>N)<span class="sc">*</span>s2<span class="sc">/</span>n <span class="co"># find the estimated variance</span></span>
+<span id="cb17-9"><a href="#cb17-9"></a>SE <span class="ot">=</span> <span class="fu">sqrt</span>(estvar) <span class="co"># find the SE</span></span>
+<span id="cb17-10"><a href="#cb17-10"></a>CV <span class="ot">=</span> SE<span class="sc">/</span>m</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p><span class="math inline">\hat{\text{var}}\left[ \bar{y} \right] = 949619737</span></p></li>
+<li><p><span class="math inline">\hat{\text{SE}}\left[ \bar{y} \right] = 30815.9</span></p></li>
+<li><p><span class="math inline">\hat{\text{CV}}\left[ \bar{y} \right] = 0.0916</span></p></li>
+</ul>
+</section>
+<section id="simple-random-sampling-16" class="slide level2">
+<h2>2.3: Simple Random Sampling</h2>
+<ul>
+<li><p>Suppose we are also interested in the proportion of counties with more than 200,000 acres in farms.</p></li>
+<li><p>We need to first construct an indicator variable for acreage.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>agsamp <span class="ot">&lt;-</span> agsamp <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">over200k =</span> <span class="fu">ifelse</span>(acres92 <span class="sc">&lt;</span> <span class="dv">200000</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Then we can count,</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>agsamp <span class="sc">%&gt;%</span> <span class="fu">count</span>(over200k)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["over200k"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"0","2":"149"},{"1":"1","2":"149"},{"1":"NA","2":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="simple-random-sampling-17" class="slide level2">
+<h2>2.3: Simple Random Sampling</h2>
+<ul>
+<li>To find the statistics we are interested in,</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># set values to use in computation:</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>sum_y <span class="ot">=</span> <span class="fu">sum</span>(agsamp<span class="sc">$</span>over200k, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># count the number with the characteristic</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a>n <span class="ot">=</span> <span class="fu">nrow</span>(agsamp) <span class="co"># count the number of rows for sample size</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>N <span class="ot">=</span> <span class="fu">nrow</span>(agpop) <span class="co"># count the number of rows for population size</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a></span>
+<span id="cb20-6"><a href="#cb20-6"></a><span class="co"># computations:</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a>p <span class="ot">=</span> sum_y<span class="sc">/</span>n <span class="co"># find the proportion</span></span>
+<span id="cb20-8"><a href="#cb20-8"></a>estvar <span class="ot">=</span> (<span class="dv">1</span><span class="sc">-</span>n<span class="sc">/</span>N)<span class="sc">*</span>(p<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p))<span class="sc">/</span>n <span class="co"># find the estimated variance</span></span>
+<span id="cb20-9"><a href="#cb20-9"></a>SE <span class="ot">=</span> <span class="fu">sqrt</span>(estvar) <span class="co"># find the SE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p><span class="math inline">\hat{p} = 0.4967</span></p></li>
+<li><p><span class="math inline">\hat{\text{var}}\left[ \bar{y} \right] = 0.0008</span></p></li>
+<li><p><span class="math inline">\hat{\text{SE}}\left[ \bar{y} \right] = 0.0274</span></p></li>
+</ul>
+</section>
+<section id="sampling-weights" class="slide level2">
+<h2>2.4: Sampling Weights</h2>
+<ul>
+<li><p>Recall that we defined <span class="math inline">\pi_i</span> to be the probability that unit <span class="math inline">i</span> is included in the sample.</p>
+<ul>
+<li>These inclusion probabilities will be used in the calculation of point estimates.</li>
+</ul></li>
+<li><p><strong>Sampling weight</strong>: the number of population units represented by unit <span class="math inline">i</span>.</p></li>
+</ul>
+<p><span class="math display">
+w_i = \frac{1}{\pi_i}
+</span></p>
+<ul>
+<li><p>In simple random sampling, all units have equal inclusion probability, thus, equal sampling weights.</p>
+<ul>
+<li>This type of sample is called a <strong>self-weighting sample</strong>.</li>
+</ul></li>
+</ul>
+<p><span class="math display">
+\pi_i = \frac{n}{N} \text{ and } w_i = \frac{1}{\pi_i} = \frac{N}{n}
+</span></p>
+</section>
+<section id="confidence-intervals" class="slide level2">
+<h2>2.5: Confidence Intervals</h2>
+<ul>
+<li><p><strong>Confidence interval</strong> (CI): the interval estimator of a parameter, indicative of the accuracy of the point estimate.</p></li>
+<li><p>Consider a 95% CI.</p>
+<ul>
+<li><p>The 95% is the coverage probability.</p></li>
+<li><p>If we repeatedly take samples from the population and construct a CI from each sample, we expect that 95% of them contain the true value of the population parameter.</p></li>
+</ul></li>
+<li><p>Much of statistics relies on asymptotic results (i.e., assume that <span class="math inline">N \to \infty</span>).</p>
+<ul>
+<li><p>We are technically sampling from finite populations, but we assume that our population is part of a larger superpopulation.</p></li>
+<li><p>This assumption allows us to use properties of asymptotic normality.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="confidence-intervals-1" class="slide level2">
+<h2>2.5: Confidence Intervals</h2>
+<ul>
+<li><p>Our confidence intervals will take the form point estimate <span class="math inline">\pm</span> margin of error, where the margin of error is the critical value <span class="math inline">\times</span> standard error.</p></li>
+<li><p>In the case of the mean,</p></li>
+</ul>
+<p><span class="math display">
+\bar{y} \pm z_{\alpha/2} \text{SE}\left[ \bar{y} \right]
+</span></p>
+<ul>
+<li>In the case of the total,</li>
+</ul>
+<p><span class="math display">
+\hat{\tau} \pm z_{\alpha/2} \text{SE}\left[ \hat{\tau} \right]
+</span></p>
+<ul>
+<li>In the case of the proportion,</li>
+</ul>
+<p><span class="math display">
+\hat{p} \pm z_{\alpha/2} \text{SE}\left[ \hat{p} \right]
+</span></p>
+<ul>
+<li>Note: R uses the <em>t</em> distribution in place of the <em>z</em> distribution when estimating <span class="math inline">\mu</span> and <span class="math inline">\tau</span>.</li>
+</ul>
+</section>
+<section id="confidence-intervals-2" class="slide level2">
+<h2>2.5: Confidence Intervals</h2>
+<ul>
+<li>We can use the <a href="https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/t.test"><code>t.test()</code> function</a> to find confidence intervals for <span class="math inline">\mu</span>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">t.test</span>(agsamp<span class="sc">$</span>acres92, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  agsamp$acres92
+t = 10.339, df = 297, p-value &lt; 2.2e-16
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 272429.4 400528.8
+sample estimates:
+mean of x 
+ 336479.1 </code></pre>
+</div>
+</div>
+<ul>
+<li><p><span class="math inline">\bar{y} = 336579.1</span></p></li>
+<li><p>The 95% CI for <span class="math inline">\mu</span> is <span class="math inline">(272429.4, 400528.8)</span>.</p></li>
+</ul>
+</section>
+<section id="confidence-intervals-3" class="slide level2">
+<h2>2.5: Confidence Intervals</h2>
+<ul>
+<li><p>We will construct the CI for <span class="math inline">\tau</span> by “hand”.</p></li>
+<li><p>We will need to find the critical value of <em>t</em> using the <a href="https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/TDist"><code>qt()</code> function</a>.</p>
+<ul>
+<li>We need to specify <span class="math inline">1-\alpha/2</span> and the degrees of freedom, <span class="math inline">n-1</span>.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># set values to use in computation:</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>m <span class="ot">=</span> <span class="fu">mean</span>(agsamp<span class="sc">$</span>acres92, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># find the mean of acres92</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>s2 <span class="ot">=</span> <span class="fu">var</span>(agsamp<span class="sc">$</span>acres92, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># find the variance of acres92</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a>n <span class="ot">=</span> <span class="fu">nrow</span>(agsamp) <span class="co"># count the number of rows for sample size</span></span>
+<span id="cb23-5"><a href="#cb23-5"></a>N <span class="ot">=</span> <span class="fu">nrow</span>(agpop) <span class="co"># count the number of rows for population size</span></span>
+<span id="cb23-6"><a href="#cb23-6"></a>t <span class="ot">=</span> <span class="fu">qt</span>(.<span class="dv">975</span>, n<span class="dv">-1</span>)</span>
+<span id="cb23-7"><a href="#cb23-7"></a></span>
+<span id="cb23-8"><a href="#cb23-8"></a><span class="co"># computations:</span></span>
+<span id="cb23-9"><a href="#cb23-9"></a>tau_hat <span class="ot">=</span> N<span class="sc">*</span>m</span>
+<span id="cb23-10"><a href="#cb23-10"></a>estvar <span class="ot">=</span> N<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>n<span class="sc">/</span>N)<span class="sc">*</span>s2<span class="sc">/</span>n <span class="co"># find the estimated variance</span></span>
+<span id="cb23-11"><a href="#cb23-11"></a>SE <span class="ot">=</span> <span class="fu">sqrt</span>(estvar) <span class="co"># find the SE</span></span>
+<span id="cb23-12"><a href="#cb23-12"></a>lb <span class="ot">=</span> tau_hat <span class="sc">-</span> t<span class="sc">*</span>SE</span>
+<span id="cb23-13"><a href="#cb23-13"></a>ub <span class="ot">=</span> tau_hat <span class="sc">+</span> t<span class="sc">*</span>SE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p><span class="math inline">\hat{\tau} = 1035682724</span></p></li>
+<li><p>The 95% CI for <span class="math inline">\tau</span> is <span class="math inline">(849021953, 1222343494)</span>.</p></li>
+</ul>
+</section>
+<section id="confidence-intervals-4" class="slide level2">
+<h2>2.5: Confidence Intervals</h2>
+<ul>
+<li>We can use the <a href="https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/prop.test"><code>prop.test()</code> function</a> to find confidence intervals for <span class="math inline">p</span>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">prop.test</span>(<span class="fu">sum</span>(agsamp<span class="sc">$</span>over200k, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">n=</span><span class="fu">nrow</span>(agsamp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    1-sample proportions test with continuity correction
+
+data:  sum(agsamp$over200k, na.rm = TRUE) out of nrow(agsamp), null probability 0.5
+X-squared = 0.0033333, df = 1, p-value = 0.954
+alternative hypothesis: true p is not equal to 0.5
+95 percent confidence interval:
+ 0.4388455 0.5545746
+sample estimates:
+        p 
+0.4966667 </code></pre>
+</div>
+</div>
+<ul>
+<li><p><span class="math inline">\hat{p} = 0.4967</span></p></li>
+<li><p>The 95% CI for <span class="math inline">p</span> is <span class="math inline">(0.4388, 0.5546)</span>.</p></li>
+</ul>
+</section>
+<section id="determining-the-sample-size" class="slide level2">
+<h2>2.7: Determining the Sample Size</h2>
+<ul>
+<li><p>Before executing a study/survey, a sample size should be determined.</p>
+<ul>
+<li>We need to know what amount of sampling error is “okay” and balance the precision of the estimates with the cost of the experiment/survey.</li>
+</ul></li>
+<li><p>Although we collect as much relevant information as possible from sampling units, there are going to be one or two responses that are of primary interest.</p>
+<ul>
+<li>These are what we use to determine the sample size necessary.</li>
+</ul></li>
+<li><p>When I am asked for a sample size, my first response is, “How many can you afford?”</p>
+<ul>
+<li>The textbook notes that if you are new at sample size estimation, you will likely find that the sample size needed is much larger than can be afforded.</li>
+</ul></li>
+</ul>
+</section>
+<section id="determining-the-sample-size-1" class="slide level2">
+<h2>2.7: Determining the Sample Size</h2>
+<ul>
+<li>Our first step is to specify the tolerable error – this can only be defined by the researcher. Mathematically,</li>
+</ul>
+<p><span class="math display">
+\text{P} \left[ |\bar{y}-\mu | \le e \right] = 1 - \alpha
+</span></p>
+<ul>
+<li><p>where <span class="math inline">e</span> is the margin of error and is one-half the width of the CI</p></li>
+<li><p>Note that while we can specify any <span class="math inline">\alpha \in (0, 1)</span>, we most often specify <span class="math inline">\alpha=0.05</span>.</p>
+<ul>
+<li>Soapbox about <span class="math inline">\alpha=0.05</span> 😬</li>
+</ul></li>
+</ul>
+</section>
+<section id="determining-the-sample-size-2" class="slide level2">
+<h2>2.7: Determining the Sample Size</h2>
+<ul>
+<li><p>Then, we find an equation relating the precision and sample size and solve for <span class="math inline">n</span>.</p></li>
+<li><p>Using the margin of error from previous CIs,</p></li>
+</ul>
+<p><span class="math display">
+\begin{align*}
+e &amp;= z_{\alpha/2} \sqrt{\left( 1 - \frac{n}{N} \right)} \frac{S}{\sqrt{n}} \\
+n_0 &amp; = \left( \frac{z_{\alpha/2}S}{e} \right)^2
+\end{align*}
+</span></p>
+<ul>
+<li>If we need to apply the finite population correction (FPC),</li>
+</ul>
+<p><span class="math display">
+n = \frac{n_0}{1+\frac{n_0}{N}} = \frac{z_{\alpha/2}^2 S^2}{e^2 + \frac{z_{\alpha/2}^2 S^2}{N}}
+</span></p>
+</section>
+<section id="determining-the-sample-size-3" class="slide level2">
+<h2>2.7: Determining the Sample Size</h2>
+<ul>
+<li><p>Suppose we want to estimate the proportion of recipes in a cookbook that do not involve animal products. A simple random sample of the 1251 recipes in the cookbook will be drawn. We want to construct a 95% CI with margin of error 0.03.</p>
+<ul>
+<li>Because we do not have an estimate for <span class="math inline">\hat{p}</span>, we will plug in <span class="math inline">\hat{p}=0.50</span>.</li>
+</ul></li>
+</ul>
+<p><span class="math display">
+\begin{align*}
+n_0 &amp;= \left( \frac{z_{\alpha/2}S}{e} \right)^2 \\
+&amp;= \frac{1.96^2 (0.5)(1-0.5)}{0.03^2} \\
+&amp;= 1067.111 \\
+&amp;\approx 1068
+\end{align*}
+</span></p>
+<ul>
+<li><p>Note 1: we almost always round up when estimating sample size.</p>
+<ul>
+<li>Note 1a: except when dealing with cost restrictions.</li>
+</ul></li>
+<li><p>Note 2: 1068/1251 = needing a sample size that is 85% of the population 😱</p></li>
+</ul>
+</section>
+<section id="determining-the-sample-size-4" class="slide level2">
+<h2>2.7: Determining the Sample Size</h2>
+<ul>
+<li>We do need to apply the FPC because 1068/1251 is a large proportion.</li>
+</ul>
+<p><span class="math display">
+\begin{align*}
+n &amp;= \frac{n_0}{1+\frac{n_0}{N}} \\
+&amp;= \frac{1067}{1+\frac{1067}{1251}} \\
+&amp;= 576.1397 \\
+&amp;\approx 577
+\end{align*}
+</span></p>
+<ul>
+<li><p>Thus, the sample size of <span class="math inline">n=577</span> will ensure a maximum margin of error of 0.03 when estimating this proportion.</p>
+<ul>
+<li><p>Note that it will be smaller if <span class="math inline">\hat{p} \ne 0.5</span>.</p></li>
+<li><p>By plugging in <span class="math inline">\hat{p} = 0.5</span>, we are being conservative with our estimation.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="determining-the-sample-size-5" class="slide level2">
+<h2>2.7: Determining the Sample Size</h2>
+<ul>
+<li><p>Recall that we took a sample of 300 from the <strong>agpop</strong> dataset.</p></li>
+<li><p>Using a pilot sample of 30 found the sample standard deviation to be 519,085 acres.</p></li>
+<li><p>If we want a margin of error of 60,000 acres, then</p></li>
+</ul>
+<p><span class="math display">
+\begin{align*}
+n_0 &amp;= \left( \frac{z_{\alpha/2}S}{e} \right)^2 \\
+&amp;= \frac{1.96^2 (519085)^2}{60000^2} \\
+&amp;= 287.5323 \\
+&amp;\approx 288
+\end{align*}
+</span></p>
+<ul>
+<li><p>The sample size was then to 300 to ensure that we would reach 288 in the event of missing data.</p>
+<ul>
+<li>Always keep in mind that the sample size found is the <em>minimum</em> needed to hit the margin of error.</li>
+</ul></li>
+</ul>
+</section>
+<section id="homework" class="slide level2">
+<h2>Homework</h2>
+<p>1, 2, 3, 4, 5, 6, 7, 12, 13, 15, 16, 17, 18, 31</p>
+<div class="footer footer-default">
+<p><a href="https://samanthaseals.github.io/STA4222">STA4222 - Sampling Theory</a></p>
+</div>
+</section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="L02_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="L02_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="L02_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="L02_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="L02_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="L02_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="L02_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="L02_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="L02_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="L02_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'smaller': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1600,
+
+        height: 900,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        target: function(trigger) {
+          return trigger.previousElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto-reveal',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
