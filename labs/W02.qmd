@@ -1,0 +1,68 @@
+---
+title: "Lab: Week 2"
+author: "Your Name Here"
+format: 
+  html:
+    self-contained: true
+execute:
+  echo: true
+editor: source
+---
+
+Monday's lecture: [Chapter 1](https://github.com/samanthaseals/STA4222/blob/master/slides/L01.qmd)
+
+Wednesday's lecture: [Chapter 2](https://github.com/samanthaseals/STA4222/blob/master/slides/L02.qmd)
+
+1. Call in the necessary packages:
+
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(SDAResources)
+```
+
+2. Call in the **agpop** dataset from the [`SDAResources` package](https://rdrr.io/cran/SDAResources/man/agpop.html).
+
+```{r}
+
+```
+
+3. Take a simple random sample of $n=300$ farms. Remember to set your seed before drawing the sample.
+
+```{r}
+
+```
+
+4. Construct a variable (columnn) to indicate if the county has more than 50 large farms in 1992 (*largef92*). 
+
+```{r}
+
+```
+
+5. Use the `count()` function to determine how many counties have more than 50 large farms using the variable you created in the previous question.
+
+```{r}
+
+```
+
+6. Estimate the average number of large farms in 1992 (*largef92*) -- construct both the point estimate and the 95% CI.
+
+```{r}
+
+```
+
+7. Estimate the total number of large farms in 1992 (*largef92*) -- construct both the point estimate and the 95% CI.
+
+```{r, echo = TRUE}
+
+```
+
+8. Estimate the proportion of counties with more than 50 large farms in 1992 (use the variable you constructed question 4) -- construct both the point estimate and the 95% CI.
+
+```{r}
+
+```
+
+9. Challenge and bonus: are these estimates significantly different from 1982? 
+
+10. Challenge and bonus: construct a data visualization that compares the data from 1982 and 1992.
+
