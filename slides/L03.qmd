@@ -1,0 +1,478 @@
+---
+title: "Stratified Sampling"
+subtitle: "Chapter 3"
+author: "Dr. Seals"
+execute:
+  echo: true
+format: 
+  revealjs:
+    theme: uwf
+    self-contained: true
+    slide-number: false
+    footer: "[STA4222 - Sampling Theory](https://samanthaseals.github.io/STA4222)"
+    width: 1600
+    height: 900
+    df-print: paged
+    html-math-method: katex
+editor: source
+---
+
+## 3.1: Introduction
+
+-   **Stratified random sample**: the population is divided into subgroups (strata) and a simple random sample is selected from each stratum.
+
+- We use stratified sampling for the following reasons:
+
+    - We want to be protected from the possibility of a bad/wonky sample. 
+    
+        - Simple random sampling from UWF students - could get sample of all freshmen, but it is not representive of population
+        
+        - Stratified sampling from UWF students - ensures all classifications are represented in the sample
+        
+    - It may result in a lower cost for the survey.
+    
+        - Cost of experiment/survey may vary by strata.
+        
+    - It results in more precise estimation.
+    
+        - The variance is smaller because the variance within each stratum is often lower than the population variance.
+        
+## 3.1: Introduction
+
+- Recall the agriculture data we've been examining.
+
+- Let's look at the acres of farmland in 1992, but split up by region of the country.
+
+    - Northeast, North Central, South, and West.
+    
+- Boxplots comparing (see [.qmd file on GitHub](https://github.com/samanthaseals/STA4222/blob/master/slides/L03.qmd) for code!):     
+
+<center>
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+library(SDAResources)
+data("agpop")
+data("agsrs")
+data("agstrat")
+
+library(tidyverse)
+pop <- agpop %>% 
+  mutate(acres_mil = acres92/1000000) %>%
+  ggplot(aes(x=region, y=acres_mil)) + 
+    geom_boxplot() +
+    ylim(0, 8) +
+    labs(x = "Region",
+         y = "Acres (millions)",
+         title = "Full Population") +
+    theme_bw()
+
+srs <- agsrs %>% 
+  mutate(acres_mil = acres92/1000000) %>%
+  ggplot(aes(x=region, y=acres_mil)) + 
+    geom_boxplot() +
+    ylim(0, 8) +
+    labs(x = "Region",
+         y = "Acres (millions)",
+         title = "Simple Random Sample") +
+    theme_bw()
+
+strat <- agstrat %>% 
+  mutate(acres_mil = acres92/1000000) %>%
+  ggplot(aes(x=region, y=acres_mil)) + 
+    geom_boxplot() +
+    ylim(0, 8) +
+    labs(x = "Region",
+         y = "Acres (millions)",
+         title = "Stratified Random Sample") +
+    theme_bw()
+
+library(ggpubr)
+ggarrange(pop, srs, strat, 
+          ncol = 3, nrow = 1)
+```
+</center>
+
+## 3.2: Theory of Stratified Sampling
+
+**Population quantities**: let there be $H$ strata (groups). Then,
+
+- Number of population units in stratum $h$
+    
+$$N_h$$
+
+- Value of $j^{\text{th}}$ unit in stratum $h$
+
+$$y_{hj}$$ 
+
+## 3.2: Theory of Stratified Sampling
+
+**Sample quantities**: let there be $H$ strata (groups). Then,
+
+- Set of units from stratum $h$ included in sample
+
+$$\mathscr{S}_h$$
+
+- Sample size taken in stratum $h$
+
+$$n_h$$
+
+- Total sample size, from all strata
+    
+$$n = \sum_{h=1}^H n_h$$ 
+
+## 3.2: Theory of Stratified Sampling
+
+**Sample quantities**: let there be $H$ strata (groups). Then,
+
+- Estimated mean in stratum $h$
+    
+$$\bar{y}_h = \frac{1}{n_h} \sum_{j \in \mathscr{S}_h} y_{hj}$$
+    
+- Estimated mean under stratified sampling
+
+$$ \bar{y}_{\text{str}} = \sum_{h=1}^H \frac{N_h}{N} \bar{y}_h $$
+
+- Estimated variance of $\bar{y}$ under stratified sampling
+
+$$\hat{\text{var}}\left[ \bar{y}_{\text{str}} \right] = \sum_{h=1}^H \left( 1- \frac{n_h}{N_h} \right) \left( \frac{N_h}{N} \right)^2 \frac{s_h^2}{n_h} $$
+
+## 3.2: Theory of Stratified Sampling
+
+**Sample quantities**: let there be $H$ strata (groups). Then,
+
+- Estimated population total in stratum $h$ 
+
+$$\hat{\tau}_h = \frac{N_h}{n_h} \sum_{j \in \mathscr{S}_h} y_{hj} = N_h \bar{y}_h$$ 
+    
+- Estimated total under stratified sampling
+
+$$ \hat{\tau}_{\text{str}} = \sum_{h=1}^H N_h \bar{y}_h $$
+
+- Estimated variance of $\hat{\tau}$ under stratified sampling
+
+$$\hat{\text{var}}\left[\hat{\tau}_{\text{str}} \right] = \sum_{h=1}^H \left( 1- \frac{n_h}{N_h} \right)  N_h^2 \frac{s_h^2}{n_h} $$
+
+
+## 3.2: Theory of Stratified Sampling
+
+**Sample quantities**: let there be $H$ strata (groups). Then,
+
+- Estimated proportion in stratum $h$
+    
+$$\hat{p}_h = \frac{1}{n_h} \sum_{j \in \mathscr{S}_h} y_{hj}$$
+
+- Estimated proportion under stratified sampling
+
+$$ \hat{p}_{\text{str}} = \sum_{h=1}^H \frac{N_h}{N} \hat{p}_h $$
+
+- Estimated variance of $\hat{p}$ under stratified sampling
+
+$$\hat{\text{var}}\left[ \hat{p}_{\text{str}} \right] = \sum_{h=1}^H \left( 1- \frac{n_h}{N_h} \right) \left( \frac{N_h}{N} \right)^2 \frac{\hat{p}_h \left( 1 - \hat{p}_h \right)}{n_h-1} $$
+
+## 3.2: Theory of Stratified Sampling
+
+- Recall that our confidence intervals will take the form point estimate $\pm$ margin of error, where the margin of error is the critical value $\times$ standard error.
+
+- In the case of the mean,
+
+$$ 
+\bar{y} \pm z_{\alpha/2} \text{SE}\left[ \bar{y} \right]
+$$
+
+- In the case of the total,
+
+$$ 
+\hat{\tau} \pm z_{\alpha/2} \text{SE}\left[ \hat{\tau} \right]
+$$
+
+- In the case of the proportion,
+
+$$ 
+\hat{p} \pm z_{\alpha/2} \text{SE}\left[ \hat{p} \right]
+$$
+
+- Note: R uses the *t* distribution in place of the *z* distribution when estimating $\mu$ and $\tau$.
+
+    - In this case, the *t* will have $\text{df} = n - H$
+
+## 3.2: Theory of Stratified Sampling
+
+- Siniff and Skoog (1964) used stratified random sampling to estimate the size of the Nelchina herd of Alaska caribou in February of 1962. 
+
+- The biologists used preliminary estimates of caribou densities to divide the area of interest into six strata.
+
+    - Each stratum was then divided into a grid of 4-square-mile sampling units. 
+    
+- The data can be seen on the next slide.
+
+    - All stratum-level calculations have been completed for us.
+    
+```{r, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(gsheet)
+data <- tibble(gsheet2tbl("https://docs.google.com/spreadsheets/d/13PpOnJnC7Hr1mN97zhqS5YE1M_rhdqvW5Ug1h89Rma0"))
+```
+
+- We are going to estimate the mean and total size of the Nelchina herd of Alaska caribou in 1962.
+
+## 3.2: Theory of Stratified Sampling
+
+```{r}
+head(data)
+```
+
+## 3.2: Theory of Stratified Sampling
+
+- Let's first estimate the mean,
+
+```{r}
+data <- data %>%
+  mutate(ybar = N_h/sum(N_h)*ybar_h)
+sum(data$ybar)
+```
+
+- Then, the estimated variance of $\bar{y}_{\text{str}}$,
+```{r}
+data <- data %>%
+  mutate(varhat_ybar = (1-n_h/N_h)*(N_h^2/sum(N_h)^2)*(s2_h/n_h))
+sum(data$varhat_ybar)
+```
+
+- Thus,
+
+    - $\bar{y}_{\text{str}} = 77.964$
+    - $\hat{\text{var}}\left[ \hat{y}_{\text{str}} \right] = 69.803$
+
+## 3.2: Theory of Stratified Sampling
+
+- Let's now find the 95% confidence interval,
+
+```{r, echo = TRUE}
+# set values to use in computation:
+m = sum(data$ybar) # point estimate for mu
+estvar = sum(data$varhat_ybar) # find the variance of ybar
+SE = sqrt(estvar) # find the SE
+n = sum(data$n_h) # find overall sample size
+H = nrow(data) # count the number of rows for number of strata
+t = qt(.975, n-H)
+
+# CI computations:
+lb = m - t*SE
+ub = m + t*SE
+lb
+ub
+```
+
+- The 95% CI for $\mu$ is $(61.49, 94.44)$.
+
+## 3.2: Theory of Stratified Sampling
+
+- Let's now estimate $\tau$
+
+```{r}
+data <- data %>%
+  mutate(tauhat = N_h*ybar_h)
+sum(data$tauhat)
+```
+
+- Then, the estimated variance of $\hat{\tau}_{\text{str}}$,
+```{r}
+data <- data %>%
+  mutate(varhat_tauhat = (1-n_h/N_h)*N_h^2*(s2_h/n_h))
+sum(data$varhat_tauhat)
+```
+
+- Thus,
+
+    - $\hat{\tau}_{\text{str}} = 54,497$
+    - $\hat{\text{var}}\left[ \hat{\tau}_{\text{str}} \right] = 34,105,732$
+
+## 3.2: Theory of Stratified Sampling
+
+- Let's now find the 95% confidence interval,
+
+```{r, echo = TRUE}
+# set values to use in computation:
+tau = sum(data$tauhat) # point estimate for tau
+estvar = sum(data$varhat_tauhat) # find the variance of ybar
+SE = sqrt(estvar) # find the SE
+n = sum(data$n_h) # find overall sample size
+H = nrow(data) # count the number of rows for number of strata
+t = qt(.975, n-H)
+
+# CI computations:
+lb = tau - t*SE
+ub = tau + t*SE
+lb
+ub
+```
+
+- The 95% CI for $\tau$ is $(42,982, 66,011)$.
+    
+## 3.2: Theory of Stratified Sampling
+
+- The American Council of Learned Societies (ACLS) used a stratified random sample of selected ACLS societies in seven disciplines to study publication patterns and computer and library use among scholars who belong to one of the member organizations of the ACLS (Morton and Price, 1989). 
+
+```{r, warning = FALSE, message = FALSE}
+data <- tibble(gsheet2tbl("https://docs.google.com/spreadsheets/d/100p5N_A2Ium25Ij-Jy2RbbGu-z5RDKNQEqtj6LTmcmY"))
+head(data, n=3)
+```
+
+- We want to estimate the percentage and number of respondents of the major societies in those seven disciplines that are female.
+
+## 3.2: Theory of Stratified Sampling
+
+- First, let's estimate the proportion,
+
+```{r}
+data <- data %>%
+  mutate(phat = (membership/sum(membership)) * (female_pct/100))
+sum(data$phat)
+```
+
+- Then, the estimated variance of $\hat{p}_{\text{str}}$,
+```{r}
+data <- data %>%
+  mutate(varhat_phat = (1-returned/membership)*(membership/sum(membership))^2*(sum(phat)*(1-sum(phat))/(returned-1)))
+format(sum(data$varhat_phat), scientific = FALSE)
+```
+    
+- Thus,
+
+    - $\hat{p}_{\text{str}} = 0.247$
+    - $\hat{\text{var}}\left[ \hat{p}_{\text{str}} \right] = 0.0000528$    
+    
+## 3.2: Theory of Stratified Sampling
+
+- Let's now find the 95% confidence interval,
+
+```{r, echo = TRUE}
+# set values to use in computation:
+p = sum(data$phat) # point estimate for tau
+estvar = sum(data$varhat_phat) # find the variance of ybar
+SE = sqrt(estvar) # find the SE
+z = qnorm(.975, 0, 1) # critical value of standard normal
+
+# CI computations:
+lb = p - z*SE
+ub = p + z*SE
+lb
+ub
+```    
+    
+- The 95% CI for $p$ is $(0.232, 0.261)$.
+
+## 3.2: Theory of Stratified Sampling
+
+- We can use the estimates for $p$ to estimate the total, $\hat{\tau}$, too.
+
+```{r, echo = TRUE}
+# set values to use in computation:
+N = sum(data$membership) # find overall population size
+tau = N*p # estimate tau
+lb_tau = N*lb
+ub_tau = N*ub
+tau
+lb_tau
+ub_tau
+```    
+    
+- Thus,
+
+    - $\hat{\tau} = 10,847$ are female.
+    - The 95% CI for $\tau$ is $(10,220, 11,474)$.
+    
+## 3.3: Sampling Weights in Stratified Random Sampling
+
+- In simple random sampling, we discussed the sampling weight as
+
+$$w_i = \frac{1}{\pi_i}$$
+
+- When all $\pi_i$ are the same (e.g., simple random sampling), all $w_i$ are the same.
+
+- In stratified sampling, we may have different $\pi_i$ for different strata, so the sampling weight becomes
+
+$$w_{hj} = \frac{1}{\pi_{hj}}$$
+    
+## 3.3: Sampling Weights in Stratified Random Sampling   
+
+- We can rewrite the estimator for $\bar{y}$,
+
+$$\bar{y}_{\text{str}} = \frac{\sum_{h=1}^H \sum_{j \in \mathscr{S}_h} w_{hj} y_{hj}}{\sum_{h=1}^H \sum_{j \in \mathscr{S}_h} w_{hj}}$$
+
+- We can rewrite the estimator for $\tau$,
+
+$$\hat{\tau}_{\text{str}}= \sum_{h=1}^H \sum_{j \in \mathscr{S}_h} w_{hj} y_{hj}$$
+
+## 3.3: Sampling Weights in Stratified Random Sampling  
+
+- Which stratum has the smallest sampling weight?
+
+<center><img src="images/L03a.png"></center>
+
+## 3.3: Sampling Weights in Stratified Random Sampling  
+
+- Let's revisit the caribou data,
+
+```{r, warning = FALSE, message = FALSE}
+data <- tibble(gsheet2tbl("https://docs.google.com/spreadsheets/d/13PpOnJnC7Hr1mN97zhqS5YE1M_rhdqvW5Ug1h89Rma0")) %>%
+  select(stratum, N_h, n_h)
+head(data, n=3)
+```
+
+## 3.3: Sampling Weights in Stratified Random Sampling  
+
+- Let's add the sampling weights,
+
+```{r, warning = FALSE, message = FALSE}
+data <- data %>%
+  mutate(w_hj = N_h/n_h)
+head(data)
+```
+
+## 3.3: Sampling Weights in Stratified Random Sampling  
+
+- The $w_{hj}$ tell s how many observations each sampling unit represents.
+
+    - In stratum A, each unit represents 4 observations: 
+    
+        - itself + 3 from the population that were not sampled.
+        
+    - In stratum B, each unit represents 3 observations:
+    
+        - itself + 2 from the population that were not sampled.
+        
+    - etc.
+        
+## Homework
+
+1, 2, 3, 5, 12, 13
+        
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
