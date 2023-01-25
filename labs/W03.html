@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.251">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -2631,42 +2631,64 @@ vertical-align: -.125em;
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SDAResources)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="2" type="1">
-<li>Call in the <strong>agstrat</strong> dataset from the <a href="https://rdrr.io/cran/SDAResources/man/agpop.html"><code>SDAResources</code> package</a>.</li>
+<li>Call in the <strong>agstrat</strong> and <strong>agpop</strong> datasets from the <a href="https://rdrr.io/cran/SDAResources/man/agpop.html"><code>SDAResources</code> package</a>.</li>
 </ol>
 <div class="cell">
 
 </div>
 <ol start="3" type="1">
-<li>Construct a variable (column) to indicate if the county has more than 50 large farms in 1992 (<em>largef92</em>).</li>
+<li>Create the dataset of summary statistics needed for estimating the mean and total.</li>
 </ol>
 <div class="cell">
-
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>summaries <span class="ot">&lt;-</span> agstrat <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(largef92), <span class="co"># request mean</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">var =</span> <span class="fu">var</span>(largef92), <span class="co"># request variance</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>()) <span class="co"># request sample size</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>pop <span class="ot">&lt;-</span> agpop <span class="sc">%&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">N =</span> <span class="fu">n</span>())</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>summaries <span class="ot">&lt;-</span> <span class="fu">full_join</span>(summaries, pop, <span class="at">by =</span> <span class="st">&quot;region&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="4" type="1">
-<li>Use the <code>count()</code> function to determine how many counties have more than 50 large farms using the variable you created in the previous question.</li>
-</ol>
-<div class="cell">
-
-</div>
-<ol start="5" type="1">
 <li>Estimate the average number of large farms in 1992 (<em>largef92</em>) – construct both the point estimate and the 95% CI.</li>
 </ol>
 <div class="cell">
 
 </div>
-<ol start="6" type="1">
+<ol start="5" type="1">
 <li>Estimate the total number of large farms in 1992 (<em>largef92</em>) – construct both the point estimate and the 95% CI.</li>
 </ol>
 <div class="cell">
 
 </div>
+<ol start="6" type="1">
+<li>Return to <strong>agstrat</strong> and construct a variable (column) to indicate if the county has more than 50 large farms in 1992 (<em>largef92</em>).</li>
+</ol>
+<div class="cell">
+
+</div>
 <ol start="7" type="1">
-<li>Estimate the proportion of counties with more than 50 large farms in 1992 (use the variable you constructed question 3) – construct both the point estimate and the 95% CI.</li>
+<li>Determine how many counties, by region, have more than 50 large farms using the variable you created in the previous question.</li>
 </ol>
 <div class="cell">
 
 </div>
 <ol start="8" type="1">
+<li>Create the dataset of summary statistics needed for estimating the proportion. (Hint: use the code from question 3 as your starting point - copy and paste into this code chunk and edit to what you need.)</li>
+</ol>
+<div class="cell">
+
+</div>
+<ol start="9" type="1">
+<li>Estimate the proportion of counties with more than 50 large farms in 1992 (use the variable you constructed question 3) – construct both the point estimate and the 95% CI.</li>
+</ol>
+<div class="cell">
+
+</div>
+<ol start="10" type="1">
 <li>How do these estimates compare to the estimates from last week? Are our estimators more or less precise? Justify your response.</li>
 </ol>
 

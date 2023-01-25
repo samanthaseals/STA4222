@@ -22,41 +22,63 @@ library(tidyverse)
 library(SDAResources)
 ```
 
-2. Call in the **agstrat** dataset from the [`SDAResources` package](https://rdrr.io/cran/SDAResources/man/agpop.html).
+2. Call in the **agstrat** and **agpop** datasets from the [`SDAResources` package](https://rdrr.io/cran/SDAResources/man/agpop.html).
 
 ```{r}
 
 ```
 
-3. Construct a variable (column) to indicate if the county has more than 50 large farms in 1992 (*largef92*). 
+3. Create the dataset of summary statistics needed for estimating the mean and total.
+
+```{r}
+summaries <- agstrat %>% 
+  group_by(region) %>%
+  summarize(mean = mean(largef92), # request mean
+            var = var(largef92), # request variance
+            n = n()) # request sample size
+
+pop <- agpop %>%
+  group_by(region) %>%
+  summarize(N = n())
+
+summaries <- full_join(summaries, pop, by = "region")
+```
+
+4. Estimate the average number of large farms in 1992 (*largef92*) -- construct both the point estimate and the 95% CI.
 
 ```{r}
 
 ```
 
-4. Use the `count()` function to determine how many counties have more than 50 large farms using the variable you created in the previous question.
-
-```{r}
-
-```
-
-5. Estimate the average number of large farms in 1992 (*largef92*) -- construct both the point estimate and the 95% CI.
-
-```{r}
-
-```
-
-6. Estimate the total number of large farms in 1992 (*largef92*) -- construct both the point estimate and the 95% CI.
+5. Estimate the total number of large farms in 1992 (*largef92*) -- construct both the point estimate and the 95% CI.
 
 ```{r, echo = TRUE}
 
 ```
 
-7. Estimate the proportion of counties with more than 50 large farms in 1992 (use the variable you constructed question 3) -- construct both the point estimate and the 95% CI.
+6. Return to **agstrat** and construct a variable (column) to indicate if the county has more than 50 large farms in 1992 (*largef92*). 
 
 ```{r}
 
 ```
 
-8. How do these estimates compare to the estimates from last week? Are our estimators more or less precise? Justify your response.
+7. Determine how many counties, by region, have more than 50 large farms using the variable you created in the previous question.
+
+```{r}
+
+```
+
+8. Create the dataset of summary statistics needed for estimating the proportion. (Hint: use the code from question 3 as your starting point - copy and paste into this code chunk and edit to what you need.)
+
+```{r}
+
+```
+
+9. Estimate the proportion of counties with more than 50 large farms in 1992 (use the variable you constructed question 3) -- construct both the point estimate and the 95% CI.
+
+```{r}
+
+```
+
+10. How do these estimates compare to the estimates from last week? Are our estimators more or less precise? Justify your response.
 
