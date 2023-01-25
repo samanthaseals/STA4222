@@ -249,17 +249,17 @@ sum(data$varhat_ybar)
 ```{r, echo = TRUE}
 # set values to use in computation:
 m = sum(data$ybar) # point estimate for mu
-estvar = sum(data$varhat_ybar) # find the variance of ybar
+estvar = sum(data$varhat_ybar) # find the variance of y bar
 SE = sqrt(estvar) # find the SE
 n = sum(data$n_h) # find overall sample size
 H = nrow(data) # count the number of rows for number of strata
-t = qt(.975, n-H)
+t = qt(.975, n-H) # critical value of t
 
 # CI computations:
-lb = m - t*SE
-ub = m + t*SE
-lb
-ub
+lb = m - t*SE # find lower bound of CI
+ub = m + t*SE # find upper bound of CI
+lb # print lower bound of CI
+ub # print upper bound of CI
 ```
 
 - The 95% CI for $\mu$ is $(61.49, 94.44)$.
@@ -293,17 +293,17 @@ sum(data$varhat_tauhat)
 ```{r, echo = TRUE}
 # set values to use in computation:
 tau = sum(data$tauhat) # point estimate for tau
-estvar = sum(data$varhat_tauhat) # find the variance of ybar
+estvar = sum(data$varhat_tauhat) # find the variance of tau hat
 SE = sqrt(estvar) # find the SE
 n = sum(data$n_h) # find overall sample size
 H = nrow(data) # count the number of rows for number of strata
-t = qt(.975, n-H)
+t = qt(.975, n-H) # critical value of t
 
 # CI computations:
-lb = tau - t*SE
-ub = tau + t*SE
-lb
-ub
+lb = tau - t*SE # find lower bound of CI
+ub = tau + t*SE # find upper bound of CI
+lb # print lower bound of CI
+ub # print upper bound of CI
 ```
 
 - The 95% CI for $\tau$ is $(42,982, 66,011)$.
@@ -347,16 +347,16 @@ format(sum(data$varhat_phat), scientific = FALSE)
 
 ```{r, echo = TRUE}
 # set values to use in computation:
-p = sum(data$phat) # point estimate for tau
-estvar = sum(data$varhat_phat) # find the variance of ybar
+p = sum(data$phat) # point estimate for p
+estvar = sum(data$varhat_phat) # find the variance of p hat
 SE = sqrt(estvar) # find the SE
 z = qnorm(.975, 0, 1) # critical value of standard normal
 
 # CI computations:
-lb = p - z*SE
-ub = p + z*SE
-lb
-ub
+lb = p - z*SE # lower bound of CI 
+ub = p + z*SE # upper bound of CI
+lb # print lower bound of CI
+ub # print upper bound of CI
 ```    
     
 - The 95% CI for $p$ is $(0.232, 0.261)$.
@@ -366,14 +366,13 @@ ub
 - We can use the estimates for $p$ to estimate the total, $\hat{\tau}$, too.
 
 ```{r, echo = TRUE}
-# set values to use in computation:
 N = sum(data$membership) # find overall population size
 tau = N*p # estimate tau
-lb_tau = N*lb
-ub_tau = N*ub
-tau
-lb_tau
-ub_tau
+lb_tau = N*lb # lower bound of CI
+ub_tau = N*ub # upper bound of CI
+tau # print point estimate
+lb_tau # print lower bound of CI
+ub_tau # print upper bound of CI
 ```    
     
 - Thus,
