@@ -16,7 +16,7 @@ show_sidebar: false
 |      | W   | 01/18 | Introduction to R / R lab (Ch 2) | [html](https://samanthaseals.github.io/STA4222/labs/W02.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W02.qmd) |
 | 3    | M   | 01/23 | Stratified Sampling (Ch 3) | [html](https://samanthaseals.github.io/STA4222/slides/L03.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/slides/L03.qmd) |
 |      | W   | 01/25 | R lab (Ch 3) | [html](https://samanthaseals.github.io/STA4222/labs/W03.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W03.qmd) |
-| 4    | M   | 01/30 | Ratio and Regression Estimation (Ch 4) | |
+| 4    | M   | 01/30 | Ratio and Regression Estimation (Ch 4) | [html](https://samanthaseals.github.io/STA4222/slides/L04.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/slides/L04.qmd)  |
 |      | W   | 02/01 | R lab (Ch 4) | |
 | 5    | M   | 02/06 | Cluster Sampling (Ch 5) | |
 |      | W   | 02/08 | R lab (Ch 5) | |
