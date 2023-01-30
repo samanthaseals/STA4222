@@ -1,0 +1,379 @@
+---
+title: "Stratified Sampling"
+subtitle: "Chapter 3 - Part 2"
+author: "Dr. Seals"
+execute:
+  echo: true
+format: 
+  revealjs:
+    theme: uwf
+    self-contained: true
+    slide-number: false
+    footer: "[STA4222 - Sampling Theory](https://samanthaseals.github.io/STA4222)"
+    width: 1600
+    height: 900
+    df-print: paged
+    html-math-method: katex
+editor: source
+---
+
+## 3.1: Introduction
+
+-   **Stratified random sample**: the population is divided into subgroups (strata) and a simple random sample is selected from each stratum.
+
+- Notation:
+
+    - $H$: number of strata
+    
+    - $N_h$: population size in stratum $h$
+
+    - $N = \sum N_h$: total population size
+    
+    - $n_h$: sample size in stratum $h$
+    
+    - $n = \sum n_h$: total sample size
+    
+    - $\bar{y}_h$, $\hat{\tau}_h$, and $\hat{p}_h$: sample statistics for each stratum
+    
+    - $\bar{y}_{\text{str}}$, $\hat{\tau}_{\text{str}}$, and $\hat{p}_{\text{str}}$: sample statistics under a stratified sample
+    
+## 3.4: Allocation Observations to Strata
+
+- **Proportional allocation**: 
+
+    - The number of sampled units in each stratum is proportional to the size of the stratum. 
+    
+    - The inclusion probability for unit $j$ in stratum $h$, $$\pi_{hj}=\frac{n_h}{N},$$ is the same for all strata.
+    
+- The probability that an individual will be selected is the same as in a simple random sample.
+
+    - However, we are protecting ourselves from a "bad" sample that could occur in a simple random sample.
+
+## 3.4: Allocation Observations to Strata
+
+- If the variances are approximately equal across strata, propotional allocation is the best.
+
+- When the variances vary greatly, optional allocation gives either higher precision or lower cost.
+
+- **Optimal allocation**:
+
+    - We want to gain the most information for the least cost.
+  
+- Cost, $C$, for conducting survey: $$C = c_0 + \sum_{h=1}^H c_h n_h,$$ where
+
+    - $c_0$ = overhead costs, such as maintaining an office,
+    
+    - $c_h$ = the cost of taking an observation from stratum H and is assumed to be known.
+
+## 3.4: Allocation Observations to Strata
+
+- Optimal allocation assigns units to strata to either:
+
+    - minimize $\text{var}\left[\bar{y}_{\text{str}}\right]$ for a fixed total cost, $C$, or
+    
+    - minimize $C$ for a fixed $\text{var}\left[\bar{y}_{\text{str}}\right]$.
+    
+- In either scenario, the optimal allocation has $n_h$ proportional to $N_h S_h / \sqrt{c_h}$ for each $h$.
+
+- This leads to the optimal sample size in stratum $h$, $$ n_h = \left( \frac{\frac{N_h \sigma_h}{\sqrt{c_h}}}{\sum_{l=1}^H \frac{N_l \sigma_l}{\sqrt{c_l}}} \right) n $$
+    
+    - Note: the fraction we are multiplying by $n$ is called the **allocation fraction**, denoted $a_h$.
+
+## 3.4: Allocation Observations to Strata
+
+- If $s_h / \sqrt{c_h} = s_l / \sqrt{c_l}$ for all strata $h$ and $l$, then $a_h n$ simplifies to proportional allocation with $$ n_h = \frac{N_h}{N} n $$
+
+- Otherwise, the allocation is disproportional and one or more of the strata is oversampled relative to its share of the population. i.e., $$ \frac{n_h}{n} > \frac{N_h}{N}$$
+
+- Under optimal allocation, we will take a larger sample size in a stratum if
+
+    - the stratum accounts for a large part of the population (i.e., $N_h$ is large),
+    
+    - the variance within the stratum is large, meaning that we sample more units to compensate for the heterogeneity, or
+    
+    - sampling in the startum is inexpensive (low $c_h$).
+
+## 3.4: Allocation Observations to Strata
+
+- **Neyman allocation**:
+
+    - A special case of optimal allocation when the costs in the strata (but not the variances) are approximately equal.
+    
+    - This means that $n_h$ is proportional to $N_h s_h$.
+    
+    - As long as $s_h^2$ are specified correctly, Neyman allocation will give an estimator with smaller variance than proportional allocation.
+    
+## 3.4: Allocation Observations to Strata
+
+- The total sample size is found as follows,
+$$ n = \frac{n_0}{1+\frac{n_0}{N} \sum_{h=1}^H \frac{N_h}{N} \frac{\sigma^2_h}{v}},  $$ where $v$ is a weighted average of stratum variances, $$ v = \sum_{h=1}^H a_h \sigma^2_h$$ and $e$ is the margin of error, which will be given by the problem statement. 
+
+- Finally, $n_0$ is the sample size to be used if all stratum FPCs could be ignored, $$ n_0 = z_{\alpha/2}^2 \frac{v}{e^2} $$
+
+## 3.X: Example 1
+
+- An advertising firm decides to conduct a sample survey to estimate the average number of hours each week that households within a county watch television. 
+
+- The county contains two towns, A ($N_{\text{A}}=155$) and B ($N_{\text{B}}=62$), and a rural area ($N_{\text{R}}=93$).
+
+    - Town A is built around a factory, and most households contain factory workers with school-age children. 
+    
+    - Town B is an exclusive suburb of a city and contains older residents with few children at home.
+
+- A prior survey suggests $\sigma_{\text{A}}^2 \approx 25$, $\sigma_{\text{B}}^2 \approx 225$, and $\sigma_{\text{R}}^2 \approx 100$.
+
+- Choose the sample size with the following:
+
+    - a margin of error of 2 hours 
+    
+    - allocation fractions of $a_{\text{A}}=1/3$, $a_{\text{B}}=1/3,$ and $a_{\text{R}}=1/3$.
+
+## 3.X: Example 1
+
+- First, let's call in the data.
+
+```{r}
+library(tidyverse)
+library(gsheet)
+data <- tibble(gsheet2tbl("https://docs.google.com/spreadsheets/d/1W7QD3yI-JC-xHWVqYTI8JrsvMGrHt2an_pzhtJ0NgRw"))
+head(data)
+```
+
+## 3.X: Example 1
+
+- Let's find $v$, $$ v = \sum_{h=1}^H a_h \sigma^2_h$$
+
+```{r}
+data <- data %>%
+  mutate(v = a*var)
+
+(v = sum(data$v))
+```
+
+- Then we can find $n_0$ (remember, $e = 2$ from problem statement),
+
+```{r}
+z = qnorm(.975, 0, 1)
+e = 2
+(n_0 = (z^2)*v/(e^2))
+```
+
+## 3.X: Example 1
+
+- Now we can find the total sample size,$$ n = \frac{n_0}{1+\frac{n_0}{N} \sum_{h=1}^H \frac{N_h}{N} \frac{\sigma^2_h}{v}}, $$
+
+```{r}
+N = sum(data$N)
+
+data <- data %>%
+  mutate(n_den = (N/sum(N)) * (var/sum(v)))
+
+(n_overall = n_0/(1+(n_0/N)*sum(data$n_den)))
+```
+
+- Which we will round to $n = 89$.
+
+## 3.X: Example 1
+
+- Finally, we must allocate our sample.
+
+- Recall that all allocation fractions were = 1/3, thus,
+
+```{r}
+data <- data %>%
+  mutate(n_allocated = ceiling(n_overall)*a) %>%
+  mutate(n_h_final = ceiling(n_allocated))
+
+data %>% select(Area, N, n_allocated, n_h_final)
+sum(data$n_h_final)
+```
+
+- Note: using the final allocation, we are going over the sample size needed of $n = 89$... is that okay?
+
+## 3.X: Example 2
+
+- The advertising firm has found that obtaining an observation from a rural household costs more than obtaining a response in town A or B. 
+
+- The increase is due to the costs of traveling from one rural household to another. 
+
+- The cost per observation in each town is estimated to be \$9 (i.e., $c_1 = c_2 = 9$), and the costs per observation in the rural area to be \$16 (i.e., $c_3 = 16$). 
+
+- The stratum standard deviations (approximated by the strata sample variances from a prior survey) are $\sigma_1 \approx 5$, $\sigma_2 \approx 15$, and $\sigma_3 \approx 10$. 
+
+- Find the overall sample size $n$ and the stratum sample sizes, $n_{\text{A}}$, $n_{\text{B}}$, and $n_{\text{R}}$, that allow the firm to estimate, at minimum cost, the average television-viewing time with a margin of error of 2.
+
+## 3.X: Example 2
+
+- First, call in the data.
+
+```{r}
+data <- tibble(gsheet2tbl("https://docs.google.com/spreadsheets/d/1Z_ray4WJ76qO3adXg3lYrsxqMrtP3MqMn6vPwst5zfM"))
+head(data)
+```
+
+## 3.X: Example 2
+
+- Let's first calculate allocation fractions,
+
+ $$ a_h = \frac{\frac{N_h \sigma_h}{\sqrt{c_h}}}{\sum_{l=1}^H \frac{N_l \sigma_l}{\sqrt{c_l}}}  $$
+
+```{r}
+data <- data %>%
+  mutate(a_num = N*sqrt(var)/sqrt(c)) %>%
+  mutate(a = a_num/sum(a_num))
+
+head(data)
+```
+
+## 3.X: Example 2
+
+- Now, calculating what we need for the overall sample size,
+
+$$ n = \frac{n_0}{1+\frac{n_0}{N} \sum_{h=1}^H \frac{N_h}{N} \frac{\sigma^2_h}{v}}, $$
+
+```{r}
+z = qnorm(.975, 0, 1)
+e = 2
+data <- data %>% mutate(v = a*var)
+n_0 = (z^2)*v/(e^2)
+N = sum(data$N)
+data <- data %>% mutate(n_den = (N/sum(N)) * (var/sum(v)))
+(n_overall = n_0/(1+(n_0/N)*sum(data$n_den)))
+```
+
+- Again, we round up and $n = 90$.
+
+## 3.X: Example 2
+
+- Finally, we will allocate our sample,
+
+```{r}
+data <- data %>%
+  mutate(n_allocated = ceiling(n_overall)*a) %>%
+  mutate(n_h_final = ceiling(n_allocated))
+
+data %>% select(Area, N, n_allocated, n_h_final)
+sum(data$n_h_final)
+```
+
+- ... and again, we are over our initial sample size of $n = 90$ ... is this okay?
+
+## 3.X: Example 3
+
+- The advertising firm now thinks that the approximate variances used previously are in error and that the stratum variances are approximately equal. 
+
+- The common value of $\sigma_i$ was approximated by 10 in a preliminary study. 
+
+- Telephone interviews are to be used, and hence costs will be equal in all strata. 
+
+- The firm desires to estimate the average number of hours per week that households in the county watch television, with margin of error equal to 2 hours. 
+
+- Find the sample size and stratum sample sizes necessary to achieve this accuracy. 
+
+## 3.X: Example 3
+
+- Let's pull in the data,
+
+```{r}
+data <- tibble(gsheet2tbl("https://docs.google.com/spreadsheets/d/12OAtjjUPDXNHSHUDueOzLkdGD3dcnt6JJj6gQI61w2w"))
+head(data)
+```
+
+## 3.X: Example 3
+
+- Because all $\sigma_h$ and $c_h$ are the same, we should use proportional allocation.
+
+```{r}
+data <- data %>%
+  mutate(a = N / sum(N))
+head(data)
+```
+
+
+## 3.X: Example 3
+
+- Now, calculating what we need for the overall sample size,
+
+$$ n = \frac{n_0}{1+\frac{n_0}{N} \sum_{h=1}^H \frac{N_h}{N} \frac{\sigma^2_h}{v}}, $$
+
+```{r}
+z = qnorm(.975, 0, 1)
+e = 2
+data <- data %>% mutate(v = a*var)
+v = sum(data$v)
+n_0 = (z^2)*v/(e^2)
+N = sum(data$N)
+data <- data %>% mutate(n_den = (N/sum(N)) * (var/sum(v)))
+(n_overall = n_0/(1+(n_0/N)*sum(data$n_den)))
+```
+
+- Rounding up, our sample size is $n = 74$.
+
+## 3.X: Example 3
+
+- Finally, we will allocate our sample,
+
+```{r}
+data <- data %>%
+  mutate(n_allocated = ceiling(n_overall)*a) %>%
+  mutate(n_h_final = ceiling(n_allocated))
+
+data %>% select(Area, N, n_allocated, n_h_final)
+sum(data$n_h_final)
+```
+
+## 3.X: Example 4
+
+- Let us return to the set up from Example 2.
+
+    - $c_1 = c_2 = 9$ and $c_3 = 16$.
+    - $\sigma_1 \approx 5$, $\sigma_2 \approx 15$, and $\sigma_3 \approx 10$. 
+    
+- Given that the advertising firm has only \$500 to spend on sampling, choose the sample size and the allocation that minimizes $\textnormal{var}[\bar{y}_{str}]$. 
+
+## 3.X: Example 4
+
+- Oh no! We now have a budget! 😰 
+
+- We can think of the problem like this, $$\begin{align*}500 &= c_{\text{A}} n_{\text{A}} + c_{\text{B}} n_{\text{B}} + c_{\text{R}} n_{\text{R}} \\ &= c_{\text{A}} a_{\text{A}} n + c_{\text{B}} a_{\text{B}} n + c_{\text{R}} a_{\text{R}} \end{align*}$$
+
+- Using the allocations from example 2,$$\begin{align*}500 &= 9(0.3226) n + 9(0.3871) n + 16(0.2903) n \\ 500 &= 11.0321 n \\ n &= 45.3223 \end{align*}$$
+
+- Again, this rounds up to $n = 46$.
+
+## 3.X: Example 4
+
+- Finally, we will allocate our sample,
+
+```{r}
+data <- tibble(gsheet2tbl("https://docs.google.com/spreadsheets/d/17EDGrGyuzf4YfVu3bseuLeh7Il4y7PEzI2To5VP8oYw"))
+data <- data %>% mutate(n_allocated = 46*a) %>% 
+  mutate(n_h_final = ceiling(n_allocated)) %>% 
+  mutate(check = c*n_h_final)
+data %>% select(Area, c, N, n_allocated, n_h_final, check)
+data %>% summarize(sum(n_h_final), sum(check))
+```
+
+## 3.X: Example 4
+
+- Let's try this again, but instead of rounding up on the final sample sizes, let's round down. 😎 
+
+```{r}
+data <- tibble(gsheet2tbl("https://docs.google.com/spreadsheets/d/17EDGrGyuzf4YfVu3bseuLeh7Il4y7PEzI2To5VP8oYw"))
+data <- data %>%  mutate(n_allocated = 46*a) %>% 
+  mutate(n_h_final = floor(n_allocated)) %>% 
+  mutate(check = c*n_h_final)
+data %>% select(Area, c, N, n_allocated, n_h_final, check)
+data %>% summarize(sum(n_h_final), sum(check))
+```
+
+## Homework
+
+25, 27, 28, 29, 30
+
+
+
+
+
+
+
