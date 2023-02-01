@@ -1,0 +1,86 @@
+---
+title: "Lab: Week 4"
+author: "Your Name Here"
+format: 
+  html:
+    self-contained: true
+execute:
+  echo: true
+editor: source
+---
+
+Lecture on simple random sampling: [Chapter 2](https://github.com/samanthaseals/STA4222/blob/master/slides/L02.qmd)
+
+Last week's lecture: [Chapter 3: Part 1](https://github.com/samanthaseals/STA4222/blob/master/slides/L03.qmd)
+
+Monday's lecture: [Chapter 3: Part 2](https://github.com/samanthaseals/STA4222/blob/master/slides/L04.qmd)
+
+
+
+
+1. Call in the necessary packages:
+
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(SDAResources)
+```
+
+2. Consider the [college scorecard data (**college**)](https://search.r-project.org/CRAN/refmans/SDAResources/html/college.html) from the [`SDAResources` package](https://rdrr.io/cran/SDAResources/man/agpop.html). Call the dataset in.
+
+```{r}
+
+```
+
+3. We will stratify by the cross-classification of *control* (1 = public, 2 = private) and *ccbasic* (based on [Carnegie classifications](https://carnegieclassifications.acenet.edu/classification_descriptions/basic.php) -- 15 = Doctoral Universities: Very High Research Activity, 16 = Doctoral Universities: High Research Activity, 17 = Doctoral/Professional Universities, 18 = Master's Colleges & Universities: Larger Programs, 19 = Master's Colleges & Universities: Medium Programs, 20 = Master's Colleges & Universities: Small Programs, 21 Baccalaureate Colleges: Arts & Sciences Focus, 22 = Baccalaureate Colleges: Diverse Fields). Create a new variable identifying the strata. 
+
+```{r}
+college <- college %>%
+  mutate(strata = case_when(
+    control == 1 & ccbasic == 15 ~ 1
+    control == 1 & ccbasic == 16 ~ 2
+    ...
+  ))
+```
+
+4. Count the number of colleges in each stratum.
+
+```{r}
+
+```
+
+5. Suppose a sample of 200 colleges is to be taken. Find the sample size for each of the strata under proportional allocation.
+
+```{r}
+
+```
+
+6. We think that the variance will be proportional to the variance of the number of undergraduates (*ugds*). Calculate the variance for number of undergrads for each stratum.
+
+```{r}
+
+```
+
+7. Use the variances found in question 6 to find the Neyman allocation.
+
+```{r}
+
+```
+
+8. Take a stratified sample based on the allocations above.
+
+- **Aric, Amelia, Rashidi, Grady**: proportional allocation
+
+- **Aidan, Brittany, Frankie, Brooklyn**: Neyman allocation
+
+```{r}
+
+```
+
+9. Estimate the average price of attendance for college using your sample from question 8. Remember to construct both the point estimate and the interval estimate. 
+
+```{r}
+
+```
+
+10. Compare your estimate with the other group's. Which allocation resulted in the better estimate? Why?
+
