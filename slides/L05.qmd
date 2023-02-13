@@ -1,0 +1,426 @@
+---
+title: "Ratio and Regression Estimation"
+subtitle: "Chapter 4 - Part 1"
+author: "Dr. Seals"
+execute:
+  echo: true
+format: 
+  revealjs:
+    theme: uwf
+    self-contained: true
+    slide-number: false
+    footer: "[STA4222 - Sampling Theory](https://samanthaseals.github.io/STA4222)"
+    width: 1600
+    height: 900
+    df-print: paged
+    html-math-method: katex
+editor: source
+---
+
+## Introduction
+
+- In the 1800s, [Laplace](https://en.wikipedia.org/wiki/Pierre-Simon_Laplace) wanted to estimate the number of residents in France.
+
+- France did not have a census at the time.
+
+- Laplace sampled 30 communities throughout France.
+    
+    - In the previous 3 years, a total of 215,599 births were registered in the 30 communities.
+    
+        - The estimated number of births in the 30 communities was 71,866.33.
+        
+    - These communities had a total of 2,037,615 residents.
+    
+        - He determined that every year there was one registered birth for every 28.352545 persons (pop. / births).
+        
+- Laplace then used the birth rate to determine the French population by multiplying the total number of annual births by 28.352845.
+
+- This is an example of *ratio estimation*.
+        
+## 4.1: Ratio Estimation in Simple Random Sampling
+
+- In order to employ ratio estimation, we need two quantities, $x_i$ and $y_i$ that are measured on each sample unit.
+
+    - $y_i$ is usually what we are actually interested in measuring,
+    
+    - $x_i$ is an auxiliary variable.
+    
+- In the population of size $N$, $$ \tau_y = \sum_{i=1}^N y_i, \ \ \ \tau_x = \sum_{i=1}^N x_i $$ and we can take their ratio, $$\beta = \frac{\tau_y}{\tau_x} = \frac{\bar{y}_{\mathscr{U}}}{\bar{x}_{\mathscr{U}}}$$
+
+## 4.1: Ratio Estimation in Simple Random Sampling
+
+- Ratio estimation takes advantage of the correlation between $x$ and $y$.
+
+    - The higher the correlation, the better this works.
+    
+- Let's first define the correlation, $$R = \frac{\sum_{i=1}^N(x_i - \bar{x}_{\mathscr{U}})(y_i - \bar{y}_{\mathscr{U}})}{(N-1) \sigma_x \sigma_y},$$ where
+
+    - $\sigma_x$ is the population standard deviation of $x$,
+    - $\sigma_y$ is the population standard deviation of $y$, and
+    - $R$ is the Pearson correlation between $x$ and $y$.
+
+## 4.1: Ratio Estimation in Simple Random Sampling
+
+- Let's look at a basic example to see how we can apply ratio estimation.
+
+- Suppose we are looking at agricultural fields of different sizes. 
+
+- We have the following information:
+
+    - $y_i$ = the bushels of grain harvested in field $i$,
+    - $x_i$ = the acreage of field $i$
+    
+- Then we can define,
+
+    - $\hat{\beta}$ = average yield in bushels per acre
+    - $\bar{y}_{\mathscr{U}}$ = average yield in bushels per field
+    - $\hat{\bar{y}}_r = \hat{\beta} \bar{x}_{\mathscr{U}}$
+
+- Note: we are assuming that we know (or can calculate) $\tau_x$ and $\bar{x}_{\mathscr{U}}$.
+
+## 4.1: Ratio Estimation in Simple Random Sampling
+
+- Let's now look at an example with data.
+
+- The dataset `agsrs` contains a simple random sample of 300 counties ($N = 3078$).
+
+    - Suppose we know the population totals for 1987, but only have information for 1992 for the 300 counties.
+    
+    - Because we have an earlier measurement, it is a great choice for an auxiliary variable.
+    
+    - We will use the information from 1987 to help inform our estimation for 1992.
+    
+- Let us define
+
+    - $y_i$ = total acreage of farms in county $i$ in 1992
+  
+    - $x_i$ = total acerage of farms in county $i$ in 1987
+    
+## 4.1: Ratio Estimation in Simple Random Sampling
+
+- We now want to find $\tau_x$ using *acres87* in **agpop** (remember, we know the population totals for 1987).
+
+```{r, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(SDAResources)
+data(agpop) # use for x / the population values we know
+(tau_x = sum(agpop$acres87, na.rm = TRUE))
+```
+
+- Then, we can find $\bar{x}_{\mathscr{U}}$,
+
+```{r, warning = FALSE, message = FALSE}
+(xbar_U = tau_x/nrow(agpop))
+```
+
+## 4.1: Ratio Estimation in Simple Random Sampling
+
+- Now, we will look at the sample data to calculate $\bar{y}$ (average of *acres92*) and $\bar{x}$ (average of *acres87*).
+
+```{r}
+data(agsrs)
+(ybar = mean(agsrs$acres92))
+(xbar = mean(agsrs$acres87))
+```
+
+- Then, we can calculate $\hat{\beta}$,
+
+```{r}
+(Bhat = ybar/xbar)
+```
+
+## 4.1: Ratio Estimation in Simple Random Sampling
+
+- Then, estimating $\hat{\bar{y}}_r$ and $\hat{\tau}_{yr}$,
+
+```{r}
+(ybarhat_r = Bhat*xbar_U)
+(tauhat_yr = Bhat*tau_x)
+```
+
+- Thus, the estimated total acreage in 1992 is `r format(round(tauhat_yr,2), scientific = FALSE)`.
+
+## 4.1: Ratio Estimation in Simple Random Sampling
+
+- How correlated are the data from 1987 and 1992?
+
+- Let's construct a graph with
+
+    - *acres87* on the *x*-axis,
+    - *acres92* on the *y*-axis, and
+    - a line that has the slope $\hat{\beta}$.
+    
+- We also want to scale the data by millions for ease of labeling axes.
+
+```{r, eval = FALSE, warning = FALSE, message = FALSE}
+agpop %>% 
+  ggplot(aes(x = acres87/1000000, y = acres92/1000000)) +
+  geom_point() +
+  geom_abline(intercept = 0, slope = Bhat) +
+  labs(x = "Millions of Acres Devoted to Farms (1987)",
+       y = "Millions of Acres Devoted to Farms (1992)") +
+  theme_bw()
+```
+
+## 4.1: Ratio Estimation in Simple Random Sampling
+
+- The graph looks as follows: 
+
+<center>
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+agpop %>% 
+  ggplot(aes(x = acres87/1000000, y = acres92/1000000)) +
+  geom_point() +
+  geom_abline(intercept = 0, slope = Bhat) +
+  labs(x = "Millions of Acres Devoted to Farms (1987)",
+       y = "Millions of Acres Devoted to Farms (1992)") +
+  theme_bw()
+```
+</center>
+
+## 4.1: Ratio Estimation in Simple Random Sampling
+
+- We can construct confidence intervals for $\beta$, $\mu$, and $\tau_{y}$ under ratio estimation.
+
+- First, we need the residual, $$ e_i = y_i - \hat{\beta}x_i, $$ and the sample variance of the residuals, $$ s_e^2 = \frac{1}{n-1} \sum_{i = \mathscr{S}} e_i^2 $$ 
+
+## 4.1: Ratio Estimation in Simple Random Sampling
+
+- For the slope, $\beta$, $$ \hat{\beta} \pm z_{\alpha/2} \sqrt{\left(1 - \frac{n}{N} \right) \frac{s_e^2}{n \bar{x}^2}}$$
+
+- For the mean, $\mu$, $$ \hat{\bar{y}}_r \pm z_{\alpha/2} \sqrt{\left(1 - \frac{n}{N} \right) \left( \frac{\bar{x}_{\mathscr{U}}}{\bar{x}} \right)^2 \frac{s_e^2}{n}} $$
+
+- For the total, $\tau$, $$ \hat{\tau}_{yr} \pm z_{\alpha/2} \sqrt{\left(1 - \frac{n}{N} \right) \left( \frac{\tau_x}{\bar{x}} \right)^2 \frac{s_e^2}{n}} $$
+
+## 4.1: Ratio Estimation in Simple Random Sampling
+
+- Let's find the CIs from the sample in the **agsrs** dataset.
+
+- First, we need to find the residual (recall, *y* is *acres92* and *x* is *acres87*),
+
+```{r}
+agsrs <- agsrs %>%
+  mutate(e = acres92 - Bhat*acres87)
+format(sum(agsrs$e), scientific = FALSE) # check that e = 0
+```
+
+- Then, the variance of the residuals,
+
+```{r}
+(s2_e = var(agsrs$e))
+```
+
+## 4.1: Ratio Estimation in Simple Random Sampling
+
+- Finding the CI for $\beta$, the slope,
+$$ \hat{\beta} \pm z_{\alpha/2} \sqrt{\left(1 - \frac{n}{N} \right) \frac{s_e^2}{n \bar{x}^2}}$$
+
+```{r}
+n = nrow(agsrs) # sample size
+N = nrow(agpop) # pop. size
+MOE = qnorm(.975, 0, 1)*sqrt((1-n/N)*s2_e/(n*xbar^2))
+(lb = Bhat - MOE)
+(ub = Bhat + MOE)
+```
+
+- The point estimate for $\beta$ is $\hat{\beta} =$ `r round(Bhat, 3)` and the 95% CI for $\beta$ is (`r round(lb, 3)`, `r round(ub, 3)`).
+
+## 4.1: Ratio Estimation in Simple Random Sampling
+
+- Finding the CI for the mean, $\mu$, $$ \hat{\bar{y}}_r \pm z_{\alpha/2} \sqrt{\left(1 - \frac{n}{N} \right) \left( \frac{\bar{x}_{\mathscr{U}}}{\bar{x}} \right)^2 \frac{s_e^2}{n}} $$
+
+```{r}
+n = nrow(agsrs) # sample size
+N = nrow(agpop) # pop. size
+MOE = qnorm(.975, 0, 1)*sqrt((1-n/N)*((xbar_U/xbar)^2)*(s2_e/n))
+(lb = ybarhat_r - MOE)
+(ub = ybarhat_r + MOE)
+```
+
+- The point estimate for $\mu$ is $\hat{\bar{y}}_r =$ `r format(round(ybarhat_r, 2), scientific = FALSE)` and the 95% CI for $\mu$ is (`r format(round(lb, 2), scientific = FALSE)`, `r format(round(ub, 2), scientific = FALSE)`).
+
+## 4.1: Ratio Estimation in Simple Random Sampling
+
+- Finding the CI for the total, $\tau$, $$ \hat{\tau}_{yr} \pm z_{\alpha/2} \sqrt{\left(1 - \frac{n}{N} \right) \left( \frac{\tau_x}{\bar{x}} \right)^2 \frac{s_e^2}{n}} $$
+
+```{r}
+n = nrow(agsrs) # sample size
+N = nrow(agpop) # pop. size
+MOE = qnorm(.975, 0, 1)*sqrt((1-n/N)*((tau_x/xbar)^2)*(s2_e/n))
+(lb = tauhat_yr - MOE)
+(ub = tauhat_yr + MOE)
+```
+
+- The point estimate for $\tau$ is $\hat{\tau} =$ `r format(round(tauhat_yr, 2), scientific = FALSE)` and the 95% CI for $\tau$ is (`r format(round(lb, 2), scientific = FALSE)`, `r format(round(ub, 2), scientific = FALSE)`).
+
+## 4.2: Regression Estimation in Simple Random Sampling
+
+- Ratio estimation works best when the data fits a straight line through the origin.
+
+    - However, we will see situations where the line does not go through the origin.
+    
+- We will now estimate $\hat{\beta}$ using the straight line regression model, $$y = \beta_0 + \beta_1 x + e$$
+
+- This is called the **ordinary least squares** line.
+
+- We will estimate the slope, $\beta_1$ first, $$\hat{\beta}_1 = \frac{r s_y}{s_x},$$ where $r$ is the sample Pearson correlation between $x$ and $y$.
+    
+- Then, we will estimate the intercept, $\beta_0$, $$\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}.$$    
+
+## 4.2: Regression Estimation in Simple Random Sampling
+
+- We can then use the regression equation to find an estimate of $\mu$, $$\hat{\bar{y}}_{\text{reg}} = \hat{\beta}_0 + \hat{\beta}_1\bar{x}_{\mathscr{U}}$$
+
+- This leads to new residuals, $$e_i = y_i - \left( \hat{\beta}_0 + \hat{\beta}_1 x_i \right)$$
+
+- and a confidence interval for $\mu$, $$\hat{\bar{y}}_{\text{reg}} \pm z_{\alpha/2} \sqrt{\left( 1 - \frac{n}{N} \right) \frac{s_e^2}{n}}$$
+
+## 4.2: Regression Estimation in Simple Random Sampling
+
+- We can use the previous result to find the estimate of of $\tau$, $$\hat{\bar{\tau}}_{y\text{reg}} = N\left(\hat{\beta}_0 + \hat{\beta}_1\bar{x}_{\mathscr{U}}\right)$$
+
+- This leads to a new confidence interval for $\tau$, $$\hat{\tau}_{y\text{reg}} \pm z_{\alpha/2} \sqrt{\left( 1 - \frac{n}{N} \right) \frac{N^2s_e^2}{n}}$$
+
+## 4.2: Regression Estimation in Simple Random Sampling
+
+- Let us look at a new example.
+
+- To estimate the number of dead trees in an area, the area was divided into 100 square plots and, using a photograph, the number of dead trees was counted. 
+
+    - Photo counts can be made quickly, but sometimes a tree is misclassified or not detected. 
+    
+- A simple random sample of 25 of the plots for field counts of dead trees was taken. 
+
+    - This sample is available in the **deadtrees** dataset.
+
+```{r}
+data(deadtrees)
+head(deadtrees, n=2)
+```
+
+- We know that the population mean number of dead trees per plot from the photo count is 11.3. 
+
+## 4.2: Regression Estimation in Simple Random Sampling
+
+- Let us first graph the data,
+
+```{r, eval = FALSE, warning = FALSE, message = FALSE}
+deadtrees %>% 
+  ggplot(aes(x = photo, y = field)) +
+  geom_point() +
+  labs(x = "Photo Count of Dead Trees",
+       y = "Field Count of Dead Trees") +
+  theme_bw()
+```
+
+## 4.2: Regression Estimation in Simple Random Sampling
+
+- Let us first graph the data,
+
+<center>
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+deadtrees %>% 
+  ggplot(aes(x = photo, y = field)) +
+  geom_point() +
+  labs(x = "Photo Count of Dead Trees",
+       y = "Field Count of Dead Trees") +
+  theme_bw()
+```
+</center>
+
+- The data is pretty scattered out. Of note:
+
+    - If we were to create a regression line, it would not go through the origin.
+    
+    - The correlation is not as high as we saw in the previous example.
+    
+## 4.2: Regression Estimation in Simple Random Sampling
+
+- We can use the [`lm()`](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/lm) and [`coefficients()`](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/coef) to directly find the regression line,
+
+```{r}
+m <- lm(field ~ photo, data = deadtrees)
+coefficients(m)
+```
+
+- We can save the coefficients for future calculations,
+```{r}
+b_0 = coefficients(m)[1]
+b_1 = coefficients(m)[2]
+```
+
+- We can also use the [`cor()`](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/cor) function to directly find the Pearson correlation,
+
+```{r}
+(r = cor(deadtrees$photo, deadtrees$field))
+```
+
+## 4.2: Regression Estimation in Simple Random Sampling
+
+- Let's start working towards a CI for $\mu$.
+
+- First, the residuals.
+
+```{r}
+deadtrees <- deadtrees %>%
+  mutate(e_comp = field - (b_0+b_1*photo), # hard code
+         e_easy = residuals(m)) # use built in function
+head(deadtrees,n=2)
+```
+
+- We also need the variance of the residuals,
+
+```{r}
+(s2_e = var(deadtrees$e_easy))
+```
+
+## 4.2: Regression Estimation in Simple Random Sampling
+
+- Before we calculate the CI for $\mu$, let us estimate $\mu$ using the regression model.
+
+    - Recall from the problem set up, we know that the population mean number of dead trees per plot from the photo count is 11.3. 
+    
+```{r}
+(yhatbar_reg = b_0 + b_1*11.3)
+```
+
+## 4.2: Regression Estimation in Simple Random Sampling
+
+- Now, the confidence interval for $\mu$, $$\hat{\bar{y}}_{\text{reg}} \pm z_{\alpha/2} \sqrt{\left( 1 - \frac{n}{N} \right) \frac{s_e^2}{n}}$$
+
+```{r}
+n = nrow(deadtrees) # sample size
+N = 100 # pop. size; given in problem
+MOE = qnorm(.975, 0, 1)*sqrt((1-n/N)*(s2_e/n))
+(lb = yhatbar_reg - MOE)
+(ub = yhatbar_reg + MOE)
+```
+
+- The point estimate for $\mu$ is $\hat{\bar{y}}_{\text{reg}} =$ `r format(round(yhatbar_reg, 2), scientific = FALSE)` and the 95% CI for $\mu$ is (`r format(round(lb, 2), scientific = FALSE)`, `r format(round(ub, 2), scientific = FALSE)`).
+
+## 4.2: Regression Estimation in Simple Random Sampling
+
+- We can use this information to estimate the total number of dead trees, $\tau$. $$\hat{\bar{\tau}}_{y\text{reg}} = N\left(\hat{\beta}_0 + \hat{\beta}_1\bar{x}_{\mathscr{U}}\right)$$
+
+```{r}
+(tauhat_yreg = N*yhatbar_reg)
+```
+
+## 4.2: Regression Estimation in Simple Random Sampling
+
+- Then the confidence interval for $\tau$, $$\hat{\tau}_{y\text{reg}} \pm z_{\alpha/2} \sqrt{\left( 1 - \frac{n}{N} \right) \frac{N^2s_e^2}{n}}$$
+
+```{r}
+MOE = qnorm(.975, 0, 1)*sqrt((1-n/N)*(N^2*s2_e/n))
+(lb = tauhat_yreg - MOE)
+(ub = tauhat_yreg + MOE)
+```
+
+- Thus, the point estimate for $\tau$ is $\hat{\tau}_{y\text{reg}} =$ `r format(round(tauhat_yreg, 2), scientific = FALSE)` and the 95% CI for $\tau$ is (`r format(round(lb, 2), scientific = FALSE)`, `r format(round(ub, 2), scientific = FALSE)`).
+
+## Homework
+
+- Read Sections 4.1.1, 4.1.5
+
+- 1, 2, 5, 6, 8, 11, 13 
+
