@@ -1,0 +1,51 @@
+---
+title: "Lab: Week 6"
+author: "Your Name Here"
+format: 
+  html:
+    self-contained: true
+execute:
+  echo: true
+editor: source
+---
+
+Monday's lecture: [Chapter 4: Part 1](https://github.com/samanthaseals/STA4222/blob/master/slides/L05.qmd)
+
+The data set **agsrs** also contains information on the number of farms in 1987 for the SRS of 300 counties from the population of the 3078 counties in the United States. In 1987, the United States had a total of 2,087,759 farms.
+
+1. Call in the necessary packages:
+
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(SDAResources)
+```
+
+2. Call in the dataset,
+
+```{r}
+
+```
+
+3. Plot the data. Use the number of farms in 1987 (*farms87*) on the *x*-axis and the number of acres devoted to farming in 1992 (*acres92*) on the *y*-axis.
+
+```{r}
+
+```
+
+4. Use ratio estimation to estimate the total number of acres devoted to farming in 1992 (*acres92*), using the number of farms in 1987 (*farms87*) as the auxiliary variable.
+
+```{r}
+
+```
+
+5. Use regression estimation to estimate the total number of acres devoted to farming in 1992 (*acres92*), using the number of farms in 1987 (*farms87*) as the auxiliary variable.
+
+```{r}
+
+```
+
+6. Which method gives the most precision: ratio estimation with auxiliary variable *acres87* (go back to lecture for this estimate), ratio estimation with auxiliary variable *farms87* (question 4), or regression estimation with auxiliary variable *farms87* (question 5)? For full credit, you **must** provide appropriate statistical justification with your response.
+
+```{r}
+
+```
