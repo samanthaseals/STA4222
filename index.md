@@ -22,7 +22,7 @@ show_sidebar: false
 |      | W   | 02/08 | R lab (Ch 3 - part 2) | [html](https://samanthaseals.github.io/STA4222/labs/W04.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W04.qmd) |
 | 6    | M   | 02/13 | Ratio and Regression Estimation (Ch 4 - part 1) | [html](https://samanthaseals.github.io/STA4222/slides/L05.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/slides/L05.qmd) |
 |      | W   | 02/15 | R lab (Ch 4 - part 1) | [html](https://samanthaseals.github.io/STA4222/labs/W06.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W06.qmd)  |
-| 7    | M   | 02/20 | Ratio and Regression Estimation (Ch 4 - part 2)  | |
+| 7    | M   | 02/20 | Ratio and Regression Estimation (Ch 4 - part 2)  | [html](https://samanthaseals.github.io/STA4222/slides/L06.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/slides/L06.qmd) |
 |      | W   | 02/22 | R lab (Ch 4 - part 2) | |
 | 8    | M   | 02/27 | Cluster Sampling (Ch 5) | |
 |      | W   | 03/01 | R lab (Ch 5) | |
