@@ -1,0 +1,428 @@
+---
+title: "Ratio and Regression Estimation"
+subtitle: "Chapter 4 - Part 2"
+author: "Dr. Seals"
+execute:
+  echo: true
+format: 
+  revealjs:
+    theme: uwf
+    self-contained: true
+    slide-number: false
+    footer: "[STA4222 - Sampling Theory](https://samanthaseals.github.io/STA4222)"
+    width: 1600
+    height: 900
+    df-print: paged
+    html-math-method: katex
+editor: source
+---
+
+## Introduction
+
+- Last week, we discussed ratio estimation and regression estimation under simple random sampling.
+
+- This week, we will extend these methods into stratified sampling.
+
+- Remember:
+
+    - ratio estimation is a line that goes through the origin, and
+    - regression estimation does not force the line to go through the origin.
+
+- This estimation method uses information from an auxillary variable, *x*, that we suspect is correlated to what we are measuring, *y*.
+
+## 4.3: Estimation in Domains
+
+- Before we talk about stratified sampling, let's consider domains or subdomains.
+
+- Sometimes, we want to create separate estimations for subpopulations (aka domains or subdomains).
+
+- Suppose we haven taken a simple random sample of *n* = 1000 faculty in the state of Florida.
+
+    - We want to estimate the average salary for lecturers, assistant professors, associate professors, and full professors.
+    
+    - Thus, we have four domains.
+    
+- We do not know what domain an observation will fall into, so the number of observations in a sample that fall into each domain is an unknown random variable when the survey is designed.
+
+## 4.3: Estimation in Domains
+
+- Suppose there are $D$ domains. Then,
+
+    - $\mathscr{U}_d$ is the index set of the units in the population in doman $d$, where $d = 1, 2, ... , D$,
+    
+    - $N_d$ is the number of population units in $\mathscr{U}_d$,
+    
+    - $\mathscr{S}_d$ is the index set of the units int he sample that are in domain $d$, where $d = 1, 2, ... , D$, and
+    
+    - $n_d$ is the number of sample units in $\mathscr{S}_d$.
+    
+        - This is a random number; if a different sample were taken, we would likely have a different value for $n_d$.
+        
+- We can estimate the average of a specific domain, $\mu_d$, using $\bar{y}_d$,  
+
+$$ \bar{y}_d = \frac{\sum_{i \in \mathscr{S}_d} y_i}{n_d} $$        
+
+## 4.3: Estimation in Domains
+
+- Why is $\bar{y}_d$ a ratio estimator? Let    
+
+$$\begin{align*}x_i &=
+  &\begin{cases}1 & \text{if $i \in \mathscr{U}_d$} \\
+               0 & \text{if $i \notin \mathscr{U}_d$}
+  \end{cases} \\
+  u_i &= y_i x_i = &\begin{cases} y_i & \text{if $i \in \mathscr{U}_d$} \\
+  0 & \text{if $i \notin \mathscr{U}_d$}\end{cases}\end{align*}$$
+
+- Then, we know 
+
+$$\begin{align*} \tau_x &= \sum_{i=1}^N x_i = N_d &  \mu_x &= \frac{N_d}{N} & \bar{x} &= \frac{n_d}{n}\\ \tau_u &= \sum_{i=1}^N u_i & \mu_{y_d} &= \frac{\tau_u}{\tau_x} = \beta \end{align*}$$
+
+## 4.3: Estimation in Domains
+
+- Finally,
+
+$$\begin{align*} \bar{y}_d &= \hat{\beta} \\
+&= \frac{\hat{\tau}_u}{\hat{\tau}_x} \\
+&= \frac{\sum_{i=1}^n y_i x_i}{\sum_{i=1}^n x_i} \\
+&= \frac{\sum_{i \in \mathscr{S}_d} y_i}{n_d} \end{align*}$$  
+
+- (Remember that $x_i$ is 1 if the observation is in the domain and 0 otherwise... thus we simplify appropriately.)
+
+## 4.3: Estimation in Domains
+
+- In order to calculate a confidence interval for $\mu$, we need the standard error,$$ \text{SE}[\bar{y}_d] = \sqrt{\left(1 - \frac{n}{N} \right) \frac{n}{n_d^2} \frac{(n_d-1)s_{yd}^2}{n-1}}, $$ where $s^2_{yd}$ is the sample variance of the sample observations in domain $d$, $$ s_{yd}^2 = \frac{1}{n_d-1} \sum_{i \in \mathscr{S}_d } (y_i - \bar{y}_d)^2. $$
+
+- Note 1: if $\text{E}[n_d]$ is large, then $(n_d-1)/n_d \approx 1$, and we can simplify $\text{SE}[\bar{y}_d]$, $$ \text{SE}[\bar{y}_d] = \sqrt{\left(1 - \frac{n}{N} \right) \frac{s_{yd}^2}{n_d}} $$
+
+- Note 2: if the sample is large enough, $\text{SE}[\bar{y}_d]$ is approximately the same as in simple random sampling.
+
+## 4.3: Estimation in Domains
+
+- We are also interested in estimating the total.
+
+- If $N_d$ is known, $$\hat{\tau}_u = N_d \bar{y}_d$$
+
+- However, if $N_d$ is unknown, $$ \hat{\tau}_{u} = \hat{\tau}_{yd} = N \bar{u} $$
+
+- and has standard error, $$ \text{SE}\left[ \hat{\tau}_{yd} \right] = N \sqrt{\left( 1 - \frac{n}{N} \right) \frac{s^2_u}{n}} $$
+
+## 4.3: Estimation in Domains
+
+- Let us return to the simple random sample of the agriculture data,
+
+```{r}
+library(SDAResources)
+data(agsrs)
+```
+
+- We are interested in dichotomizing the number of farms:
+
+```{r, warning = FALSE, message = FALSE}
+library(tidyverse)
+agsrs <- agsrs %>% mutate(atleast600 = ifelse(farms92 >= 600, 1, 0))
+```
+
+- Let's count,
+
+```{r}
+agsrs %>% count(atleast600)
+```
+
+## 4.3: Estimation in Domains
+
+- We are interested in estimating the average and total number of acres devoted to farming in each domain. 
+
+- First, the summary statistics and standard errors,
+
+```{r}
+n = 300 # sample size
+N = 3078 # population size
+(summaries <- agsrs %>%
+   group_by(atleast600) %>%
+   summarize(n_d = n(), ybar_d = mean(acres92), s_d = sd(acres92)) %>% 
+   mutate(SE_ybar_d = sqrt( (1-n/N)*(n/n_d^2)*((n_d-1)*s_d^2/(n-1)))))
+```
+
+## 4.3: Estimation in Domains
+
+- Finally, we can construct the CI,
+
+```{r}
+(summaries <- summaries %>%
+   mutate(t = qt(0.975, n_d-1),
+          MOE = t*SE_ybar_d,
+          LB = ybar_d - MOE,
+          UB = ybar_d + MOE))
+```
+
+- Thus, the estimates for $\mu_d$ are as follows,
+
+    - For counties with at least 600 farms, $\bar{y}_{\ge 600} = 316566$ with 95% CI $(273919, 359212)$.
+    
+    - For counties with fewer than 600 farms, $\bar{y}_{< 600} = 283814$ with 95% CI\ $(226859, 340769)$.
+
+## 4.3: Estimation in Domains
+
+- What's the difference between analyzing domains and strata?
+
+    - Both are subsets of the population...
+    
+    - ... but strata are built into the sample design.
+    
+- Stratified random sampling selects a predetermined number of observations, $n_h$, from stratum $h$.
+
+    - Every sample that could possibly be drawn will contain $n_h$ observations from stratum $h$.
+    
+- A domain is simply a population subset of interest.
+
+    - Unlike the sample size from stratum $h$, $n_d$ is not pre-determined and fixed.
+    
+    - Recall, $n_d$ is a *random variable* because it can vary between samples.
+
+## 4.4: Poststratification
+
+- Sometimes we want to perform stratified random sampling, however, we do not have the appropriate information to stratify during the design phase.
+
+    - e.g., tasked with estimating the average spent on groceries every month (🥴) and want to stratify based on household size... but our sampling frame only provides a list of households.
+    
+- We can take a simple random sample and then stratify on the backend (i.e., when performing the analysis).
+
+- This allows us to adjust the sample weights to match those of the population.
+
+    - i.e., the weights will sum to $N_h$ in poststratum $h$.
+    
+## 4.4: Poststratification
+
+- Let $w_i$ be the sampling weight for unit $i$. Then, $$w_i^* = \sum_{h=1}^H \frac{N_h}{\hat{N}_h} w_i x_{ih}$$
+
+- Further, let $x_i$ be an indicator variable for inclusion in poststratum $h$. Then, $\hat{N}_h = \sum_{i \in \mathscr{S}} w_i x_{ih}$.
+
+- We can then estimate the population mean, $\mu_y$, $$ \bar{y}_{\text{post}} = \frac{\sum_{i \in \mathscr{S}} w_i^* y_i}{\sum_{i \in \mathscr{S}} w_i^*}$$
+
+- And the standard error is as follows, $$\text{SE}\left[ \bar{y}_{\text{post}} \right] = \sqrt{\left( 1 - \frac{n}{N} \right) \sum_{h=1}^H \frac{N_h}{N} \frac{s^2_h}{n}}$$
+
+## 4.4: Poststratification
+
+- Consider the simple random sample of the agriculture data.
+
+- Recall that the counties can be categorized by the region.
+
+```{r}
+data(agsrs)
+head(agsrs)
+```
+
+## 4.4: Poststratfication
+
+- Let's estimate the average number of farm acres per county in 1992.
+
+    - We will poststratify the simple random sample.
+    
+    - Note that $w_i = N/n = 3078/300 = 10.26$.
+    
+- First, setting up for calculations,
+    
+```{r}
+pop <- SDAResources::agpop %>% 
+  group_by(region) %>% 
+  summarize(N_h = n()) # get population size
+
+summaries <- agsrs %>% 
+  group_by(region) %>% 
+  summarize(n_h = n(), # sample size
+            w_i = 3078/300, # N/n for original weights
+            ybar_h = mean(acres92), # means
+            sd_h = sd(acres92)) # standard deviations
+
+summaries <- full_join(pop, summaries, by = "region")
+```
+
+## 4.4: Poststratification
+
+```{r}
+head(summaries)
+```
+
+## 4.4: Poststratification
+
+- Now we can perform our calculations.
+
+- Recall, $$\bar{y}_{\text{post}} = \frac{\sum_{i \in \mathscr{S}} w_i^* y_i}{\sum_{i \in \mathscr{S}} w_i^*}$$
+
+```{r}
+summaries <- summaries %>%
+  mutate(Nhat_h = n_h*w_i, 
+         w_i_star = (N_h/Nhat_h)*w_i)
+weights <- summaries %>% select(region, w_i_star)
+new <- full_join(agsrs, weights, by = "region") %>%
+  mutate(num = w_i_star*acres92)
+
+(ybar_post = sum(new$num)/sum(new$w_i_star))
+```
+
+## 4.4: Poststratification
+
+- Next, we want the standard error so we can compute the margin of error for the CI, $$\text{SE}\left[ \bar{y}_{\text{post}} \right] = \sqrt{\left( 1 - \frac{n}{N} \right) \sum_{h=1}^H \frac{N_h}{N} \frac{s^2_h}{n}}$$
+
+```{r}
+summaries <- summaries %>%
+  mutate(sqrt_arg = N_h/sum(N_h) * sd_h^2/sum(n_h))
+
+(SE_ybar_post = sqrt((1-nrow(agsrs)/nrow(SDAResources::agpop))*sum(summaries$sqrt_arg)))
+```
+
+## 4.4: Poststratification
+
+- Then to compute the CI,
+
+```{r}
+MOE = qt(0.975, n-1)*SE_ybar_post
+(LB = ybar_post - MOE)
+(UB = ybar_post + MOE)
+```
+
+- Thus, the estimate for $\mu$ is $\bar{y}_{\text{post}} = 299778.1$ with 95% CI $(265452.4, 334103.9)$.
+
+## Homework
+
+4, 6, 7, 8, 17, 19
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
