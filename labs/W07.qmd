@@ -1,0 +1,52 @@
+---
+title: "Lab: Week 7"
+author: "Your Name Here"
+format: 
+  html:
+    self-contained: true
+execute:
+  echo: true
+editor: source
+---
+
+Monday's lecture: [Chapter 4: Part 2](https://github.com/samanthaseals/STA4222/blob/master/slides/L06d.qmd)
+
+The data set **agsrs** also contains information on the number of farms in 1987 for the SRS of 300 counties from the population of the 3078 counties in the United States. In 1987, the United States had a total of 2,087,759 farms.
+
+1. Call in the necessary packages:
+
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(SDAResources)
+```
+
+2. Call in the datasets needed,
+
+```{r}
+
+```
+
+3. Using the region (*region*) as the domain, estimate the total number of acres devoted to farming in 1987 (*acres87*) for each domain. Remember to construct both the point and interval estimates.
+
+```{r}
+
+```
+
+4. Using the region (*region*) as the strata for poststratification, estimate the total number of acres devoted to farming in 1987 (*acres87*) for the United States. Remember to construct both the point and interval estimates.
+
+```{r}
+
+```
+
+5. Challenge (must be answered for full credit on lab): does there appear to be a difference in acreage between regions?
+
+6. Challenge and bonus (no answer required for full credit on lab): construct a data visualization for the confidence intervals in question 3.
+
+```{r}
+
+```
+
+
+
+
+
