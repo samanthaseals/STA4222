@@ -1,0 +1,122 @@
+---
+title: "Lab: Week 8"
+author: "Your Name Here"
+format: 
+  html:
+    self-contained: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: source
+---
+
+Monday's lecture: [Chapter 5: Part 1](https://github.com/samanthaseals/STA4222/blob/master/slides/L07.qmd)
+
+The **ozone** dataset contains hourly ozone readings from a site in Monterey County, California for 2018 and 2019.
+
+```{r}
+library(SDAResources)
+library(tidyverse)
+data(ozone)
+ozone <- ozone %>%
+  pivot_longer(
+    cols = starts_with("hr"),
+    names_to = "hour",
+    names_prefix = "hr",
+    values_to = "reading"
+  ) %>%
+  mutate(num = row_number())
+```
+
+1. Create a histogram of the population ozone readings (*reading*). Hint: [here's an example](https://r-graph-gallery.com/220-basic-ggplot2-histogram.html).
+
+```{r}
+
+```
+
+2. Create a scatterplot and identify the type of population this is. Put reading number (*num*) on the *x*-axis and ozone reading (*reading*) on the *y*-axis. Hint: [here's an example](https://r-graph-gallery.com/272-basic-scatterplot-with-ggplot2.html)
+
+```{r}
+
+```
+
+3. Find the mean and standard deviation of the population readings.
+
+```{r}
+
+```
+
+4. The following function will allow us to take systematic samples,
+
+```{r}
+getsys = function(k,N){
+  n = ceiling(N/k)
+  r = sample(1:k, 1)
+  seq(r, r + k*(n-1), k)
+}
+
+# example use - penguin dataset with k = 5
+# sample <- palmerpenguins::penguins[getsys(k = 5, N = nrow(palmerpenguins::penguins)), ]
+```
+
+4a. Take a systematic sample with $k = 5$ (i.e., every 5th observation). Estimate the mean - make sure you include the point estimate and the 95% CI.
+
+```{r}
+
+```
+
+4b. Take a systematic sample with $k = 8$ (i.e., every 8th observation). Estimate the mean - make sure you include the point estimate and the 95% CI.
+
+```{r}
+
+```
+
+4c. Take a systematic sample with $k = 12$ (i.e., every 12th observation). Estimate the mean - make sure you include the point estimate and the 95% CI.
+
+```{r}
+
+```
+
+4d. Take a systematic sample with $k = 24$ (i.e., every 24th observation). Estimate the mean - make sure you include the point estimate and the 95% CI.
+
+```{r}
+
+```
+
+4e. Take a systematic sample with $k = 48$ (i.e., every 48th observation). Estimate the mean - make sure you include the point estimate and the 95% CI.
+
+```{r}
+
+```
+
+4f. Take a systematic sample with $k = 50$ (i.e., every 50th observation). Estimate the mean - make sure you include the point estimate and the 95% CI.
+
+```{r}
+
+```
+
+4g. Fill in the table of results:
+
+<center>
+|$k$|$\bar{y}_{\text{sys}} \text{ (95\% CI)}$|
+|-|:-:|
+|5| FILL IN HERE |
+|8| FILL IN HERE |
+|12| FILL IN HERE |
+|24| FILL IN HERE |
+|48| FILL IN HERE |
+|50| FILL IN HERE |
+</center>
+
+5. Challenge (must be completed for full credit)! Create a scatterplot to graphically display the results. Hint 1: use the table in 4g to create a dataset to use for graphing. Hint 2: [here's how to include error bars](https://r-graph-gallery.com/4-barplot-with-error-bar.html).
+
+```{r}
+
+```
+
+6. Write a couple of sentences summarizing what you found in lab. Things to think about -- What happens as we increase the choice of $k$? What happens when we pull from the same time every day (i.e., $k=24$) vs. not (i.e., $k=5$ or $k=50$)? What happens when we pull every couple of days (i.e., $k=48$ or $k=50$) vs. more often ($k<48$)?
+
+
+
+
