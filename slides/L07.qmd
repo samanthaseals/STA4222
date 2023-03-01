@@ -1,0 +1,377 @@
+---
+title: "One-Stage Cluster Sampling and Systematic Sampling"
+subtitle: "Chapter 5 - Part 1"
+author: "Dr. Seals"
+execute:
+  echo: true
+format: 
+  revealjs:
+    theme: uwf
+    self-contained: true
+    slide-number: false
+    footer: "[STA4222 - Sampling Theory](https://samanthaseals.github.io/STA4222)"
+    width: 1600
+    height: 900
+    df-print: paged
+    html-math-method: katex
+editor: source
+---
+
+## 5.1: Introduction
+
+-   **Cluster random sample**: the population is divided into subgroups (clusters) and a simple random sample of clusters is selected.
+
+- There are times where it is not feasible to take a portion of each group like in stratified sampling.
+
+- In these cases, we can conduct cluster sampling.
+
+- Note that stratified sampling usually increases precision while cluster sampling usually decreases precision.
+
+    - Members of the same cluster tend to be more similar than elements selected at random from the whole population.
+    
+- Notation:
+
+    - Primary sampling unit (psu); i.e., whole cluster
+    - Secondary sampling unit (ssu); i.e., individual in cluster
+
+## 5.1: Introduction
+
+**Notation: Population**
+
+- $y_{ij}$: measurement for the $j^{\text{th}}$ element in the $i^{\text{th}}$ cluster (psu)
+
+- $N$: number of clusters (psus) in the population
+
+- $M_i$: number of individual units (ssus) in cluster $i$ (psu $i$)
+
+- $M_0 = \sum_{i=1}^N M_i$: total number of individual units (ssus) in the population
+
+- $\tau_i = \sum_{j=1}^{M_i} y_{ij}$: total in cluster $i$ (psu $i$)
+
+- $\tau = \sum_{i=1}^N \tau_i = \sum_{i=1}^N \sum_{j=1}^{M_i} y_{ij}$: population total
+
+- $\sigma_{\tau}^2 = \frac{1}{N-1} \sum_{i=1}^N \left( \tau_i - \frac{\tau}{N} \right)^2$: population variance of the cluster (psu) totals 
+
+## 5.1: Introduction
+
+**Notation: Samples**
+
+- $\mathscr{S}$: sample of clusters (psus) from the population
+
+- $\mathscr{S}_i$: individuals sampled from the cluster $i$ (psu $i$)
+
+- $n$: number of clusters (psus) in the sample
+
+- $m_i$: number of individual units (ssus) in the sample from cluster $i$ (psu $i$)
+
+- $\bar{y}_i = \frac{1}{m_i} \sum_{j \in \mathscr{S}_i} y_{ij}$: sample mean in cluster $i$ (psu $i$)
+
+- $\hat{\tau}_i = \frac{M_i}{m_i} \sum_{j \in \mathscr{S}_i} y_{ij}$: total in cluster $i$ (psu $i$)
+
+- $s_{\tau}^2 = \frac{1}{n-1} \sum_{i \in \mathscr{S}} \left( \hat{\tau}_i - \frac{\sum_{j \in \mathscr{S}} \hat{\tau}_j}{n} \right)^2$: sample variance among estimated cluster (psu) totals
+
+- $s_i^2 = \frac{1}{m_i-1} \sum_{j \in \mathscr{S}_i} \left( y_{ij} - \bar{y}_i \right)^2$: sample variance within cluster $i$ (psu $i$)
+
+- $w_{ij}$: sampling weight for unit $j$ (ssu $j$) in cluster $i$ (psu $i$)
+
+## 5.2: One-Stage Cluster Sampling
+
+- In one-stage cluster sampling, either all or none of the elements from a cluster (psu) are in the sample.
+
+    - This means that $M_i = m_i$.
+    
+- Let us first investigate the case where all clusters have the same number of elements,
+
+    - Thus, $M_i = m_i = M$.
+    
+- We will treat the cluster (psu) means or totals as the observations, ignoring the individual elements.
+
+    - This results in a simple random sample of $n$ data points.
+    
+        - e.g., $\left\{ \tau_i, \ i \in \mathscr{S} \right\}$ gives $n$ totals - one for each cluster.
+
+## 5.2: One-Stage Cluster Sampling
+
+- We can find the total, $$\hat{\tau} = \frac{N}{n} \sum_{i \in \mathscr{S}} \tau_i$$
+
+- and the associated standard error, $$\text{SE}\left[ \hat{\tau} \right] = N \sqrt{\left(1-\frac{n}{N}\right) \frac{s_{\tau}^2}{n}},$$ where $$s_{\tau}^2 = \frac{1}{n-1} \sum_{i \in \mathscr{S}} \left( \tau_i - \frac{\hat{\tau}}{N} \right)^2$$
+
+## 5.2: One-Stage Cluster Sampling
+
+- Then, to estimate the mean, we divide the estimated total by total number of elements in the sample, $$ \hat{y} = \frac{\hat{\tau}}{NM}, $$
+
+- and the associated standard error, $$\text{SE} \left[ \bar{y} \right] = \frac{1}{M} \sqrt{\left( 1 - \frac{n}{N} \right) \frac{s_{\tau}^2}{n}}$$
+
+## 5.2: One-Stage Cluster Sampling
+
+- A student wants to estimate the average grade point average (GPA) in their dormitory. 
+
+- Instead of obtaining a listing of all students in the dorm and conducting a simple random sample, they notices that the dorm consists of 100 suites, each with four students.
+
+- They choose 5 of those suites at random and obtains the GPA of every person in the 5 suites. 
+
+- The results are in a [Google Sheet](https://docs.google.com/spreadsheets/d/1puwcZHolQ0pFyQbS_o6-tGdcoKGRtfyVuEeqhHKzf4I):
+
+```{r, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(gsheet)
+data <- tibble(gsheet2tbl("https://docs.google.com/spreadsheets/d/1puwcZHolQ0pFyQbS_o6-tGdcoKGRtfyVuEeqhHKzf4I"))
+head(data, n = 2)
+```
+
+## 5.2: One-Stage Cluster Sampling
+
+- In this example, the clusters are the suites.
+
+    - $N = 100$ (total clusters in the population)
+    - $n = 5$ (clusters selected for sample)
+    - $M = 4$ (observations in each cluster)
+    
+- If we estimate $\tau$,$$\hat{\tau} = \frac{N}{n} \sum_{i \in \mathscr{S}} \tau_i$$
+
+```{r}
+n = 5
+N = 100
+M = 4
+data <- data %>% mutate(tot = GPA1 + GPA2 + GPA3 + GPA4)
+(tau_hat = N/n*sum(data$tot))
+```
+
+## 5.2: One-Stage Cluster Sampling
+
+- Then we can estimate $\bar{y}$,$$ \hat{y} = \frac{\hat{\tau}}{NM}, $$
+
+```{r}
+(y_bar = tau_hat / (N*M))
+```
+
+- and the standard error, $$\text{SE} \left[ \bar{y} \right] = \frac{1}{M} \sqrt{\left( 1 - \frac{n}{N} \right) \frac{s_{\tau}^2}{n}}$$
+
+```{r}
+s_tau2 = var(data$tot)
+(se_ybar = (1/M)*sqrt((1-n/N)*s_tau2/n))
+```
+
+## 5.2: One-Stage Cluster Sampling
+
+- Then the margin of error,
+```{r}
+MOE = qt(0.975, n-1)*se_ybar
+```
+
+- which allows us to compute the confidence interval,
+
+```{r}
+(lcl = y_bar - MOE)
+(ucl = y_bar + MOE)
+```
+
+- Giving us the final estimates of
+
+    - $\bar{y} = 2.826$
+    - 95% CI for $\mu$ is $(2.37, 3.28)$
+    
+## 5.2: One-Stage Cluster Sampling
+
+- In real life, equal cluster sizes will be rare.
+
+    - The difference between unequal- and equal-sized clusters is that the variation among the individual cluster totals $\tau_i$ is likely to be large when the clusters have different sizes.
+
+- We will update our estimators as follows.
+
+- An estimator of the population total, $\tau$, $$\hat{\tau}_{\text{unb}} = \frac{N}{n} \sum_{i=\mathscr{S}} \tau_i$$
+
+- and the corresponding standard error, $$\text{SE} \left[ \hat{\tau}_{\text{unb}} \right] = N \sqrt{ \left(1 - \frac{n}{N}\right) \frac{s_{\tau}^2}{n} }$$
+
+## 5.2: One-Stage Cluster Sampling
+
+- Then, if we want to estimate the mean, $\mu$, $$\bar{y}_{\text{r}} = \frac{\sum_{i \in \mathscr{S}} M_i \bar{y}_i}{\sum_{i \in \mathscr{S}} M_i}$$
+    
+- and the corresponding standard error,$$\text{SE}\left[ \hat{y}_{\text{r}} \right] = \sqrt{\left( 1 - \frac{n}{N} \right) \frac{s^2_{\text{r}}}{n \bar{M}^2}},$$ where $$s_\text{r}^2 = \frac{1}{n-1} \sum_{i \in \mathscr{S}} M_i^2 \left( \bar{y}_i - \bar{y}_r \right)^2$$ and $\bar{M}_i$ is the average cluster size.
+
+## 5.2: One-Stage Cluster Sampling
+
+- One-stage cluster samples are often used in educational studies, since students are naturally clustered into classrooms or schools. 
+
+- Consider a population of 187 high school algebra classes in a city. An investigator takes an SRS of 12 of those classes and gives each student in the sampled classes a test about function knowledge. 
+
+- The (hypothetical) data are given in the algebra dataset.
+
+```{r, warning = FALSE, message = FALSE}
+library(SDAResources)
+data(algebra)
+head(algebra, n = 2)
+```
+
+## 5.2: One-Stage Cluster Sampling
+
+- We will first summarize the data,
+
+```{r}
+alg <- algebra %>%
+  group_by(class) %>%
+  summarize(y_bar_i = mean(score),
+            tau_i = sum(score),
+            Mi = n())
+```
+
+- We then estimate the mean score, $\mu$, $$\bar{y}_{\text{r}} = \frac{\sum_{i \in \mathscr{S}} M_i \bar{y}_i}{\sum_{i \in \mathscr{S}} M_i}$$
+
+```{r}
+(y_bar_r = sum(alg$Mi*alg$y_bar_i)/sum(alg$Mi))
+```
+
+## 5.2: One-Stage Cluster Sampling
+
+- Then, the standard error,$$\text{SE}\left[ \hat{y}_{\text{r}} \right] = \sqrt{\left( 1 - \frac{n}{N} \right) \frac{s^2_{\text{r}}}{n \bar{M}^2}},$$
+
+```{r}
+n = nrow(alg)
+N = 187
+Mbar = sum(alg$Mi)/n
+s_r2 = sum(alg$Mi^2*(alg$y_bar_i-y_bar_r)^2)/(n-1)
+(SE = sqrt((1-n/N)*(s_r2/(n*Mbar^2)))) 
+```
+
+## 5.2: One-Stage Cluster Sampling
+
+- Then the margin of error,
+```{r}
+MOE = qt(0.975, n-1)*SE
+```
+
+- which allows us to compute the confidence interval,
+
+```{r}
+(lcl = y_bar_r - MOE)
+(ucl = y_bar_r + MOE)
+```
+
+- Giving us the final estimates of
+
+    - $\bar{y} = 62.57$
+    - 95% CI for $\mu$ is $(59.39, 65.75)$
+    
+## 5.5: Systematic Sampling
+
+- Systematic sampling is a special case of cluster sampling.
+
+- Take, for example, the following population: 
+
+<center>1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12</center>
+
+- If we want to take a systematic sample of size 3, we will take every 4^th^  value.
+
+    - Why 4^th^? $(N/n)$
+    
+- We can then split the population into clusters,
+
+<center> {1, 5, 9} {2, 6, 10} {3, 7, 11} {4, 8, 12} </center>
+
+- Then, we take a simple random sample of one cluster.
+
+## 5.5: Systematic Sampling
+
+- In a population of $NM$ elements, there are $N$ possible choices for the systematic sample, each of size $M$.
+
+- Because we are selecting only one cluster for the sample, that means that $$\bar{y}_{\text{sys}} = \bar{y}_i$$
+
+- Then, the standard error, $$\text{SE} \left[ \bar{y}_{\text{sys}} \right] = \sqrt{\left( 1 - \frac{n}{N} \right) \frac{s^2}{n}}$$
+
+
+## 5.5: Systematic Sampling
+
+- Note that the standard error will depend on the type of population we are dealing with.
+
+- **Random population**: A population is random if the elements of the population are in random order.
+
+- **Ordered population**: A population is ordered if the elements of a population have values that trend upward or downward when they are listed.
+
+- **Periodic population**: A population is periodic if the elements of a population have values that tend to cycle upward and downward in a regular pattern when listed.
+
+<center><img src = "images/L07a.png"></center>
+
+## 5.5: Systematic Sampling
+
+<center><img src = "images/L07a.png"></center>
+
+- A systematic sample for a random population behaves like a simple random sample.
+
+- In samples from an ordered population, the standard error will be smaller than under simple random sampling.
+
+    - In systematic sampling, we are guaranteed a sample with both high and low values.
+    
+    - In simple random sampling, it is entirely possible to obtain a sample with all small or all large values.
+    
+- In samples from a periodic population, the standard error may be larger or smaller than under simple random sampling.
+
+    - e.g., if we are sampling from grocery store sales and select data from every 7^th^ day, we will always sample on the same day $\to$ the variance is very small as compared to sampling every 3^rd^ day.
+
+## Homework
+
+- Read about sampling weights at the end of 5.1.1
+
+- 3, 4, 6, 11, 12, 15
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
