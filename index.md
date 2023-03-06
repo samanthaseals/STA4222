@@ -24,10 +24,10 @@ show_sidebar: false
 |      | W   | 02/15 | R lab (Ch 4 - part 1) | [html](https://samanthaseals.github.io/STA4222/labs/W06.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W06.qmd)  |
 | 7    | M   | 02/20 | Ratio and Regression Estimation (Ch 4 - part 2)  | [html](https://samanthaseals.github.io/STA4222/slides/L06.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/slides/L06.qmd) |
 |      | W   | 02/22 | R lab (Ch 4 - part 2) | [html](https://samanthaseals.github.io/STA4222/labs/W07.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W07.qmd) |
-| 8    | M   | 02/27 | Cluster Sampling (Ch 5) | |
-|      | W   | 03/01 | R lab (Ch 5) | |
-| 9    | M   | 03/06 | Sampling with Unequal Probabilities (Ch 6)| |
-|      | W   | 03/08 | R lab (Ch 6) | |
+| 8    | M   | 02/27 | One-Stage Cluster Sampling & Systematic Sampling (Ch 5 - part 1) | [html](https://samanthaseals.github.io/STA4222/slides/L07.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/slides/L07.qmd) |
+|      | W   | 03/01 | R lab (Ch 5 - part 1) | [html](https://samanthaseals.github.io/STA4222/labs/W08.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W08.qmd) |
+| 9    | M   | 03/06 | Two-Stage Cluster Sampling (Ch 5 - part 2) | [html](https://samanthaseals.github.io/STA4222/slides/L08.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/slides/L08.qmd) |
+|      | W   | 03/08 | Midterm | |
 | SB   | M   | 03/13 | Spring Break - no class | |
 |      | W   | 03/15 | Spring Break - no class | | 
 | 10   | M   | 03/20 | Complex Surveys (Ch 7)  | |
