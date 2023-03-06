@@ -1,0 +1,231 @@
+---
+title: "Two-Stage Cluster Sampling"
+subtitle: "Chapter 5 - Part 2"
+author: "Dr. Seals"
+execute:
+  echo: true
+format: 
+  revealjs:
+    theme: uwf
+    self-contained: true
+    slide-number: false
+    footer: "[STA4222 - Sampling Theory](https://samanthaseals.github.io/STA4222)"
+    width: 1600
+    height: 900
+    df-print: paged
+    html-math-method: katex
+editor: source
+---
+
+## Introduction
+
+- Last lecture, we introduced the concept of cluster sampling.
+
+- In one-stage cluster sampling, we take a random sample of clusters and all elements in the clusters are included in the sample.
+
+- Today, we will expand to two-stage cluster sampling.
+
+- In two-stage cluster sampling,
+
+    1. We select a simple random sample of $n$ clusters from the population of $N$ clusters.
+    
+    2. We take a sample of $m_i$ elements from each selected cluster.
+    
+- The textbook focuses on taking a simple random sample for the second step.
+
+    - However, we are able to take whatever type of sample is appropriate for the second step. 
+    
+    - Adjust formulas accordingly.
+    
+## 5.3: Two-Stage Cluster Sampling
+
+<center>
+<img src = "images/L08a.png">
+</center>
+
+## 5.3: Two-Stage Cluster Sampling
+
+<center>
+<img src = "images/L08b.png">
+</center>
+
+## 5.3: Two-Stage Cluster Sampling
+
+<center>
+<img src = "images/L08c.png">
+</center>
+
+## 5.3: Two-Stage Cluster Sampling
+
+**Notation: Population**
+
+- $y_{ij}$: measurement for the $j^{\text{th}}$ element in the $i^{\text{th}}$ cluster (psu)
+
+- $N$: number of clusters (psus) in the population
+
+- $M_i$: number of individual units (ssus) in cluster $i$ (psu $i$)
+
+- $M_0 = \sum_{i=1}^N M_i$: total number of individual units (ssus) in the population
+
+- $\tau_i = \sum_{j=1}^{M_i} y_{ij}$: total in cluster $i$ (psu $i$)
+
+- $\tau = \sum_{i=1}^N \tau_i = \sum_{i=1}^N \sum_{j=1}^{M_i} y_{ij}$: population total
+
+- $\sigma_{\tau}^2 = \frac{1}{N-1} \sum_{i=1}^N \left( \tau_i - \frac{\tau}{N} \right)^2$: population variance of the cluster (psu) totals 
+
+## 5.3: Two-Stage Cluster Sampling
+
+**Notation: Samples**
+
+- $\mathscr{S}$: sample of clusters (psus) from the population
+
+- $\mathscr{S}_i$: individuals sampled from the cluster $i$ (psu $i$)
+
+- $n$: number of clusters (psus) in the sample
+
+- $m_i$: number of individual units (ssus) in the sample from cluster $i$ (psu $i$)
+
+- $\bar{y}_i = \frac{1}{m_i} \sum_{j \in \mathscr{S}_i} y_{ij}$: sample mean in cluster $i$ (psu $i$)
+
+- $\hat{\tau}_i = \frac{M_i}{m_i} \sum_{j \in \mathscr{S}_i} y_{ij}$: total in cluster $i$ (psu $i$)
+
+- $s_{\tau}^2 = \frac{1}{n-1} \sum_{i \in \mathscr{S}} \left( \hat{\tau}_i - \frac{\sum_{j \in \mathscr{S}} \hat{\tau}_j}{n} \right)^2$: sample variance among estimated cluster (psu) totals
+
+- $s_i^2 = \frac{1}{m_i-1} \sum_{j \in \mathscr{S}_i} \left( y_{ij} - \bar{y}_i \right)^2$: sample variance within cluster $i$ (psu $i$)
+
+- $w_{ij}$: sampling weight for unit $j$ (ssu $j$) in cluster $i$ (psu $i$)
+
+## 5.3: Two-Stage Cluster Sampling
+
+- We first estimate the total for each cluster sampled, $\hat{\tau}_i$, then the overall total, $\hat{\tau}$, $$\hat{\tau}_i = \sum_{j \in \mathscr{S}_i} \frac{M_i}{m_i} y_{ij} = M_i \bar{y}_i  \ \ \ \ \ \ \ \ \&  \ \ \ \ \ \ \ \ \hat{\tau} = \frac{N}{n} \sum_{i \in \mathscr{S}} \hat{\tau}_i$$
+
+- The corresponding standard error, $$\text{SE}\left[ \hat{\tau} \right] = \sqrt{ N^2 \left(1 - \frac{n}{N} \right) \frac{s_{\hat{\tau}}^2}{n} + \frac{N}{n} \sum_{i \in \mathscr{S}} \left( 1 - \frac{m_i}{M_i} \right) M_i^2 \frac{s_i^2}{m_i}},$$ where $$s_{\hat{\tau}}^2 = \frac{1}{n-1} \sum_{i \in \mathscr{S}} \left( \hat{\tau}_i - \frac{\hat{\tau}}{N} \right)^2 \ \ \ \ \ \ \ \ \&  \ \ \ \ \ \ \ \ s_i^2 = \frac{1}{m_i-1} \sum_{j \in \mathscr{S}_i} \left( y_{ij} - \bar{y}_i \right)^2$$
+
+## 5.3: Two-Stage Cluster Sampling
+
+- After estimating the total, we can estimate the mean, $$\hat{\bar{y}}_{\text{r}} = \frac{\sum_{i \in \mathscr{S}} \hat{\tau}_i}{\sum_{i \in \mathscr{S}} M_i} = \frac{\sum_{i \in \mathscr{S}} M_i \bar{y}_i}{\sum_{i \in \mathscr{S}} M_i}$$
+
+- and the corresponding standard error, $$ \text{SE} \left[ \hat{\bar{y}}_{\text{r}} \right] = \sqrt{\frac{1}{M^2} \left(1 - \frac{n}{N} \right) \frac{s_{\text{r}}^2}{n} + \frac{1}{n N \bar{M}^2} \sum_{i \in \mathscr{S}} M_i^2 \left(1 - \frac{m_i}{M_i} \right) \frac{s_i^2}{m_i}}, $$ where $$s_{\text{r}}^2 = \frac{1}{n-1} \sum_{i \in \mathscr{S}} M_i^2 \left( \bar{y}_i - \hat{\bar{y}}_{\text{r}} \right)^2 \ \ \ \ \ \ \ \ \&  \ \ \ \ \ \ \ \ s_i^2 = \frac{1}{m_i-1} \sum_{j \in \mathscr{S}_i} \left( y_{ij} - \bar{y}_i \right)^2$$
+
+## 5.3: Two-Stage Cluster Sampling
+
+- Usually the second term in the standard error calculation does not add a large amount.
+
+- Many softwares calculate the standard error as follows, $$ \text{SE} \left[ \hat{\bar{y}}_{\text{r}} \right] = \sqrt{\frac{1}{M^2} \left(1 - \frac{n}{N} \right) \frac{s_{\text{r}}^2}{n} + \frac{1}{n N \bar{M}^2} \sum_{i \in \mathscr{S}} M_i^2 \left(1 - \frac{m_i}{M_i} \right) \frac{s_i^2}{m_i}} \approx \sqrt{\frac{s_r^2}{n \bar{M}^2}} $$
+
+## 5.3: Two-Stage Cluster Sampling
+
+- In education surveys where measurements on individual students are relatively easy to obtain once the school or classroom is selected, a one-stage cluster sample is often the most practical. 
+
+- If measuring the responses of interest requires a lot of resources from the research team (for example, if students are interviewed in person by assessment specialists), then a two-stage cluster sample may be less expensive.
+
+- The **schools** dataset contains data from a two-stage sample of students. 
+
+    - In the first stage of sampling, a simple random sample of $n=10$ schools was selected from a population of  $N=75$ schools. 
+    
+    - At the second stage, a simple random sample of $m_i=20$ students is selected from each sampled school and administered assessments for reading and math. 
+    
+- These data are fictional, but the summary statistics are consistent with those seen in educational studies.
+
+## 5.3: Two-Stage Cluster Sampling
+ 
+```{r}
+library(tidyverse)
+library(SDAResources)
+data(schools)
+head(schools) # notice that M_i is given to us...
+```
+
+## 5.3: Two-Stage Cluster Sampling
+
+<center>
+```{r}
+schools %>% ggplot(aes(x=as.factor(schoolid), y=math)) +
+  geom_boxplot() +
+  labs(y = "Math Score",
+       x = "School ID") + 
+  theme_bw()
+```
+</center>
+
+## 5.3: Two-Stage Cluster Sampling
+
+- We want to estimate the mean math score, $$\hat{\bar{y}}_{\text{r}} = \frac{\sum_{i \in \mathscr{S}} \hat{\tau}_i}{\sum_{i \in \mathscr{S}} M_i} = \frac{\sum_{i \in \mathscr{S}} M_i \bar{y}_i}{\sum_{i \in \mathscr{S}} M_i}$$
+
+```{r}
+summary <- schools %>%
+  group_by(schoolid) %>% # summary stats on clusters
+  summarize(y_bar_i = mean(math), # for mean now
+            s_i2 = var(math)) # for SE later
+
+M <- schools %>%
+  select(schoolid, Mi) %>%
+  unique() %>%
+  rename(M_i = Mi)
+
+summary <- full_join(M, summary, by = "schoolid")
+```
+
+## 5.3: Two-Stage Cluster Sampling
+
+```{r}
+head(summary)
+```
+
+## 5.3: Two-Stage Cluster Sampling
+
+- Estimating $\hat{\bar{y}}$,
+
+```{r}
+(y_bar_hat = sum(summary$y_bar_i*summary$M_i)/sum(summary$M_i)) # calculate y_bar_hat
+```
+
+- Thus, $\hat{\bar{y}} = `r round(y_bar_hat, 2)`$.
+
+## 5.3: Two-Stage Cluster Sampling
+
+- Then, working on the standard error,$$ \text{SE} \left[ \hat{\bar{y}}_{\text{r}} \right] \approx \sqrt{\frac{s_r^2}{n \bar{M}^2}}, \ \ \ \ \ s_{\text{r}}^2 = \frac{1}{n-1} \sum_{i \in \mathscr{S}} M_i^2 \left( \bar{y}_i - \hat{\bar{y}}_{\text{r}} \right)^2$$
+
+```{r}
+n = nrow(summary)
+N = 75 # given by problem statement, not raw data
+M = sum(summary$M_i)
+M_bar = M/n
+summary <- summary %>% mutate(s_r2_i = M_i^2*(y_bar_i-y_bar_hat)^2) 
+s_r2 = (1/(n-1))*sum(summary$s_r2_i)
+(SE = sqrt(s_r2/(n*M_bar^2)))
+```
+
+## 5.3: Two-Stage Cluster Sampling
+
+- Finally, putting together the confidence interval,
+
+```{r}
+MOE = qt(0.975, n-1)*SE
+(lcl = y_bar_hat - MOE)
+(ucl = y_bar_hat + MOE)
+```
+
+- Our final estimates are:
+
+    - $\hat{\bar{y}} = `r round(y_bar_hat, 2)`$.
+    
+    - 95% CI for $\mu$: $(`r round(lcl, 2)`, `r round(ucl, 2)`)$
+    
+## Homework
+
+- 7, 8, 9, 18, 19
+
+
+
+
+
+
+
+
+
+
+
+
+
+
