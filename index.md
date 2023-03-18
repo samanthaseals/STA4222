@@ -30,17 +30,16 @@ show_sidebar: false
 |      | W   | 03/08 | Midterm | |
 | SB   | M   | 03/13 | Spring Break - no class | |
 |      | W   | 03/15 | Spring Break - no class | | 
-| 10   | M   | 03/20 | Complex Surveys (Ch 7)  | |
-|      | W   | 03/22 | R lab (Ch 7) | |
-| 11   | M   | 03/27 | Nonresponse (Ch 8)  | |
-|      | W   | 03/29 | R lab (Ch 8) | |
-| 12   | M   | 04/03 | Variance Estimation in Complex Surveys (Ch 9)  | |
-|      | W   | 04/05 | R lab (Ch 9) | |
-| 13   | M   | 04/10 | Categorical Analysis in Complex Surveys (Ch 10) | |
-|      | W   | 04/12 | R lab (Ch 10)  | |
-| 14   | M   | 04/17 | Regression with Complex Survey Data (Ch 11) | |
-|      | W   | 04/19 | R lab (Ch 11) | |
-| 15   | M   | 04/24 | Estimating the Size of a Population (Ch 13),  | |
-|      |     |       | Rare Populations and Small Area Estimation (Ch 14) | |
-|      | W   | 04/26 | Review | |
+| 10   | M   | 03/20 | Research Project | [html](https://samanthaseals.github.io/STA4222/labs/W10.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W10.qmd) |
+|      | W   | 03/22 |  Research Project | [html](https://samanthaseals.github.io/STA4222/labs/W10.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W10.qmd) |
+| 11   | M   | 03/27 | Complex Surveys (Ch 7)  | |
+|      | W   | 03/29 | Present Project; R lab (Ch 7)  | |
+| 12   | M   | 04/03 | Nonresponse (Ch 8)  | |
+|      | W   | 04/05 | R lab (Ch 8) | |
+| 13   | M   | 04/10 | Variance Estimation in Complex Surveys (Ch 9) | |
+|      | W   | 04/12 | R lab (Ch 9)  | |
+| 14   | M   | 04/17 | Categorical Analysis in Complex Surveys (Ch 10) | |
+|      | W   | 04/19 | R lab (Ch 10) | |
+| 15   | M   | 04/24 | Regression with Complex Survey Data (Ch 11) | |
+|      | W   | 04/26 | R lab (Ch 11)  | |
 | 16   | W   | 05/03 | Final Exam, 11:00 am - 1:30 pm | |
