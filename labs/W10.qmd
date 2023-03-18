@@ -1,0 +1,41 @@
+---
+title: "Week 10 Assignment"
+format: 
+  html:
+    self-contained: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: source
+---
+
+## Project Details 
+
+You will work in pairs to create a 5 minute presentation on one of the following topics. **Every group member is expected to present a portion of the presentation on Wednesday, March 29.**
+
+Pair 1: Snowball sampling -- What is it? Give at least two examples of studies that used snowball sampling. What was their reasoning?
+
+Pair 2: Quota sampling -- What is it? Give at least two examples of studies that used quota sampling. What was their reasoning?
+
+Pair 3: Sample size estimation in clinical trials -- How is it different than in other areas / what we have learned in this course? Give at least two examples of trials using different methods of sample size estimation. (Note: There are usually papers outlining the design of a clinical trial. That is where you should find the sample size justification.)
+
+Pair 4: Sample size reestimation in clinical trials -- What is it? Why is it done? Give at least two examples of trials that have done sample size reestimation.
+
+When researching, please use [Google Scholar](http://scholar.google.com) and [PubMed](https://www.ncbi.nlm.nih.gov/pubmed/) to find *peer reviewed* journal articles. If you encounter a pay wall (i.e., you cannot access the full article without paying the publisher), please **email me** and I will obtain the article for you (for free). 
+
+## Pairs
+
+- Amelia, Grady
+
+- Aidan, Aric
+
+- Brittany, Rashidi
+
+- Brooklyn, Frankie
+
+In class on Monday, March 20, pairs should discuss what topic they will take both internally and with all other pairs.
+
+## Grading
+
+Grading will be all or nothing. Group members that do not participate in presentations will earn a 0 for the Week 10 lab; this will not affect participating group members. 
