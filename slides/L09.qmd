@@ -1,0 +1,498 @@
+---
+title: "Sampling with Unequal Probabilities with Replacement"
+subtitle: "Chapter 6 - Part 1"
+author: "Dr. Seals"
+execute:
+  echo: true
+  warning: false
+  message: false
+format: 
+  revealjs:
+    theme: uwf
+    self-contained: true
+    slide-number: false
+    footer: "[STA4222 - Sampling Theory](https://samanthaseals.github.io/STA4222)"
+    width: 1600
+    height: 900
+    df-print: paged
+    html-math-method: katex
+editor: source
+---
+
+## Introduction
+
+- We have considered schemes where the probability of selecting a sampling unit is equal for all units.
+
+- These designs are not always possible or as efficient as schemes using unequal probabilities.
+
+- We can also use unequal probabilities to decrease variances without stratifying the sample. $$\text{P}[\text{unit $i$ selected on first draw}] = \psi_i$$ $$\text{P}[\text{unit $i$ in sample}] = \pi_i$$
+
+- We must know the probabilities we will select a given unit in order to create sampling weights.
+
+- Many surveys with selection bias end up with unequal probabilities of selection, *however*, these probabilities are unknown and unestimable - we cannot create sampling weights.
+
+## Introduction
+
+**Notation: Population**
+
+- $y_{ij}$: measurement for the $j^{\text{th}}$ element in the $i^{\text{th}}$ cluster (psu)
+
+- $N$: number of clusters (psus) in the population
+
+- $M_i$: number of individual units (ssus) in cluster $i$ (psu $i$)
+
+- $M_0 = \sum_{i=1}^N M_i$: total number of individual units (ssus) in the population
+
+- $\tau_i = \sum_{j=1}^{M_i} y_{ij}$: total in cluster $i$ (psu $i$)
+
+- $\tau = \sum_{i=1}^N \tau_i = \sum_{i=1}^N \sum_{j=1}^{M_i} y_{ij}$: population total
+
+- $\sigma_{\tau}^2 = \frac{1}{N-1} \sum_{i=1}^N \left( \tau_i - \frac{\tau}{N} \right)^2$: population variance of the cluster (psu) totals 
+
+## Introduction
+
+**Notation: Samples**
+
+- $\mathscr{S}$: sample of clusters (psus) from the population
+
+- $\mathscr{S}_i$: individuals sampled from the cluster $i$ (psu $i$)
+
+- $n$: number of clusters (psus) in the sample
+
+- $m_i$: number of individual units (ssus) in the sample from cluster $i$ (psu $i$)
+
+- $\bar{y}_i = \frac{1}{m_i} \sum_{j \in \mathscr{S}_i} y_{ij}$: sample mean in cluster $i$ (psu $i$)
+
+- $\hat{\tau}_i = \frac{M_i}{m_i} \sum_{j \in \mathscr{S}_i} y_{ij}$: total in cluster $i$ (psu $i$)
+
+- $s_{\tau}^2 = \frac{1}{n-1} \sum_{i \in \mathscr{S}} \left( \hat{\tau}_i - \frac{\sum_{j \in \mathscr{S}} \hat{\tau}_j}{n} \right)^2$: sample variance among estimated cluster (psu) totals
+
+- $s_i^2 = \frac{1}{m_i-1} \sum_{j \in \mathscr{S}_i} \left( y_{ij} - \bar{y}_i \right)^2$: sample variance within cluster $i$ (psu $i$)
+
+- $w_{ij}$: sampling weight for unit $j$ (ssu $j$) in cluster $i$ (psu $i$)
+
+## 6.1: Sampling One Primary Sampling Unit
+
+- Consider the following example, where we know the whole population:
+
+    - A town has four supermarkets, ranging in size from 100 m^2^ to 1000 m^2^.
+    
+    - Goal: estimate the total sales in the four stores for the last month by sampling only one of the stores.
+    
+    - Expect: variability in total sales among several 1000 m^2^ stores will be greater than the variability in total sales among several 100 m^2^ stores.
+    
+    - Because we are only sampling one store, we know $$\pi_i = \psi_i = \text{P}[\text{store $i$ selected}],$$ and suppose we take the probbility to be proportional to the size of the store.
+    
+## 6.1: Sampling One Primary Sampling Unit
+
+- Consider the following example, where we know the whole population:
+
+    - The data is as follows
+    
+| Store | Size (m^2^) | $\psi_i$ | $t_i$ (in thousands) | 
+|:-:|:-:|:-:|:-:|
+| A | 100 | 1/16 | 11 |
+| B | 200 | 2/16 | 20 |
+| C | 300 | 3/16 | 24 |
+| D | 1000 | 10/16 | 245 |
+| Total | 1600 | 1 | 300 |
+
+## 6.1: Sampling One Primary Sampling Unit
+
+- Consider selecting $n=1$ of the $N$ clusters for the sample.
+
+- The total for cluster $i$ is $\hat{\tau}_i$ and we estimate the population total, $$\hat{\tau} = \sum_{i=1}^N \hat{\tau}_i$$
+
+- We will create sampling weights with the reciprocal of the probability of selection, $$w_i = \frac{1}{\text{P}[\text{unit $i$ in sample}]} = \frac{1}{\psi_i}$$
+
+- We then update our estimator of the population total, $$\hat{\tau}_{\psi} = \sum_{i \in \mathscr{S}} w_i \hat{\tau}_i = \sum_{i \in \mathscr{S}} \frac{\hat{\tau}_i}{\psi_i}$$
+
+## 6.1: Sampling One Primary Sampling Unit
+
+- Consider the following example, where we know the whole population:
+
+    - There are four samples of $n=1$ possible from the population,
+
+| Sample | $\psi_i$ | $\hat{\tau}_i$ | $\hat{\tau}_{\psi}$ | $(\hat{\tau}_{\psi}-\hat{\tau})^2$ |
+|:-:|:-:|:-:|:-:|:-:|
+| {A} | 1/16 | 11 | | |
+| {B} | 2/16 | 20 | | |
+| {C} | 3/16 | 24 | | |
+| {D} | 10/16 | 245 | | |
+
+
+## 6.1: Sampling One Primary Sampling Unit
+
+- Consider the following example, where we know the whole population:
+
+    - There are four samples of $n=1$ possible from the population,
+
+| Sample | $\psi_i$ | $\hat{\tau}_i$ | $\hat{\tau}_{\psi}$ | $(\hat{\tau}_{\psi}-\hat{\tau})^2$ |
+|:-:|:-:|:-:|:-:|:-:|
+| {A} | 1/16 | 11 | 176 | 15376 |
+| {B} | 2/16 | 20 | 160 | 19600 |
+| {C} | 3/16 | 24 | 128 | 29584 |
+| {D} | 10/16 | 245 | 392 | 8464 |
+
+- Find the expected value, $$\text{E}\left[ \hat{\tau}_{\psi} \right] = \sum_{\text{samples } \mathscr{S}} \text{P}[\mathscr{S}] \hat{\tau}_{\psi \mathscr{S}}$$ and variance, $$\text{var}\left[ \hat{\tau}_{\psi} \right] = \text{P}[\mathscr{S}] (\hat{\tau}_{\psi}-\hat{\tau})^2 $$
+
+## 6.1: Sampling One Primary Sampling Unit
+
+- Consider the following example, where we know the whole population:
+
+    - There are four samples of $n=1$ possible from the population,
+
+| Sample | $\psi_i$ | $\hat{\tau}_i$ | $\hat{\tau}_{\psi}$ | $(\hat{\tau}_{\psi}-\hat{\tau})^2$ |
+|:-:|:-:|:-:|:-:|:-:|
+| {A} | 1/16 | 11 | 176 | 15376 |
+| {B} | 2/16 | 20 | 160 | 19600 |
+| {C} | 3/16 | 24 | 128 | 29584 |
+| {D} | 10/16 | 245 | 392 | 8464 |
+
+- Find the expected value, $$\text{E}\left[ \hat{\tau}_{\psi} \right] = \sum_{\text{samples } \mathscr{S}} \text{P}[\mathscr{S}] \hat{\tau}_{\psi \mathscr{S}} = \frac{1}{16}(176) + \frac{2}{16}(160)+\frac{3}{16}(128)+\frac{10}{16}(392)=300$$ and variance, $$\text{var}\left[ \hat{\tau}_{\psi} \right] = \text{P}[\mathscr{S}] (\hat{\tau}_{\psi}-\hat{\tau})^2 = \frac{1}{16}(15376) + \frac{2}{16}(19600)+\frac{3}{16}(29584)+\frac{10}{16}(8464)=14248 $$
+
+## 6.1: Sampling One Primary Sampling Unit
+
+- Let's now consider the case where each unit has equal probability of being selected.
+
+| Sample | $\psi_i$ | $\hat{\tau}_i$ | $\hat{\tau}_{\psi}$ | $(\hat{\tau}_{\psi}-\hat{\tau})^2$ |
+|:-:|:-:|:-:|:-:|:-:|
+| {A} | 1/4 | 11 | 44 | 65536 |
+| {B} | 1/4 | 20 | 80 | 48400 |
+| {C} | 1/4 | 24 | 96 | 41616 |
+| {D} | 1/4 | 245 | 980 | 462400 |
+
+- The expected value, $$\text{E}\left[ \hat{\tau}_{\psi} \right] = \sum_{\text{samples } \mathscr{S}} \text{P}[\mathscr{S}] \hat{\tau}_{\psi \mathscr{S}} = \frac{1}{4}(44) + \frac{1}{4}(80)+\frac{1}{4}(96)+\frac{1}{4}(980)=300$$ and variance, $$\text{var}\left[ \hat{\tau}_{\psi} \right] = \text{P}[\mathscr{S}] (\hat{\tau}_{\psi}-\hat{\tau})^2 = \frac{1}{4}(65536)+\frac{1}{4}(48400)+\frac{1}{4}(41616)+\frac{1}{4}(462400) =154488 $$
+
+## 6.1: Sampling One Primary Sampling Unit
+
+- Under weighting based on store size:
+
+    - $\text{E}[\hat{\tau}] = 300$
+    - $\text{var}[\hat{\tau}] = 14,248$
+    
+- Under equal weighting:
+
+    - $\text{E}[\hat{\tau}] = 300$
+    - $\text{var}[\hat{\tau}] = 154,488$    
+    
+- Thus, it is important for us to choose the "best" weighting scheme.
+
+## 6.2: One-Stage Sampling with Replacement
+
+- Suppose $n > 1$ and we are sampling with replacement.
+
+    - This means that the selection probabilities do not change after drawing the first unit. $$\psi_i = \text{P}[\text{select unit $i$ on first draw}]$$
+    
+- We will first draw $n$ clusters with replacement.
+
+- Because the clusters are drawn with replacement, we have $n$ independent estimates of $\tau$.
+    
+    - We estimate $\tau$ by averaging the $n$ independent estimates of $\tau$.
+    
+    - The estimated variance is the sample variance of the $n$ independents estimates of $\tau$, divided by $n$.
+    
+## 6.2: One-Stage Sampling with Replacement    
+    
+- Example: [Table 6.2](https://docs.google.com/spreadsheets/d/17aesy9p-AactTCdEpovAq_IuHiLUw0bEUNW2a_OzD5w/edit#gid=0)
+
+    - The population of $N=15$ introductory statistics classes at a college.
+    
+    - Each class has $M_i$ students and $M=647$.
+    
+    - We want to select a sample of $n=5$ classes with replacement.
+    
+```{r}
+library(tidyverse)
+library(gsheet)
+data <- tibble(gsheet2tbl("https://docs.google.com/spreadsheets/d/17aesy9p-AactTCdEpovAq_IuHiLUw0bEUNW2a_OzD5w/edit"))
+head(data, n = 2)
+```    
+    
+## 6.2: One-Stage Sampling with Replacement
+
+- Cumulative size method of sampling clusters:
+
+    - This extends what we saw before, where the weights depended on the cluster size.
+    
+    - Random numbers are generated and clusters corresponding to those numbers are included in the sample.
+    
+    - To sample with replacement, we will replace the cluster before drawing again.
+
+- R syntax:
+
+```{r, eval = FALSE}
+set.seed([seed])
+sample([vector with cluster ID], size = [n], replace = TRUE, prob = [vector of psi])
+```
+
+## 6.2: One-Stage Sampling with Replacement
+
+- In our example let's first define $\psi_i = M_i/M$:
+    
+```{r}
+data <- data %>% mutate(psi_i = M_i/sum(M_i))
+head(data, n = 2)
+```       
+
+- Let's now choose our sample,
+
+```{r}
+set.seed(6170) # for reproducibility
+sample(data$"Class Number", size = 5, replace = TRUE, prob = data$psi_i)
+```   
+
+## 6.2: One-Stage Sampling with Replacement    
+    
+- Lahiri's method of sampling clusters (a rejective method):
+    
+    1. Draw a random number between 1 and $N$.
+    
+        - This indicates which cluster we are considering.
+    
+    2. Draw a random number between 1 and $\max\{M_i\}$.
+    
+        - If this number is $\le$ $M_i$ for the cluster under consideration, then *include* the cluster in the sample.
+        
+        - Otherwise, reject and return to the first step.
+        
+    3. Repeat until desired $n$ is obtained.
+
+- R syntax: use the [`lahiri.design()` function](https://www.rdocumentation.org/packages/SDaA/versions/0.1-5/topics/lahiri.design) from the [SDaA package](https://www.rdocumentation.org/packages/SDaA/versions/0.1-5)
+
+```{r, eval = FALSE}
+library(SDaA)
+set.seed([seed])
+lahiri.design(relsize = [vector of M_i], n = [n], clnames = [vector with cluster ID])
+```
+
+
+## 6.2: One-Stage Sampling with Replacement
+
+- In our example, let's now choose our sample using this method,
+
+```{r}
+library(SDaA)
+set.seed(5715)
+lahiri.design(relsize = data$M_i, n = 5, clnames = data$"Class Number")
+```
+
+- For demonstration purposes, the table from the text's version of the example:
+
+| First Random Number | Second Random Number | $M_i$ | Result |
+|:-:|:-:|:-:|:-:|
+| 12 | 6 | 24 | **Include** | 
+| 14 | 24 | 100 | **Include** |
+| 1 | 65 | 44 | Reject |
+| 7 | 84 | 20 | Reject |
+| 14 | 47 | 100 | **Include** |
+
+- ... and continue until we have $n=5$ clusters in the sample.
+
+## 6.3: Two-Stage Sampling with Replacement
+
+- To continue to a two-stage cluster sample with replacement, we first draw a with-replacement sample of clusters.
+
+    - The $i^{\text{th}}$ cluster is selected with known probability $\psi_i$.
+    
+    - Let $Q_i$ be the number of times cluster $i$ occurs in the sample.    
+    
+        - If cluster $i$ is in the sample more thaan once, there are $Q_i$ estimators of the total for cluster $i$.
+
+- Then, take a probability sample of $m_i$ subunits in the $i^{\text{th}}$ cluster.
+
+    - Any sampling method can be used here.
+    
+## 6.3: Two-Stage Sampling with Replacement
+
+- When taking the subsample, the procedure must meet two requirements:
+
+    1. When cluster $i$ is selected:
+    
+        - The same subsamplign design is used to select secondary sampling units from that cluster.
+
+        - Different subsamples from the same cluster must be sampled independently. 
+        
+            - Otherwise, the resulting estimates will be biased.
+        
+            - e.g., if cluster 42 is selected twice, we generate two independent samples from the cluster.
+            
+    2. The $j^{\text{th}}$ subsample taken from cluster $i$ (for $j = 1, ..., Q_i$) is selected in such a way that $\text{E}\left[\hat{\tau}_{ij}\right] = \tau_i$.
+    
+        - Because the same procedure is used each time cluster $i$ is selected for the sample, we can define $\text{var}\left[\hat{\tau}_{ij}\right] = \text{var}\left[\hat{\tau}_i\right] \ \forall \ j$. 
+
+## 6.3: Two-Stage Sampling with Replacement
+
+- We now modify the estimators from one-stage unequal sampling with replacement to allow for the different subsamples in clusters that are selected more than once. $$\hat{\tau}_{\psi} = \frac{1}{n} \sum_{i=1}^N \sum_{j=1}^{Q_i} \frac{\hat{\tau}_{ij}}{\psi_i}$$ and $$\hat{\text{var}}\left[\hat{\tau}_{\psi} \right] = \frac{1}{n} \frac{1}{n-1} \sum_{i=1}^N \sum_{j=1}^{Q_i} \left( \frac{\hat{\tau}_{ij}}{\psi_i} - \hat{\tau}_{\psi}\right)^2$$
+
+- Note that we can estimate the standard error in a more straight-forward manner, $$\text{SE}\left[ \hat{\tau}_{\psi} \right] = \frac{\text{sd}[\hat{\tau}_i/\psi_i]}{\sqrt{n}}$$
+
+## 6.3: Two-Stage Sampling with Replacement
+
+- Then, to estimate the population mean, $$\bar{y}_{\psi} = \frac{\hat{\tau}_{\psi}}{\hat{M}_{0\psi}},$$ where an estimate of the total number of elements in the population is $$\hat{M}_{0\psi} = \frac{1}{n} \sum_{i \in \mathscr{S}} \frac{M_i}{\psi_i}$$.
+
+- Of course, if we know the total number of elements in the population, we can use $M$ in place of $\hat{M}_{0\psi}$.
+
+## 6.3: Two-Stage Sampling with Replacement
+
+- The variance estimator is as follows, $$\hat{\text{var}}\left[ \bar{y}_{\psi}\right] = \frac{1}{(\hat{M}_{0\psi})^2} \frac{1}{n} \frac{1}{n-1} \sum_{i=1}^N \sum_{j=1}^{Q_i} \left( \frac{\hat{\tau}_{ij}}{\psi_i} - \frac{\bar{y}_{\psi} M_i}{\psi_i} \right)^2$$
+
+- Again, we can estimate the standard error in a more straight-forward manner, $$\text{SE}\left[ \bar{y}_{\psi} \right] = \frac{\text{SE}[\hat{\tau}_{\psi}]}{\hat{M}_{0\psi}}$$
+
+## 6.3: Two-Stage Sampling with Replacement
+
+- Recall our example. Suppose we subsampled 5 students in each class, rather than observing $\tau_i$.
+
+    - The response $y_{ij}$ is the total number of hours student $j$ in class $i$ spent studying statistics last week.
+    
+```{r}
+data <- tibble(gsheet2tbl("https://docs.google.com/spreadsheets/d/1DYuOqcV2T0DEwnZ1Gwv771MotJWg0DqgGi4s6LxQLLc/edit?usp=sharing"))
+head(data, n = 7)
+```
+
+## 6.3: Two-Stage Sampling with Replacement
+
+- Let's find the cluster-level estimates,
+
+```{r}
+(summaries <- data %>% 
+  group_by(i) %>%
+  summarize(ybar_i = mean(y_ij),
+            tauhat_i = ybar_i*M_i,
+            psi_i = psi_i,
+            M_i = M_i) %>%
+  unique())
+```
+
+## 6.3: Two-Stage Sampling with Replacement
+
+- Now, find $\hat{\tau}_{\psi}$, $$\hat{\tau}_{\psi} = \frac{1}{n} \sum_{i=1}^N \sum_{j=1}^{Q_i} \frac{\hat{\tau}_{ij}}{\psi_i}$$ 
+
+```{r}
+summaries <- summaries %>%
+  mutate(tauhat_psi_i = tauhat_i/psi_i)
+(tauhat_psi = 1/nrow(summaries) * sum(summaries$tauhat_psi_i))
+```
+
+- and the standard error, $$\text{SE}\left[ \hat{\tau}_{\psi} \right] = \frac{\text{sd}[\hat{\tau}_i/\psi_i]}{\sqrt{n}}$$ 
+
+```{r}
+(SE_tauhat_psi = sd(summaries$tauhat_psi_i)/sqrt(nrow(summaries)))
+```
+
+## 6.3: Two-Stage Sampling with Replacement
+
+- Finally, finding the estimate of the average study time, $$\bar{y}_{\psi} = \frac{\hat{\tau}_{\psi}}{M}$$
+
+```{r}
+M = 647 # could revert back to original data to find this
+(ybar_psi = tauhat_psi/M)
+```
+
+- and the standard error of $\bar{y}_{\psi}$, $$\text{SE}\left[ \bar{y}_{\psi} \right] = \frac{\text{SE}[\hat{\tau}_{\psi}]}{\hat{M}_{0\psi}}$$
+
+```{r}
+(SE_ybar_psi = SE_tauhat_psi/M)
+```
+
+## 6.3: Two-Stage Sampling with Replacement
+
+- Finally, we can construct confidence intervals.
+
+```{r, echo = FALSE}
+n = nrow(summaries)
+MOE_tau_psi = qt(0.975, n-1)*SE_tauhat_psi
+LB = tauhat_psi - MOE_tau_psi
+UB = tauhat_psi + MOE_tau_psi
+```
+
+- Estimating $\tau$,
+
+    - $\hat{\tau}_{\psi} = `r round(tauhat_psi, 2)`$
+    
+    - 95% CI for $\tau$: $(`r round(LB, 2)`, \ `r round(UB, 2)`)$
+
+```{r}
+n = nrow(summaries)
+MOE_tau_psi = qt(0.975, n-1)*SE_tauhat_psi
+(LB = tauhat_psi - MOE_tau_psi)
+(UB = tauhat_psi + MOE_tau_psi)
+```
+
+
+## 6.3: Two-Stage Sampling with Replacement
+
+- Finally, we can construct confidence intervals.
+
+```{r, echo = FALSE}
+n = nrow(summaries)
+MOE_mu_psi = qt(0.975, n-1)*SE_ybar_psi
+LB = ybar_psi - MOE_mu_psi
+UB = ybar_psi + MOE_mu_psi
+```
+
+- Estimating $\mu$,
+
+    - $\bar{y}_{\psi} = `r round(ybar_psi, 2)`$
+    
+    - 95% CI for $\mu$: $(`r round(LB, 2)`, \ `r round(UB, 2)`)$
+
+```{r}
+n = nrow(summaries)
+MOE_mu_psi = qt(0.975, n-1)*SE_ybar_psi
+(LB = ybar_psi - MOE_mu_psi)
+(UB = ybar_psi + MOE_mu_psi)
+```
+
+## Homework
+
+1, 3, 4, 5, 9, 10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
