@@ -1,0 +1,30 @@
+---
+title: "Lab: Week 11"
+author: "Your Name Here"
+format: 
+  html:
+    self-contained: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: source
+---
+
+Monday's lecture: [Chapter 6: Part 2](https://github.com/samanthaseals/STA4222/blob/master/slides/L09.qmd)
+
+The dataset **statepop** contains data from an unequal-probability sample of 100 counties from the 1994 County and City Data Book (U.S. Census Bureau, 1994), selected with probability proportional to population. The selection probabilities ($\psi_i$) are given in variable *psii*. Sampling was done with replacement, so large counties occur multiple times in the sample: Los Angeles County, with the largest population in the United States, occurs four times. Let $\tau_i$ represent the number of physicians in county $i$ (variable *phys*).
+
+```{r}
+library(tidyverse)
+library(SDAResources)
+data(statepop)
+```
+
+1. Construct a scatterplot of $\tau_i$ vs. $\psi_i$ for the counties in the sample. 
+
+2. Based on the scatterplot, do we expect this sampling sampling to work well for estimating the total number of physicians in the United States? Why or why not?
+
+3. Estimate the total number of physicians in the United States. Make sure you include the point estimate and the 95% CI.
+
+4. Estimate the mean number of physicians per county in the United States. Make sure you include the point estimate and the 95% CI.
