@@ -33,7 +33,7 @@ show_sidebar: false
 | 10   | M   | 03/20 | Research Project | [html](https://samanthaseals.github.io/STA4222/labs/W10.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W10.qmd) |
 |      | W   | 03/22 |  Research Project | [html](https://samanthaseals.github.io/STA4222/labs/W10.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W10.qmd) |
 | 11   | M   | 03/27 | Sampling with Unequal Probabilities with Replacement (Ch 6 - part 1) | [html](https://samanthaseals.github.io/STA4222/slides/L09.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/slides/L09.qmd) |
-|      | W   | 03/29 | Present Project; R lab (Ch 6 - part 1)  | |
+|      | W   | 03/29 | Present Project; R lab (Ch 6 - part 1)  | [html](https://samanthaseals.github.io/STA4222/labs/W11.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W11.qmd) |
 | 12   | M   | 04/03 | Sampling with Unequal Probabilities without Replacement (Ch 6 - part 2) | |
 |      | W   | 04/05 | R lab (Ch 6 - part 2) | |
 | 13   | M   | 04/10 |  Complex Surveys (Ch 7) | |
