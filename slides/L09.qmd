@@ -89,7 +89,7 @@ editor: source
 
     - The data is as follows
     
-| Store | Size (m^2^) | $\psi_i$ | $t_i$ (in thousands) | 
+| Store | Size (m^2^) | $\psi_i$ | $\tau_i$ (in thousands) | 
 |:-:|:-:|:-:|:-:|
 | A | 100 | 1/16 | 11 |
 | B | 200 | 2/16 | 20 |
@@ -113,7 +113,7 @@ editor: source
 
     - There are four samples of $n=1$ possible from the population,
 
-| Sample | $\psi_i$ | $\hat{\tau}_i$ | $\hat{\tau}_{\psi}$ | $(\hat{\tau}_{\psi}-\hat{\tau})^2$ |
+| Sample | $\psi_i$ | $\tau_i$ | $\hat{\tau}_{\psi}$ | $(\hat{\tau}_{\psi}-\tau)^2$ |
 |:-:|:-:|:-:|:-:|:-:|
 | {A} | 1/16 | 11 | | |
 | {B} | 2/16 | 20 | | |
@@ -127,14 +127,14 @@ editor: source
 
     - There are four samples of $n=1$ possible from the population,
 
-| Sample | $\psi_i$ | $\hat{\tau}_i$ | $\hat{\tau}_{\psi}$ | $(\hat{\tau}_{\psi}-\hat{\tau})^2$ |
+| Sample | $\psi_i$ | $\tau_i$ | $\hat{\tau}_{\psi}$ | $(\hat{\tau}_{\psi}-\tau)^2$ |
 |:-:|:-:|:-:|:-:|:-:|
 | {A} | 1/16 | 11 | 176 | 15376 |
 | {B} | 2/16 | 20 | 160 | 19600 |
 | {C} | 3/16 | 24 | 128 | 29584 |
 | {D} | 10/16 | 245 | 392 | 8464 |
 
-- Find the expected value, $$\text{E}\left[ \hat{\tau}_{\psi} \right] = \sum_{\text{samples } \mathscr{S}} \text{P}[\mathscr{S}] \hat{\tau}_{\psi \mathscr{S}}$$ and variance, $$\text{var}\left[ \hat{\tau}_{\psi} \right] = \text{P}[\mathscr{S}] (\hat{\tau}_{\psi}-\hat{\tau})^2 $$
+- Find the expected value, $$\text{E}\left[ \hat{\tau}_{\psi} \right] = \sum_{\text{samples } \mathscr{S}} \text{P}[\mathscr{S}] \hat{\tau}_{\psi \mathscr{S}}$$ and variance, $$\text{var}\left[ \hat{\tau}_{\psi} \right] = \sum_{\text{samples } \mathscr{S}} \text{P}[\mathscr{S}] (\hat{\tau}_{\psi}-\tau)^2 $$
 
 ## 6.1: Sampling One Primary Sampling Unit
 
@@ -142,27 +142,27 @@ editor: source
 
     - There are four samples of $n=1$ possible from the population,
 
-| Sample | $\psi_i$ | $\hat{\tau}_i$ | $\hat{\tau}_{\psi}$ | $(\hat{\tau}_{\psi}-\hat{\tau})^2$ |
+| Sample | $\psi_i$ | $\tau_i$ | $\hat{\tau}_{\psi}$ | $(\hat{\tau}_{\psi}-\tau)^2$ |
 |:-:|:-:|:-:|:-:|:-:|
 | {A} | 1/16 | 11 | 176 | 15376 |
 | {B} | 2/16 | 20 | 160 | 19600 |
 | {C} | 3/16 | 24 | 128 | 29584 |
 | {D} | 10/16 | 245 | 392 | 8464 |
 
-- Find the expected value, $$\text{E}\left[ \hat{\tau}_{\psi} \right] = \sum_{\text{samples } \mathscr{S}} \text{P}[\mathscr{S}] \hat{\tau}_{\psi \mathscr{S}} = \frac{1}{16}(176) + \frac{2}{16}(160)+\frac{3}{16}(128)+\frac{10}{16}(392)=300$$ and variance, $$\text{var}\left[ \hat{\tau}_{\psi} \right] = \text{P}[\mathscr{S}] (\hat{\tau}_{\psi}-\hat{\tau})^2 = \frac{1}{16}(15376) + \frac{2}{16}(19600)+\frac{3}{16}(29584)+\frac{10}{16}(8464)=14248 $$
+- Find the expected value, $$\text{E}\left[ \hat{\tau}_{\psi} \right] = \sum_{\text{samples } \mathscr{S}} \text{P}[\mathscr{S}] \hat{\tau}_{\psi \mathscr{S}} = \frac{1}{16}(176) + \frac{2}{16}(160)+\frac{3}{16}(128)+\frac{10}{16}(392)=300$$ and variance, $$\text{var}\left[ \hat{\tau}_{\psi} \right] = \sum_{\text{samples } \mathscr{S}} \text{P}[\mathscr{S}] (\hat{\tau}_{\psi}-\tau)^2 = \frac{1}{16}(15376) + \frac{2}{16}(19600)+\frac{3}{16}(29584)+\frac{10}{16}(8464)=14248 $$
 
 ## 6.1: Sampling One Primary Sampling Unit
 
 - Let's now consider the case where each unit has equal probability of being selected.
 
-| Sample | $\psi_i$ | $\hat{\tau}_i$ | $\hat{\tau}_{\psi}$ | $(\hat{\tau}_{\psi}-\hat{\tau})^2$ |
+| Sample | $\psi_i$ | $\tau_i$ | $\hat{\tau}_{\psi}$ | $(\hat{\tau}_{\psi}-\tau)^2$ |
 |:-:|:-:|:-:|:-:|:-:|
 | {A} | 1/4 | 11 | 44 | 65536 |
 | {B} | 1/4 | 20 | 80 | 48400 |
 | {C} | 1/4 | 24 | 96 | 41616 |
 | {D} | 1/4 | 245 | 980 | 462400 |
 
-- The expected value, $$\text{E}\left[ \hat{\tau}_{\psi} \right] = \sum_{\text{samples } \mathscr{S}} \text{P}[\mathscr{S}] \hat{\tau}_{\psi \mathscr{S}} = \frac{1}{4}(44) + \frac{1}{4}(80)+\frac{1}{4}(96)+\frac{1}{4}(980)=300$$ and variance, $$\text{var}\left[ \hat{\tau}_{\psi} \right] = \text{P}[\mathscr{S}] (\hat{\tau}_{\psi}-\hat{\tau})^2 = \frac{1}{4}(65536)+\frac{1}{4}(48400)+\frac{1}{4}(41616)+\frac{1}{4}(462400) =154488 $$
+- The expected value, $$\text{E}\left[ \hat{\tau}_{\psi} \right] = \sum_{\text{samples } \mathscr{S}} \text{P}[\mathscr{S}] \hat{\tau}_{\psi \mathscr{S}} = \frac{1}{4}(44) + \frac{1}{4}(80)+\frac{1}{4}(96)+\frac{1}{4}(980)=300$$ and variance, $$\text{var}\left[ \hat{\tau}_{\psi} \right] = \sum_{\text{samples } \mathscr{S}} \text{P}[\mathscr{S}] (\hat{\tau}_{\psi}-\tau)^2= \frac{1}{4}(65536)+\frac{1}{4}(48400)+\frac{1}{4}(41616)+\frac{1}{4}(462400) =154488 $$
 
 ## 6.1: Sampling One Primary Sampling Unit
 
@@ -335,9 +335,9 @@ lahiri.design(relsize = data$M_i, n = 5, clnames = data$"Class Number")
 
 ## 6.3: Two-Stage Sampling with Replacement
 
-- The variance estimator is as follows, $$\hat{\text{var}}\left[ \bar{y}_{\psi}\right] = \frac{1}{(\hat{M}_{0\psi})^2} \frac{1}{n} \frac{1}{n-1} \sum_{i=1}^N \sum_{j=1}^{Q_i} \left( \frac{\hat{\tau}_{ij}}{\psi_i} - \frac{\bar{y}_{\psi} M_i}{\psi_i} \right)^2$$
+- The variance estimator is as follows, $$\hat{\text{var}}\left[ \bar{y}_{\psi}\right] = \frac{1}{(\hat{M}_{0\psi})^2} \frac{1}{n} \frac{1}{n-1} \sum_{i=1}^N \sum_{j=1}^{Q_i} \left( \frac{\hat{\tau}_{ij}}{\psi_i} - \frac{\bar{y}_{\psi} M_i}{\psi_i} \right)^2,$$ or, if we know $M$, $$\hat{\text{var}}\left[ \bar{y}_{\psi}\right] = \frac{1}{M^2} \frac{1}{n} \frac{1}{n-1} \sum_{i=1}^N \sum_{j=1}^{Q_i} \left( \frac{\hat{\tau}_{ij}}{\psi_i} - \frac{\bar{y}_{\psi} M_i}{\psi_i} \right)^2$$
 
-- Again, we can estimate the standard error in a more straight-forward manner, $$\text{SE}\left[ \bar{y}_{\psi} \right] = \frac{\text{SE}[\hat{\tau}_{\psi}]}{\hat{M}_{0\psi}}$$
+- Again, we can estimate the standard error in a more straight-forward manner, $$\text{SE}\left[ \bar{y}_{\psi} \right] = \frac{\text{SE}[\hat{\tau}_{\psi}]}{\hat{M}_{0\psi}},$$ or, if we know $M$, $$\text{SE}\left[ \bar{y}_{\psi} \right] = \frac{\text{SE}[\hat{\tau}_{\psi}]}{M}$$
 
 ## 6.3: Two-Stage Sampling with Replacement
 
@@ -389,7 +389,7 @@ M = 647 # could revert back to original data to find this
 (ybar_psi = tauhat_psi/M)
 ```
 
-- and the standard error of $\bar{y}_{\psi}$, $$\text{SE}\left[ \bar{y}_{\psi} \right] = \frac{\text{SE}[\hat{\tau}_{\psi}]}{\hat{M}_{0\psi}}$$
+- and the standard error of $\bar{y}_{\psi}$, $$\text{SE}\left[ \bar{y}_{\psi} \right] = \frac{\text{SE}[\hat{\tau}_{\psi}]}{M}$$
 
 ```{r}
 (SE_ybar_psi = SE_tauhat_psi/M)
