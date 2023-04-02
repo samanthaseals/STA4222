@@ -11,7 +11,7 @@ execute:
 editor: source
 ---
 
-Monday's lecture: [Chapter 6: Part 2](https://github.com/samanthaseals/STA4222/blob/master/slides/L09.qmd)
+Monday's lecture: [Chapter 6: Part 1](https://github.com/samanthaseals/STA4222/blob/master/slides/L09.qmd)
 
 The dataset **statepop** contains data from an unequal-probability sample of 100 counties from the 1994 County and City Data Book (U.S. Census Bureau, 1994), selected with probability proportional to population. The selection probabilities ($\psi_i$) are given in variable *psii*. Sampling was done with replacement, so large counties occur multiple times in the sample: Los Angeles County, with the largest population in the United States, occurs four times. Let $\tau_i$ represent the number of physicians in county $i$ (variable *phys*).
 

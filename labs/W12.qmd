@@ -1,0 +1,51 @@
+---
+title: "Lab: Week 12"
+author: "Your Name Here"
+format: 
+  html:
+    self-contained: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: source
+---
+
+Monday's lecture: [Chapter 6: Part 2](https://github.com/samanthaseals/STA4222/blob/master/slides/L10.qmd)
+
+Consider the **baseball** dataset, which contains statistics on 797 baseball players from the rosters of all major league teams in November 2004. In this lab, we will take a two-stage cluster sample (without replacement) with the teams (*team*) as the clusters and probabilities proportional to the total number of runs (*run*) scored for the teams. 
+
+```{r}
+library(tidyverse)
+library(SDAResources)
+data(baseball)
+```
+
+1. Construct the selection probabilities. Remember, teams (*team*) define the clusters and we want probabilities proportional to the total number of runs (*run*) scored. 
+
+```{r}
+
+```
+
+2. Take a sample such that your final sample has approximately 150 players. Write a few sentences to describe (and justify) how you selected your sample.
+
+```{r}
+
+```
+
+3. Use your sample to estimate the mean salary (*salary*) in 2004. Make sure you include the point estimate and the 95% CI.
+
+```{r}
+
+```
+
+4. (Challenge!) Use your sample to estimate the proportion of players that were pitchers (*pos*) in 2004. Make sure you include the point estimate and the 95% CI.
+
+```{r}
+
+```
+
+
+
+
+
