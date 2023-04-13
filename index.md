@@ -36,10 +36,10 @@ show_sidebar: false
 |      | W   | 03/29 | Present Project; R lab (Ch 6 - part 1)  | [html](https://samanthaseals.github.io/STA4222/labs/W11.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W11.qmd) |
 | 12   | M   | 04/03 | Sampling with Unequal Probabilities without Replacement (Ch 6 - part 2) | [html](https://samanthaseals.github.io/STA4222/slides/L10.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/slides/L10.qmd)  |
 |      | W   | 04/05 | R lab (Ch 6 - part 2) | [html](https://samanthaseals.github.io/STA4222/labs/W12.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W12.qmd) |
-| 13   | M   | 04/10 |  Complex Surveys (Ch 7) | |
-|      | W   | 04/12 | R lab (Ch 7)  | |
-| 14   | M   | 04/17 | Nonresponse (Ch 8) | |
-|      | W   | 04/19 | R lab (Ch 8) | |
-| 15   | M   | 04/24 | Categorical Analysis and Regression with Complex Survey Data (Ch 10 and 11) | |
-|      | W   | 04/26 | R lab (Ch 10 and 11)  | |
+| 13   | M   | 04/10 | R lab (Ch 6 - part 2) | [html](https://samanthaseals.github.io/STA4222/labs/W12.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W12.qmd) |
+|      | W   | 04/12 | R lab (Ch 6 - part 2)  | [html](https://samanthaseals.github.io/STA4222/labs/W12.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W12.qmd) |
+| 14   | M   | 04/17 | Complex Surveys (Ch 7) | |
+|      | W   | 04/19 | R lab (Ch 7) | |
+| 15   | M   | 04/24 | Nonresponse (Ch 8) | |
+|      | W   | 04/26 | R lab (Ch 8)  | |
 | 16   | W   | 05/03 | Final Exam, 11:00 am - 1:30 pm | |
