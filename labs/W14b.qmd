@@ -1,0 +1,46 @@
+---
+title: "Lab: Week 14 - part 2"
+author: "Your Name Here"
+format: 
+  html:
+    self-contained: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: source
+---
+
+Recall the **baseball** dataset, which contains statistics on 797 baseball players from the rosters of all major league teams in November 2004. 
+
+```{r}
+library(tidyverse)
+library(SDAResources)
+data(baseball)
+```
+
+1. Determine the appropriate sample size to estimate the mean salary (*salary*) in 2004 using the player's position as the strata under optimal allocation and a margin of error of $25,000.
+
+```{r}
+
+```
+
+2. Draw a stratified sample based on your sample size(s) in question 1.
+
+```{r}
+
+```
+
+3. Estimate the mean salary (*salary*) in 2004 using the sample you just drew. Make sure you include the point estimate and the 95% CI.
+
+```{r}
+
+```
+
+4. How does today's estimate compare to last week's estimate? Why do you think the difference exists?
+
+5. How does today's estimate compare to the population mean? Why do you think the difference exists?
+
+6. How does today's estimate compare to Monday's estimate? Why do you think the difference exists?
+
+
