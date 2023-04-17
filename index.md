@@ -38,8 +38,8 @@ show_sidebar: false
 |      | W   | 04/05 | R lab (Ch 6 - part 2) | [html](https://samanthaseals.github.io/STA4222/labs/W12.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W12.qmd) |
 | 13   | M   | 04/10 | R lab (Ch 6 - part 2) | [html](https://samanthaseals.github.io/STA4222/labs/W12.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W12.qmd) |
 |      | W   | 04/12 | R lab (Ch 6 - part 2)  | [html](https://samanthaseals.github.io/STA4222/labs/W12.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W12.qmd) |
-| 14   | M   | 04/17 | Complex Surveys (Ch 7) | |
-|      | W   | 04/19 | R lab (Ch 7) | |
-| 15   | M   | 04/24 | Nonresponse (Ch 8) | |
-|      | W   | 04/26 | R lab (Ch 8)  | |
+| 14   | M   | 04/17 | R lab | [html](https://samanthaseals.github.io/STA4222/labs/W14a.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W14a.qmd) |
+|      | W   | 04/19 | R lab | [html](https://samanthaseals.github.io/STA4222/labs/W14b.html), [qmd](https://github.com/samanthaseals/STA4222/blob/master/labs/W14b.qmd) |
+| 15   | M   | 04/24 | R lab | |
+|      | W   | 04/26 | R lab | |
 | 16   | W   | 05/03 | Final Exam, 11:00 am - 1:30 pm | |
